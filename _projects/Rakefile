@@ -1,0 +1,106 @@
+#
+# Dependency tasks
+#
+
+desc 'Bundle dependencies'
+task :bundle do
+  output = `bundle check 2>&1`
+  
+  unless $?.to_i == 0
+    puts output
+    sh "bundle install 2>&1"
+    puts
+  end
+end
+
+#
+# Project tasks
+#
+
+PROJECTS = %w{
+  thinkerbot/configurable
+  thinkerbot/shell_test
+}
+ROOT_DIR = File.expand_path('../..', __FILE__)
+GEM_DIR = File.join(ROOT_DIR, '_gems')
+
+def capture_sh(str)
+  puts str
+  `#{str}`
+end
+
+def each_project
+  PROJECTS.each do |project_path|
+    project_name = File.basename(project_path)
+    yield(project_name)
+  end
+end
+
+def in_each_project
+  each_project do |project_name|
+    Dir.chdir(project_name) do
+      yield(project_name)
+    end if File.exists?(project_name)
+  end
+end
+
+desc 'fetch gems for each project'
+task :fetch do
+  FileUtils.mkdir_p GEM_DIR
+
+  Dir.chdir(GEM_DIR) do
+    each_project do |project|
+      list = capture_sh "gem list -a --remote #{project}"
+
+      list =~ /^#{project} \((.*)\)$/
+      $1.to_s.split(', ').each do |version|
+        unless File.exists?("#{project}-#{version}.gem")
+          capture_sh "gem fetch #{project} -v #{version}"
+        end
+      end
+    end
+  end
+end
+
+desc 'clone each project'
+task :clone do
+  Dir.chdir(ROOT_DIR) do
+    PROJECTS.each do |project_path|
+      project_dir = File.basename(project_path)
+      unless File.exists?("_projects/#{project_dir}")
+        capture_sh "git submodule add git@github.com:#{project_path}.git _projects/#{project_dir}"
+      end
+    end
+  end
+end
+
+desc 'checkout gh-pages for each project'
+task :checkout => :clone do
+  in_each_project do |project|
+    capture_sh "git checkout gh-pages"
+    unless $?.exitstatus == 0
+      capture_sh "git symbolic-ref HEAD refs/heads/gh-pages"
+      capture_sh "rm .git/index"
+      capture_sh "git clean -fdx"
+      capture_sh 'echo "My GitHub Page" > index.html'
+      capture_sh "git add ."
+      capture_sh "git commit -a -m 'First pages commit'"
+    end
+  end
+end
+
+desc 'commit changes'
+task :commit, :message do |task, args|
+  in_each_project do |project|
+    capture_sh "git add ."
+    capture_sh "git add -u"
+    capture_sh "git commit -m '#{args.message}'"
+  end
+end
+
+desc 'push changes'
+task :push do
+  in_each_project do |project|
+    capture_sh "git push --all"
+  end
+end

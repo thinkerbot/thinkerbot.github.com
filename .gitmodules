@@ -1,0 +1,6 @@
+[submodule "_projects/configurable"]
+	path = _projects/configurable
+	url = git@github.com:thinkerbot/configurable.git
+[submodule "_projects/shell_test"]
+	path = _projects/shell_test
+	url = git@github.com:thinkerbot/shell_test.git
