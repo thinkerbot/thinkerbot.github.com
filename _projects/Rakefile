@@ -1,19 +1,4 @@
 #
-# Dependency tasks
-#
-
-desc 'Bundle dependencies'
-task :bundle do
-  output = `bundle check 2>&1`
-  
-  unless $?.to_i == 0
-    puts output
-    sh "bundle install 2>&1"
-    puts
-  end
-end
-
-#
 # Project tasks
 #
 
