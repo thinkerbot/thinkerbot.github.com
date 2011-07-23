@@ -1,7 +1,3 @@
-#
-# Project tasks
-#
-
 PROJECTS = %w{
   thinkerbot/configurable
   thinkerbot/shell_test
@@ -28,6 +24,36 @@ def in_each_project
     end if File.exists?(project_name)
   end
 end
+
+#
+# Dependency tasks
+#
+
+desc 'Bundle dependencies'
+task :bundle do
+  output = `bundle check 2>&1`
+  
+  unless $?.to_i == 0
+    puts output
+    sh "bundle install 2>&1"
+    puts
+  end
+end
+
+#
+# Site tasks
+#
+
+desc 'Build site'
+task :build => :bundle do
+  Dir.chdir(ROOT_DIR) do
+    capture_sh "jekyll --pygments --safe"
+  end
+end
+
+#
+# Project tasks
+#
 
 desc 'fetch gems for each project'
 task :fetch do
