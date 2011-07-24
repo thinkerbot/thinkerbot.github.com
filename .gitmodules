@@ -1,6 +1,0 @@
-[submodule "/Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/configurable"]
-	path = /Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/configurable
-	url = git@github.com:thinkerbot/configurable.git
-[submodule "/Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/shell_test"]
-	path = /Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/shell_test
-	url = git@github.com:thinkerbot/shell_test.git
