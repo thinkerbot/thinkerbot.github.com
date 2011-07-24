@@ -1,4 +1,3 @@
 _site/
 _gems/
-_projects/*/*
-_projects/Gemfile.lock
+_Gemfile.lock

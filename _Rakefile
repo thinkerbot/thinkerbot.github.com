@@ -2,8 +2,9 @@ PROJECTS = %w{
   thinkerbot/configurable
   thinkerbot/shell_test
 }
-ROOT_DIR = File.expand_path('../..', __FILE__)
+ROOT_DIR = File.expand_path('..', __FILE__)
 GEM_DIR = File.join(ROOT_DIR, '_gems')
+GEMFILE = File.join(ROOT_DIR, '_Gemfile')
 
 def capture_sh(str)
   puts str
@@ -32,11 +33,11 @@ end
 
 desc 'Bundle dependencies'
 task :bundle do
-  output = `bundle check 2>&1`
+  output = `bundle check --gemfile '#{GEMFILE}' 2>&1`
   
   unless $?.to_i == 0
     puts output
-    sh "bundle install 2>&1"
+    sh "bundle install --gemfile '#{GEMFILE}' 2>&1"
     puts
   end
 end
