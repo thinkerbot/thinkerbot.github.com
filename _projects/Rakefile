@@ -13,15 +13,16 @@ end
 def each_project
   PROJECTS.each do |project_path|
     project_name = File.basename(project_path)
-    yield(project_name)
+    project_dir = File.join(ROOT_DIR, project_name)
+    yield(project_path, project_name, project_dir)
   end
 end
 
-def in_each_project
-  each_project do |project_name|
-    Dir.chdir(project_name) do
-      yield(project_name)
-    end if File.exists?(project_name)
+def in_each_project_dir
+  each_project do |project_path, project_name, project_dir|
+    Dir.chdir(project_dir) do
+      yield
+    end if File.exists?(project_dir)
   end
 end
 
@@ -60,13 +61,13 @@ task :fetch do
   FileUtils.mkdir_p GEM_DIR
 
   Dir.chdir(GEM_DIR) do
-    each_project do |project|
-      list = capture_sh "gem list -a --remote #{project}"
+    each_project do |project_path, project_name, project_dir|
+      list = capture_sh "gem list -a --remote #{project_name}"
 
-      list =~ /^#{project} \((.*)\)$/
+      list =~ /^#{project_name} \((.*)\)$/
       $1.to_s.split(', ').each do |version|
-        unless File.exists?("#{project}-#{version}.gem")
-          capture_sh "gem fetch #{project} -v #{version}"
+        unless File.exists?("#{project_name}-#{version}.gem")
+          capture_sh "gem fetch #{project_name} -v #{version}"
         end
       end
     end
@@ -76,10 +77,9 @@ end
 desc 'clone each project'
 task :clone do
   Dir.chdir(ROOT_DIR) do
-    PROJECTS.each do |project_path|
-      project_dir = File.basename(project_path)
-      unless File.exists?("_projects/#{project_dir}")
-        capture_sh "git submodule add git@github.com:#{project_path}.git _projects/#{project_dir}"
+    each_project do |project_path, project_name, project_dir|
+      unless File.exists?(project_dir)
+        capture_sh "git submodule add git@github.com:#{project_path}.git #{project_dir}"
       end
     end
   end
@@ -87,7 +87,7 @@ end
 
 desc 'checkout gh-pages for each project'
 task :checkout => :clone do
-  in_each_project do |project|
+  in_each_project_dir do
     capture_sh "git checkout gh-pages"
     unless $?.exitstatus == 0
       capture_sh "git symbolic-ref HEAD refs/heads/gh-pages"
@@ -102,7 +102,10 @@ end
 
 desc 'commit changes'
 task :commit, :message do |task, args|
-  in_each_project do |project|
+  if args.message.to_s.strip.empty?
+    raise "no message specified"
+  end
+  in_each_project_dir do
     capture_sh "git add ."
     capture_sh "git add -u"
     capture_sh "git commit -m '#{args.message}'"
@@ -111,7 +114,7 @@ end
 
 desc 'push changes'
 task :push do
-  in_each_project do |project|
+  in_each_project_dir do
     capture_sh "git push --all"
   end
 end
