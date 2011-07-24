@@ -102,10 +102,7 @@ task :checkout => :clone do
 end
 
 desc 'commit changes'
-task :commit, :message do |task, args|
-  if args.message.to_s.strip.empty?
-    raise "no message specified"
-  end
+task :commit do
   each_project do |project_path, project_name, project_dir|
     site_dir = File.join(ROOT_DIR, '_site', project_name)
     FileUtils.mv File.join(project_dir, '.git'), File.join(site_dir, '.git')
@@ -115,7 +112,7 @@ task :commit, :message do |task, args|
   in_each_project_dir do |project_name|
     capture_sh "git add ."
     capture_sh "git add -u"
-    capture_sh "git commit -m '#{args.message}'"
+    capture_sh "git commit -m 'updated to thinkerbot.github.com@#{`git log -n1 --format=%H`}'"
   end
 end
 
