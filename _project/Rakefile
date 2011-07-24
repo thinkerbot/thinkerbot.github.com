@@ -2,9 +2,9 @@ PROJECTS = %w{
   thinkerbot/configurable
   thinkerbot/shell_test
 }
-ROOT_DIR = File.expand_path('..', __FILE__)
-GEM_DIR = File.join(ROOT_DIR, '_gems')
-GEMFILE = File.join(ROOT_DIR, '_Gemfile')
+ROOT_DIR = File.expand_path('../..', __FILE__)
+GEMS_DIR = File.expand_path('../gems', __FILE__)
+PROJECT_DIR = File.expand_path('../projects', __FILE__)
 
 def capture_sh(str)
   puts str
@@ -14,7 +14,7 @@ end
 def each_project
   PROJECTS.each do |project_path|
     project_name = File.basename(project_path)
-    project_dir = File.join(ROOT_DIR, '_projects', project_name)
+    project_dir = File.join(PROJECT_DIR, project_name)
     yield(project_path, project_name, project_dir)
   end
 end
@@ -33,11 +33,11 @@ end
 
 desc 'Bundle dependencies'
 task :bundle do
-  output = `bundle check --gemfile '#{GEMFILE}' 2>&1`
+  output = `bundle check 2>&1`
   
   unless $?.to_i == 0
     puts output
-    sh "bundle install --gemfile '#{GEMFILE}' 2>&1"
+    sh "bundle install 2>&1"
     puts
   end
 end
@@ -59,9 +59,9 @@ end
 
 desc 'fetch gems for each project'
 task :fetch do
-  FileUtils.mkdir_p GEM_DIR
+  FileUtils.mkdir_p GEMS_DIR
 
-  Dir.chdir(GEM_DIR) do
+  Dir.chdir(GEMS_DIR) do
     each_project do |project_path, project_name, project_dir|
       list = capture_sh "gem list -a --remote #{project_name}"
 

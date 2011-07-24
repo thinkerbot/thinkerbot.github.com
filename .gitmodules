@@ -1,12 +1,3 @@
-[submodule "_site/configurable"]
-	path = _site/configurable
-	url = git@github.com:thinkerbot/configurable.git
-[submodule "/Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/_site/shell_test"]
-	path = /Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/_site/shell_test
-	url = git@github.com:thinkerbot/shell_test.git
-[submodule "/Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/_projects/configurable"]
-	path = /Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/_projects/configurable
-	url = git@github.com:thinkerbot/configurable.git
-[submodule "/Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/_projects/shell_test"]
-	path = /Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/_projects/shell_test
+[submodule "/Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/_project/projects/shell_test"]
+	path = /Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/_project/projects/shell_test
 	url = git@github.com:thinkerbot/shell_test.git
