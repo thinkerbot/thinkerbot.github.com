@@ -1,9 +1,4 @@
 _site/
 _gems/
 _Gemfile.lock
-configurable/*
-!/Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/_site/configurable/
-shell_test/*
-!/Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/_site/shell_test/
-shell_test/*
-!/Users/bahuvrihi/Documents/Gems/thinkerbot.github.com/_site/shell_test
+
