@@ -113,8 +113,8 @@ task :fetch do
   end
 end
 
-desc 'clone each project'
-task :clone do
+desc 'setup each project'
+task :setup do
   Dir.chdir(ROOT_DIR) do
     each_project do |project_path, project_name, project_dir|
       unless File.exists?(project_dir)
@@ -122,41 +122,17 @@ task :clone do
       end
     end
   end
-end
 
-desc 'checkout gh-pages for each project'
-task :checkout => :clone do
   in_each_project_dir do
     capture_sh "git checkout gh-pages"
     unless $?.exitstatus == 0
       capture_sh "git symbolic-ref HEAD refs/heads/gh-pages"
       capture_sh "rm .git/index"
       capture_sh "git clean -fdx"
-      capture_sh 'echo "My GitHub Page" > index.html'
+      capture_sh 'touch index.html'
       capture_sh "git add ."
-      capture_sh "git commit -a -m 'First pages commit'"
+      capture_sh "git commit -a -m 'setup repo for thinkerbot.github.com'"
+      capture_sh "git push origin gh-pages"
     end
-  end
-end
-
-desc 'commit changes'
-task :commit do
-  each_project do |project_path, project_name, project_dir|
-    site_dir = File.join(ROOT_DIR, '_site', project_name)
-    FileUtils.mv File.join(project_dir, '.git'), File.join(site_dir, '.git')
-    FileUtils.rm_r project_dir
-    FileUtils.mv site_dir, project_dir
-  end
-  in_each_project_dir do |project_name|
-    capture_sh "git add ."
-    capture_sh "git add -u"
-    capture_sh "git commit -m 'updated to thinkerbot.github.com@#{`git log -n1 --format=%H`}'"
-  end
-end
-
-desc 'push changes'
-task :push do
-  in_each_project_dir do
-    capture_sh "git push --all"
   end
 end
