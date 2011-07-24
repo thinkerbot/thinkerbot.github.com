@@ -74,3 +74,54 @@ task :fetch do
     end
   end
 end
+
+desc 'clone each project'
+task :clone do
+  Dir.chdir(ROOT_DIR) do
+    each_project do |project_path, project_name, project_dir|
+      unless File.exists?(project_dir)
+        gitignore = File.join(ROOT_DIR, '.gitignore')
+        File.open(gitignore, 'a') do |io|
+          io.puts "#{project_name}/*"
+          io.puts "!#{project_dir}"
+        end
+        capture_sh "git submodule add -f git@github.com:#{project_path}.git #{project_dir}"
+        FileUtils.mkdir_p File.join(ROOT_DIR, project_name)
+      end
+    end
+  end
+end
+
+desc 'checkout gh-pages for each project'
+task :checkout => :clone do
+  in_each_project_dir do
+    capture_sh "git checkout gh-pages"
+    unless $?.exitstatus == 0
+      capture_sh "git symbolic-ref HEAD refs/heads/gh-pages"
+      capture_sh "rm .git/index"
+      capture_sh "git clean -fdx"
+      capture_sh 'echo "My GitHub Page" > index.html'
+      capture_sh "git add ."
+      capture_sh "git commit -a -m 'First pages commit'"
+    end
+  end
+end
+
+desc 'commit changes'
+task :commit, :message do |task, args|
+  if args.message.to_s.strip.empty?
+    raise "no message specified"
+  end
+  in_each_project_dir do
+    capture_sh "git add ."
+    capture_sh "git add -u"
+    capture_sh "git commit -m '#{args.message}'"
+  end
+end
+
+desc 'push changes'
+task :push do
+  in_each_project_dir do
+    capture_sh "git push --all"
+  end
+end
