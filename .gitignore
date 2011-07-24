@@ -1,3 +1,5 @@
 _site/
 _project/Gemfile.lock
 _project/gems
+*/rdoc
+*/*/rdoc

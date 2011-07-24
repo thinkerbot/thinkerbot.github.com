@@ -27,6 +27,12 @@ def in_each_project_dir
   end
 end
 
+def each_gemspec
+  Dir.glob File.join(GEMS_DIR, '*.gem') do |gemfile|
+    gemspec = capture_sh("gem specification '#{gemfile}' --ruby --backtrace")
+    yield gemfile, eval(gemspec)
+  end
+end
 #
 # Dependency tasks
 #
@@ -47,9 +53,41 @@ end
 #
 
 desc 'Build site'
-task :build => :bundle do
+task :build => [:bundle, :rdoc] do
   Dir.chdir(ROOT_DIR) do
     capture_sh "jekyll --pygments --safe"
+  end
+end
+
+task :rdoc do
+  latest = {}
+  each_gemspec do |gemfile, spec|
+    code_dir = File.join(GEMS_DIR, spec.full_name)
+    unless File.exists?(code_dir)
+      capture_sh %Q{gem unpack '#{gemfile}' --target '#{GEMS_DIR}' --backtrace}
+    end
+
+    rdoc_dir = File.join(ROOT_DIR, spec.name, spec.version.to_s, 'rdoc')
+    unless File.exists?(rdoc_dir)
+      Dir.chdir(code_dir) do
+        files =  spec.files.select {|file| File.extname(file) == '.rb' }
+        files += spec.extra_rdoc_files
+        FileUtils.mkdir_p File.dirname(rdoc_dir)
+        capture_sh "rdoc -o '#{rdoc_dir}' '#{spec.rdoc_options.join("' '")}' '#{files.join("' '")}'"
+      end
+    end
+
+    current = latest[spec.name]
+    if current.nil? || current < spec.version
+      latest[spec.name] = spec.version
+    end
+  end
+
+  latest.each_pair do |name, version|
+    latest_rdoc_dir = File.join(ROOT_DIR, name, version.to_s, 'rdoc')
+    rdoc_dir = File.join(ROOT_DIR, name, 'rdoc')
+    FileUtils.rm_r(rdoc_dir) if File.exists?(rdoc_dir)
+    FileUtils.cp_r(latest_rdoc_dir, rdoc_dir)
   end
 end
 
