@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: ShellTest::Unit</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">ShellTest::Unit</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/shell_test/unit_rb.html">
+                lib/shell_test/unit.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="../ShellTest.html">ShellTest</a> is designed to work with
+MiniTest, which is the standard testing framework included in ruby 1.9.
+Minor changes in the API break backward compatibility with Test::Unit
+and/or add functionality expected by <a
+href="../ShellTest.html">ShellTest</a>.
+</p>
+<p>
+Test::Unit can be patched by requiring the shim file before defining
+specific TestCase subclasses.
+</p>
+<pre>
+  require 'test/unit'
+  unless Object.const_defined?(:MiniTest)
+    require 'shell_test/unit/shim'
+  end
+</pre>
+<p>
+To let <a href="../ShellTest.html">ShellTest</a> do this for you:
+</p>
+<pre>
+ require 'shell_test/unit'
+</pre>
+<p>
+Note that the shim script has only been tested vs the Test::Unit that comes
+with ruby 1.8.x. A Test::Unit 2.0 gem exists; use with caution.
+</p>
+<h4>Patches</h4>
+<p>
+The shim script adds two things to Test::Unit:
+</p>
+<p>
+1) A <em>name</em> method which returns the test method name (alias for
+method_name)
+</p>
+<p>
+2) A skip method which can be used to skip a test (use it like flunk)
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
