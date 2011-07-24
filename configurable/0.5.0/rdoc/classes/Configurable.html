@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Configurable</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Configurable</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/configurable_rb.html">
+                lib/configurable.rb
+                </a>
+        <br />
+                <a href="../files/lib/configurable/class_methods_rb.html">
+                lib/configurable/class_methods.rb
+                </a>
+        <br />
+                <a href="../files/lib/configurable/delegate_rb.html">
+                lib/configurable/delegate.rb
+                </a>
+        <br />
+                <a href="../files/lib/configurable/delegate_hash_rb.html">
+                lib/configurable/delegate_hash.rb
+                </a>
+        <br />
+                <a href="../files/lib/configurable/indifferent_access_rb.html">
+                lib/configurable/indifferent_access.rb
+                </a>
+        <br />
+                <a href="../files/lib/configurable/module_methods_rb.html">
+                lib/configurable/module_methods.rb
+                </a>
+        <br />
+                <a href="../files/lib/configurable/validation_rb.html">
+                lib/configurable/validation.rb
+                </a>
+        <br />
+                <a href="../files/lib/configurable/utils_rb.html">
+                lib/configurable/utils.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="Configurable.html">Configurable</a> enables the specification of
+configurations within a class definition.
+</p>
+<pre>
+  class ConfigClass
+    include Configurable
+
+    config :one, 'one'
+    config :two, 'two'
+    config :three, 'three'
+
+  end
+
+  c = ConfigClass.new
+  c.config.class         # =&gt; Configurable::DelegateHash
+  c.config               # =&gt; {:one =&gt; 'one', :two =&gt; 'two', :three =&gt; 'three'}
+</pre>
+<p>
+Instances have a <tt>config</tt> object that acts like a forwarding hash;
+configuration keys delegate to accessors while undeclared key-value pairs
+are stored internally:
+</p>
+<pre>
+  c.config[:one] = 'ONE'
+  c.one                  # =&gt; 'ONE'
+
+  c.one = 1
+  c.config               # =&gt; {:one =&gt; 1, :two =&gt; 'two', :three =&gt; 'three'}
+
+  c.config[:undeclared] = 'value'
+  c.config.store         # =&gt; {:undeclared =&gt; 'value'}
+</pre>
+<p>
+The writer for a configuration can be defined by providing a block to
+config. The <a href="Configurable/Validation.html">Validation</a> module
+provides a number of common validation/transform blocks accessible through
+the class method &#8216;c&#8217;:
+</p>
+<pre>
+  class SubClass &lt; ConfigClass
+    config(:one, 'one') {|v| v.upcase }
+    config :two, 2, &amp;c.integer
+  end
+
+  s = SubClass.new
+  s.config               # =&gt; {:one =&gt; 'ONE', :two =&gt; 2, :three =&gt; 'three'}
+
+  s.one = 'aNothER'
+  s.one                  # =&gt; 'ANOTHER'
+
+  s.two = -2
+  s.two                  # =&gt; -2
+  s.two = &quot;3&quot;
+  s.two                  # =&gt; 3
+  s.two = nil            # !&gt; ValidationError
+  s.two = 'str'          # !&gt; ValidationError
+</pre>
+<p>
+Note that config blocks are defined in class-context and will have access
+to variables outside the block (as you would expect). For instance, these
+are analagous declarations:
+</p>
+<pre>
+  class ClassConfig
+    config :key, 'value' do |input|
+      input.upcase
+    end
+  end
+
+  class AnalagousClass
+    block = lambda {|input| input.upcase}
+
+    define_method(:key=) do |input|
+      @key = block.call(input)
+    end
+  end
+</pre>
+<p>
+To have the block literally define the writer, use the config_attr method.
+Blocks provided to config_attr will have instance context and must set the
+instance variable themselves.
+</p>
+<pre>
+  class ConfigClass
+    config_attr :key, 'value' do |input|
+      @key = input.upcase
+    end
+  end
+</pre>
+<p>
+Configurations are inherited and may be overridden in subclasses.
+</p>
+<h3>Attributes</h3>
+<p>
+Alternative reader and writer methods may be specified as config
+attributes. When alternate methods are specified, <a
+href="Configurable.html">Configurable</a> assumes the methods are declared
+elsewhere and will not define accessors.
+</p>
+<pre>
+  class AlternativeClass
+    include Configurable
+
+    config_attr :sym, 'value', :reader =&gt; :get_sym, :writer =&gt; :set_sym
+
+    def get_sym
+      @sym
+    end
+
+    def set_sym(input)
+      @sym = input.to_sym
+    end
+  end
+
+  alt = AlternativeClass.new
+  alt.respond_to?(:sym)     # =&gt; false
+  alt.respond_to?(:sym=)    # =&gt; false
+
+  alt.config[:sym] = 'one'
+  alt.get_sym               # =&gt; :one
+
+  alt.set_sym('two')
+  alt.config[:sym]          # =&gt; :two
+</pre>
+<p>
+Idiosyncratically, true and false may also be provided as reader/writer
+values.
+</p>
+<table>
+<tr><td valign="top">true:</td><td>Same as using the defaults, accessors are defined.
+
+</td></tr>
+<tr><td valign="top">false:</td><td>Sets the default reader/writer but does not define the accessors (think
+&#8216;define reader/writer&#8217; =&gt; false).
+
+</td></tr>
+</table>
+<p>
+Nil is not allowed as a value.
+</p>
+<h4>Non-reader/writer attributes</h4>
+<p>
+Attributes provide metadata for how to use configurations in various
+contexts. In general, attributes can be used to set any metadata an
+application needs. A few attributes are used internally by <a
+href="Configurable.html">Configurable</a>.
+</p>
+<p>
+Attribute:: Use::
+</p>
+<table>
+<tr><td valign="top">set_default:</td><td>When set to false, the delegate will not map a default value during bind.
+Specify when you manually initialize a config variable.
+
+</td></tr>
+<tr><td valign="top">type:</td><td>Specifies the type of option <a href="ConfigParser.html">ConfigParser</a>
+generates for this <a href="Configurable/Delegate.html">Delegate</a> (ex:
+:switch, :flag, :list, :hidden)
+
+</td></tr>
+<tr><td valign="top">desc:</td><td>The description string used in the <a
+href="ConfigParser.html">ConfigParser</a> help
+
+</td></tr>
+<tr><td valign="top">long:</td><td>The long option (default: key)
+
+</td></tr>
+<tr><td valign="top">short:</td><td>The short option.
+
+</td></tr>
+</table>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000033">initialize_config</a>&nbsp;&nbsp;
+      <a href="#M000031">initialize_copy</a>&nbsp;&nbsp;
+      <a href="#M000029">new</a>&nbsp;&nbsp;
+      <a href="#M000032">open_io</a>&nbsp;&nbsp;
+      <a href="#M000030">reconfigure</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="Configurable/ClassMethods.html" class="link">Configurable::ClassMethods</a><br />
+Module <a href="Configurable/IndifferentAccess.html" class="link">Configurable::IndifferentAccess</a><br />
+Module <a href="Configurable/ModuleMethods.html" class="link">Configurable::ModuleMethods</a><br />
+Module <a href="Configurable/Utils.html" class="link">Configurable::Utils</a><br />
+Module <a href="Configurable/Validation.html" class="link">Configurable::Validation</a><br />
+Class <a href="Configurable/Delegate.html" class="link">Configurable::Delegate</a><br />
+Class <a href="Configurable/DelegateHash.html" class="link">Configurable::DelegateHash</a><br />
+Class <a href="Configurable/OrderedHashPatch.html" class="link">Configurable::OrderedHashPatch</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_ATTRIBUTES</td>
+          <td>=</td>
+          <td class="context-item-value">Hash.new({})</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+A hash of (block, default attributes) for config blocks. The attributes for
+nil will be merged with those for the block.
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">config</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+A <a href="Configurable/DelegateHash.html">DelegateHash</a> bound to self
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000029" class="method-detail">
+        <a name="M000029"></a>
+
+        <div class="method-heading">
+          <a href="#M000029" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Initializes config, if necessary, and then calls super. If initialize is
+overridden without calling super, be sure to call <a
+href="Configurable.html#M000033">initialize_config</a> manually within the
+<a href="Configurable.html#M000029">new</a> initialize method.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000029-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000029-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/configurable.rb, line 148</span>
+148:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+149:     <span class="ruby-identifier">initialize_config</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">instance_variable_defined?</span>(<span class="ruby-identifier">:@config</span>)
+150:     <span class="ruby-keyword kw">super</span>
+151:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000031" class="method-detail">
+        <a name="M000031"></a>
+
+        <div class="method-heading">
+          <a href="#M000031" class="method-signature">
+          <span class="method-name">initialize_copy</span><span class="method-args">(orig)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Reinitializes configurations in the copy such that the <a
+href="Configurable.html#M000029">new</a> object has it&#8216;s own set of
+configurations, separate from the original object.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000031-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000031-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/configurable.rb, line 165</span>
+165:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_copy</span>(<span class="ruby-identifier">orig</span>)
+166:     <span class="ruby-keyword kw">super</span>
+167:     <span class="ruby-identifier">initialize_config</span>(<span class="ruby-identifier">orig</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">dup</span>)
+168:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000030" class="method-detail">
+        <a name="M000030"></a>
+
+        <div class="method-heading">
+          <a href="#M000030" class="method-signature">
+          <span class="method-name">reconfigure</span><span class="method-args">(overrides={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Reconfigures self with the given overrides. Only the specified configs are
+modified.
+</p>
+<p>
+Returns self.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000030-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000030-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/configurable.rb, line 157</span>
+157:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reconfigure</span>(<span class="ruby-identifier">overrides</span>={})
+158:     <span class="ruby-identifier">config</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">overrides</span>)
+159:     <span class="ruby-keyword kw">self</span>
+160:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Protected Instance methods</h3>
+
+      <div id="method-M000033" class="method-detail">
+        <a name="M000033"></a>
+
+        <div class="method-heading">
+          <a href="#M000033" class="method-signature">
+          <span class="method-name">initialize_config</span><span class="method-args">(overrides={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Initializes config. Default config values are overridden as specified by
+overrides.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000033-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000033-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/configurable.rb, line 212</span>
+212:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_config</span>(<span class="ruby-identifier">overrides</span>={})
+213:     <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">overrides</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">DelegateHash</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">overrides</span> <span class="ruby-operator">:</span> <span class="ruby-constant">DelegateHash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">configurations</span>, <span class="ruby-identifier">overrides</span>)
+214:     <span class="ruby-ivar">@config</span>.<span class="ruby-identifier">bind</span>(<span class="ruby-keyword kw">self</span>)
+215:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000032" class="method-detail">
+        <a name="M000032"></a>
+
+        <div class="method-heading">
+          <a href="#M000032" class="method-signature">
+          <span class="method-name">open_io</span><span class="method-args">(io, mode='r') {|file| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Opens the file specified by io and yield it to the block. If io is an IO,
+it will be yielded immediately, and the mode is ignored. Nil io are simply
+ignored.
+</p>
+<h3>Usage</h3>
+<p>
+<a href="Configurable.html#M000032">open_io</a> is used to compliment the
+io validation, to ensure that if a file is specified, it will be closed.
+</p>
+<pre>
+  class IoSample
+    include Configurable
+    config :output, $stdout, &amp;c.io    # can be an io or filepath
+
+    def say_hello
+      open_io(output, 'w') do |io|
+        io &lt;&lt; 'hello!'
+      end
+    end
+  end
+</pre>
+<p>
+In short, this method provides a way to responsibly handle IO and file
+configurations.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000032-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000032-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/configurable.rb, line 194</span>
+194:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">open_io</span>(<span class="ruby-identifier">io</span>, <span class="ruby-identifier">mode</span>=<span class="ruby-value str">'r'</span>)
+195:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">io</span>
+196:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+197:       <span class="ruby-identifier">dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">io</span>)
+198:       <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">dir</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">dir</span>)
+199:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">io</span>, <span class="ruby-identifier">mode</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">file</span>) }
+200:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Integer</span>
+201:       <span class="ruby-comment cmt"># note this does not close the io because, as far as I understand, </span>
+202:       <span class="ruby-comment cmt"># valid integer file descriptors point to files that are already</span>
+203:       <span class="ruby-comment cmt"># open and presumably managed elsewhere</span>
+204:       <span class="ruby-keyword kw">yield</span> <span class="ruby-constant">IO</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">io</span>, <span class="ruby-identifier">mode</span>)
+205:     <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">then</span> <span class="ruby-keyword kw">nil</span>
+206:     <span class="ruby-keyword kw">else</span> <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">io</span>)
+207:     <span class="ruby-keyword kw">end</span>
+208:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

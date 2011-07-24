@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: ConfigParser::Option</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">ConfigParser::Option</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/config_parser/option_rb.html">
+                lib/config_parser/option.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Represents an option registered with <a
+href="../ConfigParser.html">ConfigParser</a>.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000022">new</a>&nbsp;&nbsp;
+      <a href="#M000024">parse</a>&nbsp;&nbsp;
+      <a href="#M000023">switches</a>&nbsp;&nbsp;
+      <a href="#M000025">to_s</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">LINE_FORMAT</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;%-36s %-43s&quot;</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+A format string used by <a href="Option.html#M000025">to_s</a>
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">arg_name</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The argument name printed by <a href="Option.html#M000025">to_s</a>. If
+arg_name is nil, no value will be parsed for self.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">block</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The block called when one of the <a href="Option.html#M000023">switches</a>
+mapping to self is <a href="Option.html#M000024">parse</a>; block will
+receive the parsed argument if arg_name is specified.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">desc</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The description printed by <a href="Option.html#M000025">to_s</a>
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">long</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The long switch mapping to self
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">short</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The short switch mapping to self
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000022" class="method-detail">
+        <a name="M000022"></a>
+
+        <div class="method-heading">
+          <a href="#M000022" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(attributes={}, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Initializes a <a href="Option.html#M000022">new</a> <a
+href="Option.html">Option</a> using attribute values for :long, :short,
+:arg_name, and :desc. The long and short values are transformed using <a
+href="Utils.html#M000016">Utils.longify</a> and <a
+href="Utils.html#M000015">Utils.shortify</a>, meaning both bare strings (ex
+&#8216;opt&#8217;, &#8216;o&#8217;) and full <a
+href="Option.html#M000023">switches</a> (&#8217;&#8212;opt&#8217;,
+&#8217;-o&#8217;) are valid.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000022-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000022-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/config_parser/option.rb, line 33</span>
+33:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">attributes</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+34:       <span class="ruby-ivar">@short</span> = <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">shortify</span>(<span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">:short</span>])
+35:       <span class="ruby-ivar">@long</span> = <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">longify</span>(<span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">:long</span>])
+36:       <span class="ruby-ivar">@arg_name</span> = <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">:arg_name</span>]
+37:       <span class="ruby-ivar">@desc</span> = <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">:desc</span>]
+38:       <span class="ruby-ivar">@block</span> = <span class="ruby-identifier">block</span>
+39:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000024" class="method-detail">
+        <a name="M000024"></a>
+
+        <div class="method-heading">
+          <a href="#M000024" class="method-signature">
+          <span class="method-name">parse</span><span class="method-args">(switch, value, argv)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Parse determines how an option is actually parsed from an argv. Parse
+recieves the switch mapping to self for cases in which it affects the
+outcome (see <a href="Switch.html">Switch</a>). By default <a
+href="Option.html#M000024">parse</a> has two modes of action:
+</p>
+<h4>Argument-style option (arg_name is specified)</h4>
+<p>
+If arg_name is set, then <a href="Option.html#M000024">parse</a> passes
+value to the block. If no value is specified, the next argument in argv is
+used instead. An error is raised if no value can be found.
+</p>
+<h4>Flag-style option (no arg_name is specified)</h4>
+<p>
+In this case, <a href="Option.html#M000024">parse</a> simply calls the
+block. If a non-nil value is specified, <a
+href="Option.html#M000024">parse</a> raises an error.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000024-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/config_parser/option.rb, line 61</span>
+61:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">switch</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">argv</span>)
+62:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">arg_name</span>
+63:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">value</span>
+64:           <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;no value provided for: #{switch}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">empty?</span>
+65:           <span class="ruby-identifier">value</span> = <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">shift</span>
+66:         <span class="ruby-keyword kw">end</span>
+67:         <span class="ruby-identifier">block</span> <span class="ruby-value">? </span><span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">value</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">value</span>
+68:       <span class="ruby-keyword kw">else</span>
+69:         <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;value specified for flag&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>
+70:         <span class="ruby-identifier">block</span> <span class="ruby-value">? </span><span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+71:       <span class="ruby-keyword kw">end</span>
+72:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000023" class="method-detail">
+        <a name="M000023"></a>
+
+        <div class="method-heading">
+          <a href="#M000023" class="method-signature">
+          <span class="method-name">switches</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns an array of non-nil <a href="Option.html#M000023">switches</a>
+mapping to self (ie [long, short]).
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000023-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/config_parser/option.rb, line 42</span>
+42:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">switches</span>
+43:       [<span class="ruby-identifier">long</span>, <span class="ruby-identifier">short</span>].<span class="ruby-identifier">compact</span>
+44:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000025" class="method-detail">
+        <a name="M000025"></a>
+
+        <div class="method-heading">
+          <a href="#M000025" class="method-signature">
+          <span class="method-name">to_s</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Formats self as a help string for use on the command line.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000025-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/config_parser/option.rb, line 75</span>
+75:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+76:       <span class="ruby-identifier">lines</span> = <span class="ruby-constant">Lazydoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Utils</span>.<span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">desc</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-value">43</span>)
+77:       
+78:       <span class="ruby-identifier">header</span> =  <span class="ruby-node">&quot;    #{short_str} #{long_str} #{arg_name}&quot;</span>
+79:       <span class="ruby-identifier">header</span> = <span class="ruby-identifier">header</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">36</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">header</span>.<span class="ruby-identifier">ljust</span>(<span class="ruby-value">80</span>) <span class="ruby-operator">:</span> (<span class="ruby-constant">LINE_FORMAT</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">header</span>, <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">shift</span>])
+80:       
+81:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">empty?</span>
+82:         <span class="ruby-identifier">header</span>
+83:       <span class="ruby-keyword kw">else</span>
+84:         <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">collect!</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-constant">LINE_FORMAT</span> <span class="ruby-operator">%</span> [<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">line</span>] }
+85:         <span class="ruby-node">&quot;#{header}\n#{lines.join(&quot;\n&quot;)}&quot;</span>
+86:       <span class="ruby-keyword kw">end</span>
+87:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

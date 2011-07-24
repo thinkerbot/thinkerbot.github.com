@@ -1,0 +1,137 @@
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+
+    Methods
+
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Methods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="rdoc-style.css" type="text/css" />
+  <base target="docwin" />
+</head>
+<body>
+<div id="index">
+  <h1 class="section-bar">Methods</h1>
+  <div id="index-entries">
+    <a href="classes/Configurable/ConfigHash.html#M000109">== (Configurable::ConfigHash)</a><br />
+    <a href="classes/ConfigParser.html#M000005">[] (ConfigParser)</a><br />
+    <a href="classes/Configurable/IndifferentAccess.html#M000040">[] (Configurable::IndifferentAccess)</a><br />
+    <a href="classes/Configurable/ConfigHash.html#M000103">[] (Configurable::ConfigHash)</a><br />
+    <a href="classes/Configurable/Config.html#M000093">[] (Configurable::Config)</a><br />
+    <a href="classes/ConfigParser.html#M000006">[]= (ConfigParser)</a><br />
+    <a href="classes/Configurable/IndifferentAccess.html#M000041">[]= (Configurable::IndifferentAccess)</a><br />
+    <a href="classes/Configurable/ConfigHash.html#M000104">[]= (Configurable::ConfigHash)</a><br />
+    <a href="classes/Configurable/OrderedHashPatch.html#M000077">[]= (Configurable::OrderedHashPatch)</a><br />
+    <a href="classes/ConfigParser.html#M000014">add (ConfigParser)</a><br />
+    <a href="classes/Configurable/Validation.html#M000061">api (Configurable::Validation)</a><br />
+    <a href="classes/Configurable/Validation.html#M000056">attributes (Configurable::Validation)</a><br />
+    <a href="classes/ConfigParser.html#M000003">bind (ConfigParser)</a><br />
+    <a href="classes/Configurable/ClassMethods.html#M000053">c (Configurable::ClassMethods)</a><br />
+    <a href="classes/Configurable/ClassMethods.html#M000046">cache_configurations (Configurable::ClassMethods)</a><br />
+    <a href="classes/Configurable/Validation.html#M000060">check (Configurable::Validation)</a><br />
+    <a href="classes/Configurable/ClassMethods.html#M000048">config (Configurable::ClassMethods)</a><br />
+    <a href="classes/Configurable/ClassMethods.html#M000049">config_attr (Configurable::ClassMethods)</a><br />
+    <a href="classes/Configurable/ConfigHash.html#M000100">configs (Configurable::ConfigHash)</a><br />
+    <a href="classes/Configurable/ClassMethods.html#M000045">configurations (Configurable::ClassMethods)</a><br />
+    <a href="classes/Configurable/Config.html#M000092">default (Configurable::Config)</a><br />
+    <a href="classes/Configurable/NestConfig.html#M000085">default (Configurable::NestConfig)</a><br />
+    <a href="classes/ConfigParser.html#M000013">define (ConfigParser)</a><br />
+    <a href="classes/Configurable/Utils.html#M000070">dump (Configurable::Utils)</a><br />
+    <a href="classes/Configurable/Utils.html#M000071">dump_file (Configurable::Utils)</a><br />
+    <a href="classes/Configurable/IndifferentAccess.html#M000042">dup (Configurable::IndifferentAccess)</a><br />
+    <a href="classes/Configurable/Config.html#M000090">duplicable_value? (Configurable::Config)</a><br />
+    <a href="classes/Configurable/ConfigHash.html#M000108">each_pair (Configurable::ConfigHash)</a><br />
+    <a href="classes/Configurable/OrderedHashPatch.html#M000079">each_pair (Configurable::OrderedHashPatch)</a><br />
+    <a href="classes/Configurable/NestConfig.html#M000086">get (Configurable::NestConfig)</a><br />
+    <a href="classes/Configurable/Config.html#M000094">get (Configurable::Config)</a><br />
+    <a href="classes/Configurable/ConfigHash.html#M000106">has_key? (Configurable::ConfigHash)</a><br />
+    <a href="classes/Configurable/ConfigHash.html#M000101">import (Configurable::ConfigHash)</a><br />
+    <a href="classes/Configurable/ModuleMethods.html#M000075">included (Configurable::ModuleMethods)</a><br />
+    <a href="classes/Configurable/ConfigHash.html#M000102">inconsistent? (Configurable::ConfigHash)</a><br />
+    <a href="classes/ConfigParser/Utils.html#M000023">infer_arg_name (ConfigParser::Utils)</a><br />
+    <a href="classes/ConfigParser/Utils.html#M000022">infer_long (ConfigParser::Utils)</a><br />
+    <a href="classes/Configurable/NestConfig.html#M000088">init (Configurable::NestConfig)</a><br />
+    <a href="classes/Configurable/Config.html#M000096">init (Configurable::Config)</a><br />
+    <a href="classes/Configurable/Config.html#M000097">init? (Configurable::Config)</a><br />
+    <a href="classes/Configurable.html#M000039">initialize_config (Configurable)</a><br />
+    <a href="classes/Configurable.html#M000037">initialize_copy (Configurable)</a><br />
+    <a href="classes/Configurable/OrderedHashPatch.html#M000081">initialize_copy (Configurable::OrderedHashPatch)</a><br />
+    <a href="classes/Configurable/Config.html#M000098">inspect (Configurable::Config)</a><br />
+    <a href="classes/Configurable/ConfigHash.html#M000111">inspect (Configurable::ConfigHash)</a><br />
+    <a href="classes/Configurable/NestConfig.html#M000089">inspect (Configurable::NestConfig)</a><br />
+    <a href="classes/Configurable/ConfigHash.html#M000105">keys (Configurable::ConfigHash)</a><br />
+    <a href="classes/Configurable/OrderedHashPatch.html#M000078">keys (Configurable::OrderedHashPatch)</a><br />
+    <a href="classes/Configurable/Utils.html#M000072">load (Configurable::Utils)</a><br />
+    <a href="classes/Configurable/Utils.html#M000073">load_file (Configurable::Utils)</a><br />
+    <a href="classes/Configurable/Validation.html#M000059">load_if_yaml (Configurable::Validation)</a><br />
+    <a href="classes/ConfigParser/Utils.html#M000020">longify (ConfigParser::Utils)</a><br />
+    <a href="classes/Configurable/ConfigHash.html#M000107">merge! (Configurable::ConfigHash)</a><br />
+    <a href="classes/Configurable/OrderedHashPatch.html#M000080">merge! (Configurable::OrderedHashPatch)</a><br />
+    <a href="classes/ConfigParser.html#M000002">nest (ConfigParser)</a><br />
+    <a href="classes/Configurable/ClassMethods.html#M000050">nest (Configurable::ClassMethods)</a><br />
+    <a href="classes/ConfigParser.html#M000007">nested_config (ConfigParser)</a><br />
+    <a href="classes/Configurable/OrderedHashPatch.html#M000076">new (Configurable::OrderedHashPatch)</a><br />
+    <a href="classes/Configurable/ConfigHash.html#M000099">new (Configurable::ConfigHash)</a><br />
+    <a href="classes/Configurable/Validation/ApiError.html#M000068">new (Configurable::Validation::ApiError)</a><br />
+    <a href="classes/Configurable/Config.html#M000091">new (Configurable::Config)</a><br />
+    <a href="classes/Configurable/NestConfig.html#M000084">new (Configurable::NestConfig)</a><br />
+    <a href="classes/ConfigParser/Switch.html#M000032">new (ConfigParser::Switch)</a><br />
+    <a href="classes/ConfigParser.html#M000004">new (ConfigParser)</a><br />
+    <a href="classes/Configurable.html#M000035">new (Configurable)</a><br />
+    <a href="classes/Configurable/Validation/ValidationError.html#M000069">new (Configurable::Validation::ValidationError)</a><br />
+    <a href="classes/ConfigParser/Option.html#M000028">new (ConfigParser::Option)</a><br />
+    <a href="classes/ConfigParser.html#M000011">on (ConfigParser)</a><br />
+    <a href="classes/ConfigParser.html#M000012">on! (ConfigParser)</a><br />
+    <a href="classes/Configurable.html#M000038">open_io (Configurable)</a><br />
+    <a href="classes/ConfigParser.html#M000008">options (ConfigParser)</a><br />
+    <a href="classes/ConfigParser/Option.html#M000030">parse (ConfigParser::Option)</a><br />
+    <a href="classes/ConfigParser/Switch.html#M000034">parse (ConfigParser::Switch)</a><br />
+    <a href="classes/ConfigParser.html#M000015">parse (ConfigParser)</a><br />
+    <a href="classes/Configurable/ClassMethods.html#M000043">parse (Configurable::ClassMethods)</a><br />
+    <a href="classes/ConfigParser.html#M000016">parse! (ConfigParser)</a><br />
+    <a href="classes/Configurable/ClassMethods.html#M000044">parse! (Configurable::ClassMethods)</a><br />
+    <a href="classes/ConfigParser/Utils.html#M000021">prefix_long (ConfigParser::Utils)</a><br />
+    <a href="classes/Configurable.html#M000036">reconfigure (Configurable)</a><br />
+    <a href="classes/Configurable/Utils.html#M000074">recursive_path (Configurable::Utils)</a><br />
+    <a href="classes/ConfigParser.html#M000010">register (ConfigParser)</a><br />
+    <a href="classes/Configurable/Validation.html#M000054">register (Configurable::Validation)</a><br />
+    <a href="classes/Configurable/Validation.html#M000055">register_as (Configurable::Validation)</a><br />
+    <a href="classes/Configurable/ClassMethods.html#M000051">remove_config (Configurable::ClassMethods)</a><br />
+    <a href="classes/ConfigParser.html#M000017">scan (ConfigParser)</a><br />
+    <a href="classes/ConfigParser.html#M000009">separator (ConfigParser)</a><br />
+    <a href="classes/Configurable/NestConfig.html#M000087">set (Configurable::NestConfig)</a><br />
+    <a href="classes/Configurable/Config.html#M000095">set (Configurable::Config)</a><br />
+    <a href="classes/ConfigParser/Utils.html#M000025">setup_flag (ConfigParser::Utils)</a><br />
+    <a href="classes/ConfigParser/Utils.html#M000027">setup_list (ConfigParser::Utils)</a><br />
+    <a href="classes/ConfigParser/Utils.html#M000024">setup_option (ConfigParser::Utils)</a><br />
+    <a href="classes/ConfigParser/Utils.html#M000026">setup_switch (ConfigParser::Utils)</a><br />
+    <a href="classes/ConfigParser/Utils.html#M000019">shortify (ConfigParser::Utils)</a><br />
+    <a href="classes/Configurable/Validation.html#M000067">strbol (Configurable::Validation)</a><br />
+    <a href="files/lib/configurable/validation_rb.html#M000001">strbol_or_nil (lib/configurable/validation.rb)</a><br />
+    <a href="classes/Configurable/Validation.html#M000063">string (Configurable::Validation)</a><br />
+    <a href="classes/Configurable/Validation.html#M000064">string_or_nil (Configurable::Validation)</a><br />
+    <a href="classes/ConfigParser/Option.html#M000029">switches (ConfigParser::Option)</a><br />
+    <a href="classes/ConfigParser/Switch.html#M000033">switches (ConfigParser::Switch)</a><br />
+    <a href="classes/Configurable/Validation.html#M000065">symbol (Configurable::Validation)</a><br />
+    <a href="classes/Configurable/Validation.html#M000066">symbol_or_nil (Configurable::Validation)</a><br />
+    <a href="classes/Configurable/ConfigHash.html#M000110">to_hash (Configurable::ConfigHash)</a><br />
+    <a href="classes/ConfigParser.html#M000018">to_s (ConfigParser)</a><br />
+    <a href="classes/ConfigParser/Option.html#M000031">to_s (ConfigParser::Option)</a><br />
+    <a href="classes/Configurable/OrderedHashPatch.html#M000083">to_yaml (Configurable::OrderedHashPatch)</a><br />
+    <a href="classes/Configurable/ClassMethods.html#M000052">undef_config (Configurable::ClassMethods)</a><br />
+    <a href="classes/Configurable/ClassMethods.html#M000047">use_indifferent_access (Configurable::ClassMethods)</a><br />
+    <a href="classes/Configurable/Validation.html#M000057">validate (Configurable::Validation)</a><br />
+    <a href="classes/Configurable/Validation.html#M000058">validate_api (Configurable::Validation)</a><br />
+    <a href="classes/Configurable/Validation.html#M000062">yaml (Configurable::Validation)</a><br />
+    <a href="classes/Configurable/OrderedHashPatch.html#M000082">yaml_initialize (Configurable::OrderedHashPatch)</a><br />
+  </div>
+</div>
+</body>
+</html>

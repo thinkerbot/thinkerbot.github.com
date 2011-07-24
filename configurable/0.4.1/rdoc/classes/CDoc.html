@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: CDoc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">CDoc</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/cdoc_rb.html">
+                lib/cdoc.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="CDoc.html">CDoc</a> hooks into and extends RDoc to make <a
+href="Configurable.html">Configurable</a> documentation available as
+attributes. <a href="CDoc.html">CDoc</a> provides an extension to the
+standard RDoc HTMLGenerator and template.
+</p>
+<h3>Usage</h3>
+<p>
+To generate task documentation with configuration information, <a
+href="CDoc.html">CDoc</a> must be loaded and the appropriate flags passed
+to rdoc . Essentially what you want is:
+</p>
+<pre>
+  % rdoc --fmt cdoc --template cdoc/cdoc_html_template [file_names....]
+</pre>
+<p>
+Unfortunately, there is no way to load or require a file into the rdoc
+utility directly; the above code causes an &#8216;Invalid output
+formatter&#8217; error. However, <a href="CDoc.html">CDoc</a> is easy to
+utilize from a Rake::RDocTask:
+</p>
+<pre>
+  require 'rake'
+  require 'rake/rdoctask'
+
+  desc 'Generate documentation.'
+  Rake::RDocTask.new(:rdoc) do |rdoc|
+    require 'cdoc'
+    rdoc.template = 'cdoc/cdoc_html_template'
+    rdoc.options &lt;&lt; '--fmt' &lt;&lt; 'cdoc'
+
+    # specify whatever else you need
+    # rdoc.rdoc_files.include(...)
+  end
+</pre>
+<p>
+Now execute the rake task like:
+</p>
+<pre>
+  % rake rdoc
+</pre>
+<h3>Implementation</h3>
+<p>
+RDoc is a beast to utilize in a non-standard way. One way to make RDoc
+parse unexpected flags like &#8216;config&#8217; or
+&#8216;config_attr&#8217; is to use the &#8217;&#8212;accessor&#8217;
+option (see &#8216;rdoc &#8212;help&#8217; or the RDoc documentation for
+more details).
+</p>
+<p>
+<a href="CDoc.html">CDoc</a> hooks into the &#8217;&#8212;accessor&#8217;
+parsing process to pull out configuration attributes and format them into
+their own Configuration section on an RDoc html page. When
+&#8216;cdoc&#8217; is specified as an rdoc option, <a
+href="CDoc.html">CDoc</a> in effect sets accessor flags for all the
+standard Task configuration methods, and then extends the RDoc::RubyParser
+handle these specially.
+</p>
+<p>
+If cdoc is not specified as the rdoc format, <a href="CDoc.html">CDoc</a>
+does not affect the RDoc output. Similarly, the configuration attributes
+will not appear in the output unless you specify a template that utilizes
+them.
+</p>
+<h4>Namespace conflicts</h4>
+<p>
+RDoc creates a namespace conflict with other libraries that define
+RubyToken and RubyLex in the Object namespace (the prime example being
+IRB). <a href="CDoc.html">CDoc</a> checks for such a conflict and redfines
+the RDoc versions of RubyToken and RubyLex within the RDoc namespace.
+Essentially:
+</p>
+<pre>
+  original constant    redefined constant
+  RubyToken            RDoc::RubyToken
+  RubyLex              RDoc::RubyLex
+</pre>
+<p>
+The redefinition should not affect the existing (non RDoc) RubyToken and
+RubyLex constants, but if you directly use the RDoc versions after loading
+<a href="CDoc.html">CDoc</a>, you should be aware that they must be
+accessed through the new constants. Unfortunatley the trick is not
+seamless. The RDoc RubyLex makes a few calls to the RubyLex class method
+&#8216;debug?&#8217;&#8230; these will be issued to the existing (non RDoc)
+RubyLex method and not the redefined RDoc::RubyLex.debug?
+</p>
+<p>
+In addition, because of the RubyLex calls, the RDoc::RubyLex cannot be
+fully hidden when <a href="CDoc.html">CDoc</a> is loaded before the
+conflicting RubyLex; you cannot load <a href="CDoc.html">CDoc</a> before
+loading IRB without raising warnings.
+</p>
+<p>
+Luckily all these troubles can be avoided very easily by not loading <a
+href="CDoc.html">CDoc</a> or RDoc when you&#8216;re in irb. On the plus
+side, going against what I just said, you can now access/use RDoc within
+irb by requiring <tt>&#8216;cdoc&#8216;</tt>.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,656 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Configurable::ClassMethods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Configurable::ClassMethods</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/configurable/class_methods_rb.html">
+                lib/configurable/class_methods.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="ClassMethods.html">ClassMethods</a> extends classes that include
+<a href="../Configurable.html">Configurable</a> and provides methods for
+declaring configurations.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000041">c</a>&nbsp;&nbsp;
+      <a href="#M000037">config</a>&nbsp;&nbsp;
+      <a href="#M000038">config_attr</a>&nbsp;&nbsp;
+      <a href="#M000039">nest</a>&nbsp;&nbsp;
+      <a href="#M000040">nest_attr</a>&nbsp;&nbsp;
+      <a href="#M000034">parse</a>&nbsp;&nbsp;
+      <a href="#M000035">parse!</a>&nbsp;&nbsp;
+      <a href="#M000036">use_indifferent_access</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name">Lazydoc::Attributes</span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">configurations</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+A hash of (key, <a href="Delegate.html">Delegate</a>) pairs defining the
+class configurations.
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000034" class="method-detail">
+        <a name="M000034"></a>
+
+        <div class="method-heading">
+          <a href="#M000034" class="method-signature">
+          <span class="method-name">parse</span><span class="method-args">(argv=ARGV, config={}) {|parser| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Parses configurations from argv in a non-destructive manner by generating a
+<a href="../ConfigParser.html">ConfigParser</a> using the configurations
+for self. Parsed configs are added to <a
+href="ClassMethods.html#M000037">config</a> (note that you must keep a
+separate reference to <a href="ClassMethods.html#M000037">config</a> as it
+is not returned by <a href="ClassMethods.html#M000034">parse</a>). The
+parser will is yielded to the block, if given, to register additonal
+options. Returns an array of the arguments that remain after parsing.
+</p>
+<p>
+See <a href="../ConfigParser.html#M000010">ConfigParser#parse</a> for more
+information.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000034-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/configurable/class_methods.rb, line 50</span>
+50:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">argv</span>=<span class="ruby-constant">ARGV</span>, <span class="ruby-identifier">config</span>={})
+51:       <span class="ruby-constant">ConfigParser</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">parser</span><span class="ruby-operator">|</span>
+52:         <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">configurations</span>)
+53:         <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">parser</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+54:       <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">argv</span>, <span class="ruby-identifier">config</span>)
+55:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
+
+        <div class="method-heading">
+          <a href="#M000035" class="method-signature">
+          <span class="method-name">parse!</span><span class="method-args">(argv=ARGV, config={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Same as <a href="ClassMethods.html#M000034">parse</a>, but removes parsed
+args from argv.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000035-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/configurable/class_methods.rb, line 58</span>
+58:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse!</span>(<span class="ruby-identifier">argv</span>=<span class="ruby-constant">ARGV</span>, <span class="ruby-identifier">config</span>={})
+59:       <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">argv</span>, <span class="ruby-identifier">config</span>))
+60:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Protected Instance methods</h3>
+
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
+
+        <div class="method-heading">
+          <a href="#M000041" class="method-signature">
+          <span class="method-name">c</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="Validation.html">Validation</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000041-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000041-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/configurable/class_methods.rb, line 354</span>
+354:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">c</span>
+355:       <span class="ruby-constant">Validation</span>
+356:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
+
+        <div class="method-heading">
+          <a href="#M000037" class="method-signature">
+          <span class="method-name">config</span><span class="method-args">(key, value=nil, attributes={}) {|input| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Declares a class configuration and generates the associated accessors. If a
+block is given, the <tt>key=</tt> method will set <tt>@key</tt> to the
+return of the block, which executes in class-context.
+</p>
+<pre>
+  class SampleClass
+    include Configurable
+
+    config :str, 'value'
+    config(:upcase, 'value') {|input| input.upcase }
+  end
+
+  # An equivalent class to illustrate class-context
+  class EquivalentClass
+    attr_accessor :str
+    attr_reader :upcase
+
+    UPCASE_BLOCK = lambda {|input| input.upcase }
+
+    def upcase=(input)
+      @upcase = UPCASE_BLOCK.call(input)
+    end
+  end
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000037-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000037-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/configurable/class_methods.rb, line 98</span>
+ 98:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">attributes</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+ 99:       <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">merge_attributes</span>(<span class="ruby-identifier">block</span>, <span class="ruby-identifier">attributes</span>)
+100:       
+101:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+102:         <span class="ruby-identifier">instance_variable</span> = <span class="ruby-node">&quot;@#{key}&quot;</span>.<span class="ruby-identifier">to_sym</span>
+103:         <span class="ruby-identifier">config_attr</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">attributes</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">input</span><span class="ruby-operator">|</span>
+104:           <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-identifier">instance_variable</span>, <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">input</span>))
+105:         <span class="ruby-keyword kw">end</span>
+106:       <span class="ruby-keyword kw">else</span>
+107:         <span class="ruby-identifier">config_attr</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">attributes</span>)
+108:       <span class="ruby-keyword kw">end</span>
+109:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
+
+        <div class="method-heading">
+          <a href="#M000038" class="method-signature">
+          <span class="method-name">config_attr</span><span class="method-args">(key, value=nil, attributes={}, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Declares a class configuration and generates the associated accessors. If a
+block is given, the <tt>key=</tt> method will perform the block with
+instance-context.
+</p>
+<pre>
+  class SampleClass
+    include Configurable
+
+    def initialize
+      initialize_config
+    end
+
+    config_attr :str, 'value'
+    config_attr(:upcase, 'value') {|input| @upcase = input.upcase }
+  end
+
+  # An equivalent class to illustrate instance-context
+  class EquivalentClass
+    attr_accessor :str
+    attr_reader :upcase
+
+    def upcase=(input)
+      @upcase = input.upcase
+    end
+  end
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000038-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/configurable/class_methods.rb, line 136</span>
+136:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config_attr</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">attributes</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+137:       <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">merge_attributes</span>(<span class="ruby-identifier">block</span>, <span class="ruby-identifier">attributes</span>)
+138:       
+139:       <span class="ruby-comment cmt"># define the default public reader method</span>
+140:       <span class="ruby-identifier">reader</span> = <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:reader</span>)
+141: 
+142:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">reader</span>
+143:       <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">true</span>
+144:         <span class="ruby-identifier">reader</span> = <span class="ruby-identifier">key</span>
+145:         <span class="ruby-identifier">attr_reader</span>(<span class="ruby-identifier">key</span>) 
+146:         <span class="ruby-identifier">public</span>(<span class="ruby-identifier">key</span>)
+147:       <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">false</span>
+148:         <span class="ruby-identifier">reader</span> = <span class="ruby-identifier">key</span>
+149:       <span class="ruby-keyword kw">end</span>
+150: 
+151:       <span class="ruby-comment cmt"># define the default public writer method</span>
+152:       <span class="ruby-identifier">writer</span> = <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:writer</span>)
+153: 
+154:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">writer</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">true</span>
+155:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;a block may not be specified without writer == true&quot;</span>
+156:       <span class="ruby-keyword kw">end</span>
+157: 
+158:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">writer</span>
+159:       <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">true</span>
+160:         <span class="ruby-identifier">writer</span> = <span class="ruby-node">&quot;#{key}=&quot;</span>
+161:         <span class="ruby-identifier">block_given?</span> <span class="ruby-value">? </span><span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">writer</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">attr_writer</span>(<span class="ruby-identifier">key</span>)
+162:         <span class="ruby-identifier">public</span> <span class="ruby-identifier">writer</span>
+163:       <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">false</span>
+164:         <span class="ruby-identifier">writer</span> = <span class="ruby-node">&quot;#{key}=&quot;</span>
+165:       <span class="ruby-keyword kw">end</span>
+166:   
+167:       <span class="ruby-identifier">configurations</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-constant">Delegate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">reader</span>, <span class="ruby-identifier">writer</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">attributes</span>)
+168:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
+
+        <div class="method-heading">
+          <a href="#M000039" class="method-signature">
+          <span class="method-name">nest</span><span class="method-args">(key, configurable_class, attributes={}) {|input| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Adds a configuration to self accessing the configurations for the
+configurable class. Unlike <a
+href="ClassMethods.html#M000038">config_attr</a> and <a
+href="ClassMethods.html#M000037">config</a>, <a
+href="ClassMethods.html#M000039">nest</a> does not create accessors; the
+configurations must be accessed through the instance <a
+href="ClassMethods.html#M000037">config</a> method.
+</p>
+<pre>
+  class A
+    include Configurable
+    config :key, 'value'
+
+    def initialize(overrides={})
+      initialize_config(overrides)
+    end
+  end
+
+  class B
+    include Configurable
+    nest :a, A
+
+    def initialize(overrides={})
+      initialize_config(overrides)
+    end
+  end
+
+  b = B.new
+  b.config[:a]                   # =&gt; {:key =&gt; 'value'}
+</pre>
+<p>
+Nest may be provided a block which initializes an instance of
+configurable_class. In this case accessors for the instance are created and
+access becomes quite natural.
+</p>
+<pre>
+  class C
+    include Configurable
+    nest(:a, A) {|overrides| A.new(overrides) }
+
+    def initialize(overrides={})
+      initialize_config(overrides)
+    end
+  end
+
+  c = C.new
+  c.a.key                        # =&gt; &quot;value&quot;
+
+  c.a.key = &quot;one&quot;
+  c.config[:a].to_hash           # =&gt; {:key =&gt; 'one'}
+
+  c.config[:a][:key] = 'two'
+  c.a.key                        # =&gt; &quot;two&quot;
+
+  c.config[:a] = {:key =&gt; 'three'}
+  c.a.key                        # =&gt; &quot;three&quot;
+</pre>
+<p>
+The initialize block executes in class context, much like <a
+href="ClassMethods.html#M000037">config</a>.
+</p>
+<pre>
+  # An equivalent class to illustrate class-context
+  class EquivalentClass
+    attr_reader :a, A
+
+    INITIALIZE_BLOCK = lambda {|overrides| A.new(overrides) }
+
+    def initialize(overrides={})
+      @a = INITIALIZE_BLOCK.call(overrides[:a] || {})
+    end
+  end
+</pre>
+<p>
+Nest checks for recursive nesting and raises an error if a recursive <a
+href="ClassMethods.html#M000039">nest</a> is detected.
+</p>
+<h4>Attributes</h4>
+<p>
+Nesting with an initialization block creates the public accessor for the
+instance, private methods to read and write the instance configurations,
+and a private method to initialize the instance. The default names for
+these methods are listed with the attributes to override them:
+</p>
+<pre>
+  :instance_reader         key
+  :instance_writer         &quot;#{key}=&quot;
+  :instance_initializer    &quot;#{key}_initialize&quot;
+  :reader                  &quot;#{key}_config_reader&quot;
+  :writer                  &quot;#{key}_config_writer&quot;
+</pre>
+<p>
+These attributes are ignored if no block is given; true/false/nil values
+are meaningless and will be treated as the default.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000039-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/configurable/class_methods.rb, line 253</span>
+253:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">nest</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">configurable_class</span>, <span class="ruby-identifier">attributes</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+254:       <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">merge_attributes</span>(<span class="ruby-identifier">block</span>, <span class="ruby-identifier">attributes</span>)
+255:       
+256:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+257:         <span class="ruby-identifier">instance_variable</span> = <span class="ruby-node">&quot;@#{key}&quot;</span>.<span class="ruby-identifier">to_sym</span>
+258:         <span class="ruby-identifier">nest_attr</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">configurable_class</span>, <span class="ruby-identifier">attributes</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">input</span><span class="ruby-operator">|</span>
+259:           <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-identifier">instance_variable</span>, <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">input</span>))
+260:         <span class="ruby-keyword kw">end</span>
+261:       <span class="ruby-keyword kw">else</span>
+262:         <span class="ruby-identifier">nest_attr</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">configurable_class</span>, <span class="ruby-identifier">attributes</span>)
+263:       <span class="ruby-keyword kw">end</span>
+264:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+          <a href="#M000040" class="method-signature">
+          <span class="method-name">nest_attr</span><span class="method-args">(key, configurable_class, attributes={}, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Same as <a href="ClassMethods.html#M000039">nest</a>, except the initialize
+block executes in instance-context.
+</p>
+<pre>
+  class C
+    include Configurable
+    nest(:a, A) {|overrides| A.new(overrides) }
+
+    def initialize(overrides={})
+      initialize_config(overrides)
+    end
+  end
+
+  # An equivalent class to illustrate instance-context
+  class EquivalentClass
+    attr_reader :a, A
+
+    def a_initialize(overrides)
+      A.new(overrides)
+    end
+
+    def initialize(overrides={})
+      @a = send(:a_initialize, overrides[:a] || {})
+    end
+  end
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000040-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/configurable/class_methods.rb, line 290</span>
+290:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">nest_attr</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">configurable_class</span>, <span class="ruby-identifier">attributes</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+291:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">configurable_class</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Configurable</span><span class="ruby-operator">::</span><span class="ruby-constant">ClassMethods</span>)
+292:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;not a Configurable class: #{configurable_class}&quot;</span> 
+293:       <span class="ruby-keyword kw">end</span>
+294:       
+295:       <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">merge_attributes</span>(<span class="ruby-identifier">block</span>, <span class="ruby-identifier">attributes</span>)
+296:       
+297:       <span class="ruby-comment cmt"># add some tracking attributes</span>
+298:       <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">:receiver</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">configurable_class</span>
+299:       
+300:       <span class="ruby-comment cmt"># remove method attributes</span>
+301:       <span class="ruby-identifier">instance_reader</span> = <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:instance_reader</span>)
+302:       <span class="ruby-identifier">instance_writer</span> = <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:instance_writer</span>)
+303:       <span class="ruby-identifier">initializer</span> = <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:instance_initializer</span>)
+304:       <span class="ruby-identifier">reader</span> = <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:reader</span>)
+305:       <span class="ruby-identifier">writer</span> = <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:writer</span>)
+306:       
+307:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+308:         <span class="ruby-comment cmt"># define instance accessor methods</span>
+309:         <span class="ruby-identifier">instance_reader</span> = <span class="ruby-identifier">boolean_select</span>(<span class="ruby-identifier">instance_reader</span>, <span class="ruby-identifier">key</span>)
+310:         <span class="ruby-identifier">instance_writer</span> = <span class="ruby-identifier">boolean_select</span>(<span class="ruby-identifier">instance_writer</span>, <span class="ruby-node">&quot;#{key}=&quot;</span>)
+311:         <span class="ruby-identifier">instance_var</span> = <span class="ruby-node">&quot;@#{instance_reader}&quot;</span>.<span class="ruby-identifier">to_sym</span>
+312:         
+313:         <span class="ruby-identifier">initializer</span> = <span class="ruby-identifier">boolean_select</span>(<span class="ruby-identifier">reader</span>, <span class="ruby-node">&quot;#{key}_initialize&quot;</span>)
+314:         <span class="ruby-identifier">reader</span> = <span class="ruby-identifier">boolean_select</span>(<span class="ruby-identifier">reader</span>, <span class="ruby-node">&quot;#{key}_config_reader&quot;</span>)
+315:         <span class="ruby-identifier">writer</span> = <span class="ruby-identifier">boolean_select</span>(<span class="ruby-identifier">writer</span>, <span class="ruby-node">&quot;#{key}_config_writer&quot;</span>)
+316:         
+317:         <span class="ruby-comment cmt"># the public accessor</span>
+318:         <span class="ruby-identifier">attr_reader</span> <span class="ruby-identifier">instance_reader</span>
+319:         
+320:         <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">instance_writer</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+321:           <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-identifier">instance_var</span>, <span class="ruby-identifier">value</span>)
+322:         <span class="ruby-keyword kw">end</span>
+323:         <span class="ruby-identifier">public</span>(<span class="ruby-identifier">instance_reader</span>, <span class="ruby-identifier">instance_writer</span>)
+324:         
+325:         <span class="ruby-comment cmt"># the initializer</span>
+326:         <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">initializer</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+327: 
+328:         <span class="ruby-comment cmt"># the reader returns the config for the instance</span>
+329:         <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">reader</span>) <span class="ruby-keyword kw">do</span>
+330:           <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-identifier">instance_var</span>).<span class="ruby-identifier">config</span>
+331:         <span class="ruby-keyword kw">end</span>
+332:   
+333:         <span class="ruby-comment cmt"># the writer initializes the instance if necessary,</span>
+334:         <span class="ruby-comment cmt"># or reconfigures the instance if it already exists</span>
+335:         <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">writer</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+336:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">instance_variable_defined?</span>(<span class="ruby-identifier">instance_var</span>) 
+337:             <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-identifier">instance_var</span>).<span class="ruby-identifier">reconfigure</span>(<span class="ruby-identifier">value</span>)
+338:           <span class="ruby-keyword kw">else</span>
+339:             <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-identifier">instance_var</span>, <span class="ruby-identifier">send</span>(<span class="ruby-identifier">initializer</span>, <span class="ruby-identifier">value</span>))
+340:           <span class="ruby-keyword kw">end</span>
+341:         <span class="ruby-keyword kw">end</span>
+342:         <span class="ruby-identifier">private</span>(<span class="ruby-identifier">reader</span>, <span class="ruby-identifier">writer</span>)
+343:       <span class="ruby-keyword kw">else</span>
+344:         <span class="ruby-identifier">reader</span> = <span class="ruby-identifier">writer</span> = <span class="ruby-keyword kw">nil</span>
+345:       <span class="ruby-keyword kw">end</span>
+346:       
+347:       <span class="ruby-identifier">value</span> = <span class="ruby-constant">DelegateHash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">configurable_class</span>.<span class="ruby-identifier">configurations</span>)
+348:       <span class="ruby-identifier">configurations</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-constant">Delegate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">reader</span>, <span class="ruby-identifier">writer</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">attributes</span>)
+349:   
+350:       <span class="ruby-identifier">check_infinite_nest</span>(<span class="ruby-identifier">configurable_class</span>.<span class="ruby-identifier">configurations</span>)
+351:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
+
+        <div class="method-heading">
+          <a href="#M000036" class="method-signature">
+          <span class="method-name">use_indifferent_access</span><span class="method-args">(input=true)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets configurations to symbolize keys for AGET ([]) and ASET([]=)
+operations, or not. By default, configurations will use indifferent access.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000036-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/configurable/class_methods.rb, line 67</span>
+67:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">use_indifferent_access</span>(<span class="ruby-identifier">input</span>=<span class="ruby-keyword kw">true</span>)
+68:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">input</span>
+69:         <span class="ruby-ivar">@configurations</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-constant">IndifferentAccess</span>)
+70:       <span class="ruby-keyword kw">else</span>
+71:         <span class="ruby-ivar">@configurations</span> = <span class="ruby-identifier">configurations</span>.<span class="ruby-identifier">dup</span>
+72:       <span class="ruby-keyword kw">end</span>
+73:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

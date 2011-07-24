@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: Command Line.rdoc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>Command Line.rdoc</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>Help/Command Line.rdoc
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Jul 24 13:54:20 -0600 2011</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>Command Line Usage</h1>
+<p>
+<a href="../../classes/Configurable.html">Configurable</a> guesses a
+command-line option for each config, based on the config name (ex:
+&#8212;name for :name, -n for :n) and the default value. Flags, switches,
+list configs, and nested configs are all supported.
+</p>
+<pre>
+  class ConfigClass
+    include Configurable
+    config :flag, false    # a flag
+    config :switch, true   # an on/off switch
+    config :num, 3.14      # a number
+    config :lst, [1,2,3]   # a list of integers
+    config :nest do
+      config :str, 'one'   # a string
+    end
+  end
+</pre>
+<p>
+Options can be parsed at the class level:
+</p>
+<pre>
+  parser  = ConfigClass.configs.to_parser
+  parser.parse(&quot;a --flag --no-switch --num 6.02 b c&quot;) do |args, config|
+    args
+    # =&gt; ['a', 'b', 'c']
+
+    config
+    # =&gt; {
+    # :flag   =&gt; true,
+    # :switch =&gt; false,
+    # :num    =&gt; 6.02,
+    # :lst    =&gt; [1, 2, 3],
+    # :nest   =&gt; {:str =&gt; 'one'}
+    # }
+  end
+</pre>
+<p>
+Or at the instance level:
+</p>
+<pre>
+  c = ConfigClass.new
+  c.config.parse('a --lst 7 --lst 8,9 --nest:str=two b c')
+  # =&gt; ['a', 'b', 'c']
+
+  c.config.to_hash
+  # =&gt; {
+  # :flag   =&gt; false,
+  # :switch =&gt; true,
+  # :num    =&gt; 3.14,
+  # :lst    =&gt; [7, 8, 9],
+  # :nest   =&gt; {:str =&gt; 'two'}
+  # }
+</pre>
+<p>
+A description string is extracted from the comment trailing a config
+declaration, such that a help is readily available.
+</p>
+<pre>
+  stdout = []
+  c.config.parse('--help') do |psr|
+    psr.on('--help', 'print this help') do
+      stdout &lt;&lt; &quot;options:&quot;
+      stdout &lt;&lt; psr
+    end
+  end
+
+  &quot;\n&quot; + stdout.join(&quot;\n&quot;)
+  # =&gt; %q{
+  # options:
+  #         --flag                       a flag
+  #         --help                       print this help
+  #         --lst LST...                 a list of integers (1,2,3)
+  #         --nest:str STR               a string (one)
+  #         --num NUM                    a number (3.14)
+  #         --[no-]switch                an on/off switch
+  # }
+</pre>
+<p>
+To specify alternative long/short options, or a different argument name,
+use a prefix section in the description.
+</p>
+<pre>
+  class AltClass
+    include Configurable
+    config :a, nil   # -a, --aaa ARGNAME  : cmdline options may be
+    config :b, nil   # -b                 : declared in the docs
+    config :c, nil   #     --ccc          : using a prefix
+    config :d, nil   #                    : an empty prefix implies 'hidden'
+    config :e, nil   # no prefix uses the defaults
+    config :f, nil   # -f [OPTIONAL]      : bracket argname means 'optional'
+
+    config :g, []    # -g, --ggg LIST     : same rules for list opts
+    config :nest do
+      config :i, nil # -i, --iii NEST     : and same for nested opts
+    end
+  end
+
+  stdout = []
+  AltClass.configs.to_parser do |psr|
+    psr.on('-h', '--help', 'print this help') do
+      stdout &lt;&lt; &quot;options:&quot;
+      stdout &lt;&lt; psr
+    end
+  end.parse('--help')
+
+  &quot;\n&quot; + stdout.join(&quot;\n&quot;)
+  # =&gt; %q{
+  # options:
+  #     -a, --aaa ARGNAME                cmdline options may be
+  #     -b B                             declared in the docs
+  #         --ccc C                      using a prefix
+  #     -e E                             no prefix uses the defaults
+  #     -f [OPTIONAL]                    bracket argname means 'optional'
+  #     -g, --ggg LIST...                same rules for list opts
+  #     -h, --help                       print this help
+  #     -i, --iii NEST                   and same for nested opts
+  # }
+</pre>
+<p>
+If necessary you can specify all aspects of an option manually:
+</p>
+<pre>
+  class ManualClass
+    include Configurable
+    config :key, nil, {
+      :long     =&gt; 'long',
+      :short    =&gt; 's',
+      :arg_name =&gt; 'ARGNAME',
+      :desc     =&gt; 'summary',
+      :hint     =&gt; 'hint',
+      :optional =&gt; false,
+      :hidden   =&gt; false
+    }
+  end
+
+  stdout = []
+  ManualClass.configs.to_parser do |psr|
+    psr.on('-h', '--help', 'print this help') do
+      stdout &lt;&lt; &quot;options:&quot;
+      stdout &lt;&lt; psr
+    end
+  end.parse('--help')
+
+  &quot;\n&quot; + stdout.join(&quot;\n&quot;)
+  # =&gt; %q{
+  # options:
+  #     -h, --help                       print this help
+  #     -s, --long ARGNAME               summary (hint)
+  # }
+</pre>
+<p>
+See the <a href="http://rubygems.org/gems/config_parser">ConfigParser</a>
+documentation for more details.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
