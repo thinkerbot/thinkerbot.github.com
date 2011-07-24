@@ -14,7 +14,7 @@ end
 def each_project
   PROJECTS.each do |project_path|
     project_name = File.basename(project_path)
-    project_dir = File.join(ROOT_DIR, project_name)
+    project_dir = File.join(ROOT_DIR, '_site', project_name)
     yield(project_path, project_name, project_dir)
   end
 end
@@ -80,7 +80,13 @@ task :clone do
   Dir.chdir(ROOT_DIR) do
     each_project do |project_path, project_name, project_dir|
       unless File.exists?(project_dir)
-        capture_sh "git submodule add git@github.com:#{project_path}.git #{project_dir}"
+        gitignore = File.join(ROOT_DIR, '.gitignore')
+        File.open(gitignore, 'a') do |io|
+          io.puts "#{project_name}/*"
+          io.puts "!#{project_dir}"
+        end
+        capture_sh "git submodule add -f git@github.com:#{project_path}.git #{project_dir}"
+        FileUtils.mkdir_p File.join(ROOT_DIR, project_name)
       end
     end
   end
