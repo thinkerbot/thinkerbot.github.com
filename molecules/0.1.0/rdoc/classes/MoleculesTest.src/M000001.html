@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_readme_documentation (MoleculesTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/molecules_test.rb, line 8</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_readme_documentation</span>
+    <span class="ruby-identifier">r</span> = <span class="ruby-constant">Residue</span><span class="ruby-operator">::</span><span class="ruby-constant">A</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value str">&quot;Alanine&quot;</span>, <span class="ruby-identifier">r</span>.<span class="ruby-identifier">name</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value str">&quot;Ala&quot;</span>, <span class="ruby-identifier">r</span>.<span class="ruby-identifier">abbr</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value str">&quot;A&quot;</span>, <span class="ruby-identifier">r</span>.<span class="ruby-identifier">letter</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value str">&quot;CH(3)&quot;</span>, <span class="ruby-identifier">r</span>.<span class="ruby-identifier">side_chain</span>.<span class="ruby-identifier">to_s</span>
+    <span class="ruby-identifier">assert_in_delta</span> <span class="ruby-value">71.03711</span>, <span class="ruby-identifier">r</span>.<span class="ruby-identifier">mass</span>, <span class="ruby-value">0</span><span class="ruby-value">.00001</span>
+    <span class="ruby-identifier">assert_in_delta</span> <span class="ruby-value">44.05002</span>, <span class="ruby-identifier">r</span>.<span class="ruby-identifier">immonium_ion_mass</span>, <span class="ruby-value">0</span><span class="ruby-value">.00001</span>
+  
+    <span class="ruby-identifier">p</span> = <span class="ruby-constant">Polypeptide</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;RPPGFSPFR&quot;</span>)
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value str">&quot;C(50)H(71)N(15)O(10)&quot;</span>, <span class="ruby-identifier">p</span>.<span class="ruby-identifier">to_s</span>
+    <span class="ruby-identifier">assert_in_delta</span> <span class="ruby-value">1041.5508</span>, <span class="ruby-identifier">p</span>.<span class="ruby-identifier">mass</span> , <span class="ruby-value">0</span><span class="ruby-value">.0001</span>
+  
+    <span class="ruby-identifier">caffeine</span> = <span class="ruby-constant">Molecules</span><span class="ruby-operator">::</span><span class="ruby-constant">EmpiricalFormula</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-value str">&quot;C8H10N4O2&quot;</span>)
+    <span class="ruby-identifier">coffee</span> = <span class="ruby-constant">Molecules</span><span class="ruby-operator">::</span><span class="ruby-constant">EmpiricalFormula</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-value str">&quot;C8H10N4O2 + H2O&quot;</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

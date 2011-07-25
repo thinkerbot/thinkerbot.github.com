@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Lazydoc::Attributes</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Lazydoc::Attributes</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/lazydoc/attributes_rb.html">
+                lib/lazydoc/attributes.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="Attributes.html">Attributes</a> adds methods to declare
+class-level accessors for constant attributes.
+</p>
+<pre>
+  # ConstName::key value
+  class ConstName
+    extend Lazydoc::Attributes
+    lazy_attr :key
+  end
+
+  ConstName.source_file            # =&gt;  __FILE__
+  ConstName::key.subject           # =&gt; 'value'
+</pre>
+<h4>Keys and Register</h4>
+<p>
+Note that constant attributes parsed from a source file are stored in <a
+href="Attributes.html#M000009">const_attrs</a>, and will ALWAYS be keyed
+using a string (since the &#8216;ConstName::key&#8217; syntax specifies a
+string key).
+</p>
+<pre>
+  ConstName.const_attrs['key']     # =&gt; ConstName::key
+</pre>
+<p>
+&#8216;Constant <a href="Attributes.html">Attributes</a>&#8217; specified
+by non-string keys are sometimes used to tie comments to a constant that
+will NOT be resolved from the constant attribute syntax. For instance you
+could register a method like this:
+</p>
+<pre>
+  class Sample
+    extend Lazydoc::Attributes
+
+    const_attrs[:method_one] = register___
+    # this is the method one comment
+    def method_one
+    end
+  end
+
+  Sample.lazydoc.resolve
+  Sample.const_attrs[:method_one].comment   # =&gt; &quot;this is the method one comment&quot;
+</pre>
+<p>
+For easier access, you could define a <a
+href="Attributes.html#M000012">lazy_attr</a> to access the registered
+comment. And in the simplest case, you pair a <a
+href="Attributes.html#M000013">lazy_register</a> with a <a
+href="Attributes.html#M000012">lazy_attr</a>.
+</p>
+<pre>
+  class Paired
+    extend Lazydoc::Attributes
+
+    lazy_attr(:one, :method_one)
+    lazy_attr(:two, :method_two)
+    lazy_register(:method_two)
+
+    const_attrs[:method_one] = register___
+    # this is the manually-registered method one comment
+    def method_one
+    end
+
+    # this is the lazyily-registered method two comment
+    def method_two
+    end
+  end
+
+  Paired.lazydoc.resolve
+  Paired.one.comment      # =&gt; &quot;this is the manually-registered method one comment&quot;
+  Paired.two.comment      # =&gt; &quot;this is the lazyily-registered method two comment&quot;
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000009">const_attrs</a>&nbsp;&nbsp;
+      <a href="#M000007">inherited</a>&nbsp;&nbsp;
+      <a href="#M000012">lazy_attr</a>&nbsp;&nbsp;
+      <a href="#M000013">lazy_register</a>&nbsp;&nbsp;
+      <a href="#M000010">lazydoc</a>&nbsp;&nbsp;
+      <a href="#M000008">method_added</a>&nbsp;&nbsp;
+      <a href="#M000014">register___</a>&nbsp;&nbsp;
+      <a href="#M000011">registered_methods</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">source_file</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+The source file for the extended class. By default source_file is set to
+the file where <a href="Attributes.html">Attributes</a> extends the class
+(if you include <a href="Attributes.html">Attributes</a>, you must set
+source_file manually).
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="#M000009" class="method-signature">
+          <span class="method-name">const_attrs</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the constant attributes resolved for the extended class.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/lazydoc/attributes.rb, line 92</span>
+92:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">const_attrs</span>
+93:       <span class="ruby-constant">Document</span>[<span class="ruby-identifier">to_s</span>]
+94:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="#M000007" class="method-signature">
+          <span class="method-name">inherited</span><span class="method-args">(child)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Inherits <a href="Attributes.html#M000011">registered_methods</a> from
+parent to child.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/lazydoc/attributes.rb, line 77</span>
+77:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inherited</span>(<span class="ruby-identifier">child</span>)
+78:       <span class="ruby-identifier">child</span>.<span class="ruby-identifier">registered_methods</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">registered_methods</span>)
+79:       <span class="ruby-keyword kw">super</span>
+80:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="#M000012" class="method-signature">
+          <span class="method-name">lazy_attr</span><span class="method-args">(symbol, key=symbol.to_s, writable=true)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Creates a method that reads and resolves the constant attribute specified
+by key, which should normally be a string (see above for more details). If
+writable is true, a corresponding writer is also created.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000012-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/lazydoc/attributes.rb, line 111</span>
+111:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">lazy_attr</span>(<span class="ruby-identifier">symbol</span>, <span class="ruby-identifier">key</span>=<span class="ruby-identifier">symbol</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">writable</span>=<span class="ruby-keyword kw">true</span>)
+112:       <span class="ruby-identifier">key</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">key</span>
+113:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>, <span class="ruby-constant">Symbol</span>, <span class="ruby-constant">Numeric</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">inspect</span>
+114:       <span class="ruby-keyword kw">else</span> <span class="ruby-node">&quot;YAML.load(\'#{YAML.dump(key)}\')&quot;</span>
+115:       <span class="ruby-keyword kw">end</span>
+116:       
+117:       <span class="ruby-identifier">instance_eval</span> <span class="ruby-node">%Q{
+118: def #{symbol}(resolve=true)
+119:   comment = const_attrs[#{key}] ||= Subject.new(nil, lazydoc)
+120:   resolve &amp;&amp; comment.kind_of?(Comment) ? comment.resolve : comment
+121: end}</span>
+122: 
+123:       <span class="ruby-identifier">instance_eval</span>(<span class="ruby-node">%Q{
+124: def #{symbol}=(comment)
+125:   const_attrs[#{key}] = comment
+126: end}</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">writable</span>
+127:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="#M000013" class="method-signature">
+          <span class="method-name">lazy_register</span><span class="method-args">(method_name, comment_class=Method, caller_index=1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Marks the method for lazy registration. When the method is registered, it
+will be stored in <a href="Attributes.html#M000009">const_attrs</a> by
+method_name.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000013-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/lazydoc/attributes.rb, line 131</span>
+131:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">lazy_register</span>(<span class="ruby-identifier">method_name</span>, <span class="ruby-identifier">comment_class</span>=<span class="ruby-constant">Method</span>, <span class="ruby-identifier">caller_index</span>=<span class="ruby-value">1</span>)
+132:       <span class="ruby-identifier">registered_methods</span>[<span class="ruby-identifier">method_name</span>.<span class="ruby-identifier">to_sym</span>] = [<span class="ruby-identifier">comment_class</span>, <span class="ruby-identifier">caller_index</span>]
+133:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="#M000010" class="method-signature">
+          <span class="method-name">lazydoc</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Document.html">Document</a> for source_file
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/lazydoc/attributes.rb, line 97</span>
+97:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">lazydoc</span>
+98:       <span class="ruby-constant">Lazydoc</span>[<span class="ruby-identifier">source_file</span>]
+99:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="#M000008" class="method-signature">
+          <span class="method-name">method_added</span><span class="method-args">(sym)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Lazily registers the added method if marked for lazy registration.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/lazydoc/attributes.rb, line 83</span>
+83:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_added</span>(<span class="ruby-identifier">sym</span>)
+84:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span> = <span class="ruby-identifier">registered_methods</span>[<span class="ruby-identifier">sym</span>]
+85:         <span class="ruby-identifier">const_attrs</span>[<span class="ruby-identifier">sym</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Lazydoc</span>.<span class="ruby-identifier">register_caller</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+86:       <span class="ruby-keyword kw">end</span>
+87:       
+88:       <span class="ruby-keyword kw">super</span>
+89:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="#M000014" class="method-signature">
+          <span class="method-name">register___</span><span class="method-args">(comment_class=Method)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Registers the next comment (by default as a <a
+href="Method.html">Method</a>).
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/lazydoc/attributes.rb, line 136</span>
+136:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">register___</span>(<span class="ruby-identifier">comment_class</span>=<span class="ruby-constant">Method</span>)
+137:       <span class="ruby-identifier">lazydoc</span>.<span class="ruby-identifier">register___</span>(<span class="ruby-identifier">comment_class</span>, <span class="ruby-value">1</span>)
+138:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="#M000011" class="method-signature">
+          <span class="method-name">registered_methods</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+A hash of (method_name, [comment_class, caller_index]) pairs indicating
+methods to lazily register, and the inputs to <a
+href="../Lazydoc.html#M000005">Lazydoc.register_caller</a> used to register
+the method.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000011-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/lazydoc/attributes.rb, line 104</span>
+104:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">registered_methods</span>
+105:       <span class="ruby-ivar">@registered_methods</span> <span class="ruby-operator">||=</span> {}
+106:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

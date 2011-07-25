@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_parse (EmpiricalFormulaClassTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/molecules/empirical_formula_class_test.rb, line 60</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_parse</span>
+    {
+      <span class="ruby-keyword kw">nil</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;&quot;</span>,
+      <span class="ruby-value str">&quot;&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;&quot;</span>,
+      <span class="ruby-value str">&quot;H&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;H&quot;</span>, 
+      <span class="ruby-value str">&quot;HO&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;HO&quot;</span>, 
+      <span class="ruby-value str">&quot;HFe&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;FeH&quot;</span>, 
+      <span class="ruby-value str">&quot;FeH&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;FeH&quot;</span>, 
+      <span class="ruby-value str">&quot;OH2&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;H(2)O&quot;</span>,
+      <span class="ruby-value str">&quot;H2O&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;H(2)O&quot;</span>, 
+      <span class="ruby-value str">&quot;C6H12O4&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;C(6)H(12)O(4)&quot;</span>, 
+      <span class="ruby-value str">&quot;Fe2OMg3&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Fe(2)Mg(3)O&quot;</span>, 
+      <span class="ruby-value str">&quot;(H)2&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;H(2)&quot;</span>, 
+      <span class="ruby-value str">&quot;(OH)2&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;H(2)O(2)&quot;</span>, 
+      <span class="ruby-value str">&quot;(HFe)&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;FeH&quot;</span>, 
+      <span class="ruby-value str">&quot;(FeH)&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;FeH&quot;</span>, 
+      <span class="ruby-value str">&quot;(OH2)2&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;H(4)O(2)&quot;</span>, 
+      <span class="ruby-value str">&quot;(H2O)2&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;H(4)O(2)&quot;</span>, 
+      <span class="ruby-value str">&quot;(C6H12O4)2&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;C(12)H(24)O(8)&quot;</span>,
+      <span class="ruby-value str">&quot;(Fe2OMg3)2&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Fe(4)Mg(6)O(2)&quot;</span>,
+      <span class="ruby-value str">&quot;C6H12O4(C6H12O4)2C6H12O4&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;C(24)H(48)O(16)&quot;</span>, 
+      <span class="ruby-value str">&quot;Fe2OMg3(Fe2OMg3(Fe2OMg3))Fe2OMg3&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Fe(8)Mg(12)O(4)&quot;</span>,
+      <span class="ruby-value str">&quot;Fe2OMg3(Fe2OMg3)(Fe2OMg3)Fe2OMg3&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Fe(8)Mg(12)O(4)&quot;</span>,
+      <span class="ruby-value str">&quot;Fe2OMg3(Fe2OMg3(Fe2OMg3)3((C)6H12O4)2)2C&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;C(25)Fe(18)H(48)Mg(27)O(25)&quot;</span>,
+      <span class="ruby-value str">&quot;  (H2O) 10 0   &quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;H(200)O(100)&quot;</span>,
+      <span class="ruby-value str">&quot;CH3(CH2)7CH&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;C(9)H(18)&quot;</span>, 
+      <span class="ruby-value str">&quot;H3NCHCO2&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;C(2)H(4)NO(2)&quot;</span>, 
+      <span class="ruby-value str">&quot;(CH3)2CuLi&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;C(2)CuH(6)Li&quot;</span>,
+      
+      <span class="ruby-comment cmt"># multipart</span>
+      <span class="ruby-value str">&quot;-H&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;H(-1)&quot;</span>,
+      <span class="ruby-value str">&quot;H2O-H&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;HO&quot;</span>,
+      <span class="ruby-value str">&quot;H2O - (OH)2+ H2O2-H2O&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;&quot;</span>
+    }.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">formula</span>, <span class="ruby-identifier">composition_str</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">m</span> = <span class="ruby-constant">EmpiricalFormula</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">formula</span>)
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">composition_str</span>, <span class="ruby-identifier">m</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">formula</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

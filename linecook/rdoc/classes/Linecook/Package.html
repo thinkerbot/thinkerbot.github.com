@@ -1,0 +1,1374 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Linecook::Package</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Linecook::Package</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/linecook/package_rb.html">
+                lib/linecook/package.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000183">attributes_path</a>&nbsp;&nbsp;
+      <a href="#M000196">build</a>&nbsp;&nbsp;
+      <a href="#M000193">build_file</a>&nbsp;&nbsp;
+      <a href="#M000195">build_recipe</a>&nbsp;&nbsp;
+      <a href="#M000194">build_template</a>&nbsp;&nbsp;
+      <a href="#M000200">close</a>&nbsp;&nbsp;
+      <a href="#M000174">config</a>&nbsp;&nbsp;
+      <a href="#M000197">content</a>&nbsp;&nbsp;
+      <a href="#M000171">context</a>&nbsp;&nbsp;
+      <a href="#M000202">export</a>&nbsp;&nbsp;
+      <a href="#M000184">file_path</a>&nbsp;&nbsp;
+      <a href="#M000175">files</a>&nbsp;&nbsp;
+      <a href="#M000169">init</a>&nbsp;&nbsp;
+      <a href="#M000187">load_attributes</a>&nbsp;&nbsp;
+      <a href="#M000189">load_helper</a>&nbsp;&nbsp;
+      <a href="#M000188">load_template</a>&nbsp;&nbsp;
+      <a href="#M000172">manifest</a>&nbsp;&nbsp;
+      <a href="#M000199">mode</a>&nbsp;&nbsp;
+      <a href="#M000170">new</a>&nbsp;&nbsp;
+      <a href="#M000179">next_target_name</a>&nbsp;&nbsp;
+      <a href="#M000180">next_variable_name</a>&nbsp;&nbsp;
+      <a href="#M000186">recipe_path</a>&nbsp;&nbsp;
+      <a href="#M000177">recipes</a>&nbsp;&nbsp;
+      <a href="#M000178">register</a>&nbsp;&nbsp;
+      <a href="#M000173">registry</a>&nbsp;&nbsp;
+      <a href="#M000201">reset</a>&nbsp;&nbsp;
+      <a href="#M000181">resource?</a>&nbsp;&nbsp;
+      <a href="#M000182">resource_path</a>&nbsp;&nbsp;
+      <a href="#M000168">setup</a>&nbsp;&nbsp;
+      <a href="#M000190">setup_recipe</a>&nbsp;&nbsp;
+      <a href="#M000191">setup_tempfile</a>&nbsp;&nbsp;
+      <a href="#M000198">source_path</a>&nbsp;&nbsp;
+      <a href="#M000192">tempfile?</a>&nbsp;&nbsp;
+      <a href="#M000185">template_path</a>&nbsp;&nbsp;
+      <a href="#M000176">templates</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CONTEXT_KEY</td>
+          <td>=</td>
+          <td class="context-item-value">'linecook'</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COOKBOOK_KEY</td>
+          <td>=</td>
+          <td class="context-item-value">'cookbook'</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MANIFEST_KEY</td>
+          <td>=</td>
+          <td class="context-item-value">'manifest'</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">PACKAGE_KEY</td>
+          <td>=</td>
+          <td class="context-item-value">'package'</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">REGISTRY_KEY</td>
+          <td>=</td>
+          <td class="context-item-value">'registry'</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FILES_KEY</td>
+          <td>=</td>
+          <td class="context-item-value">'files'</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">TEMPLATES_KEY</td>
+          <td>=</td>
+          <td class="context-item-value">'templates'</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">RECIPES_KEY</td>
+          <td>=</td>
+          <td class="context-item-value">'recipes'</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">callbacks</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+A hash of callbacks registered with self
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">counters</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+A hash of counters used by variable.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">env</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The package environment
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">tempfiles</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+An array of tempfiles generated by self (used to cleanup on <a
+href="Package.html#M000200">close</a>)
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000169" class="method-detail">
+        <a name="M000169"></a>
+
+        <div class="method-heading">
+          <a href="#M000169" class="method-signature">
+          <span class="method-name">init</span><span class="method-args">(package_file=nil, project_dir=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000169-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000169-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 24</span>
+24:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">init</span>(<span class="ruby-identifier">package_file</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">project_dir</span>=<span class="ruby-keyword kw">nil</span>)
+25:         <span class="ruby-identifier">cookbook</span> = <span class="ruby-constant">Cookbook</span>.<span class="ruby-identifier">init</span>(<span class="ruby-identifier">project_dir</span>)
+26:         <span class="ruby-identifier">package</span>  = <span class="ruby-identifier">setup</span>(<span class="ruby-identifier">package_file</span>, <span class="ruby-identifier">cookbook</span>)
+27:         
+28:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">package_file</span>
+29:           <span class="ruby-identifier">package</span>.<span class="ruby-identifier">context</span>[<span class="ruby-constant">PACKAGE_KEY</span>] <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">begin</span>
+30:             <span class="ruby-identifier">name</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">package_file</span>).<span class="ruby-identifier">chomp</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-identifier">package_file</span>)) 
+31:             {<span class="ruby-value str">'recipes'</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value str">'run'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span> }}
+32:           <span class="ruby-keyword kw">end</span>
+33:         <span class="ruby-keyword kw">end</span>
+34:         
+35:         <span class="ruby-identifier">package</span>
+36:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000170" class="method-detail">
+        <a name="M000170"></a>
+
+        <div class="method-heading">
+          <a href="#M000170" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(env={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000170-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000170-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 61</span>
+61:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">env</span>={})
+62:       <span class="ruby-ivar">@env</span> = <span class="ruby-identifier">env</span>
+63:       <span class="ruby-ivar">@tempfiles</span> = []
+64:       <span class="ruby-ivar">@counters</span>  = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>)
+65:       <span class="ruby-ivar">@callbacks</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">hash</span>, <span class="ruby-identifier">key</span><span class="ruby-operator">|</span> <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span> }
+66:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000168" class="method-detail">
+        <a name="M000168"></a>
+
+        <div class="method-heading">
+          <a href="#M000168" class="method-signature">
+          <span class="method-name">setup</span><span class="method-args">(env, cookbook=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000168-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000168-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 9</span>
+ 9:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup</span>(<span class="ruby-identifier">env</span>, <span class="ruby-identifier">cookbook</span>=<span class="ruby-keyword kw">nil</span>)
+10:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">env</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
+11:           <span class="ruby-identifier">env</span> = <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">load_config</span>(<span class="ruby-identifier">env</span>)
+12:         <span class="ruby-keyword kw">end</span>
+13:         
+14:         <span class="ruby-identifier">package</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">env</span>)
+15:         
+16:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cookbook</span>
+17:           <span class="ruby-identifier">manifest</span> = <span class="ruby-identifier">package</span>.<span class="ruby-identifier">manifest</span>
+18:           <span class="ruby-identifier">manifest</span>.<span class="ruby-identifier">replace</span> <span class="ruby-identifier">cookbook</span>.<span class="ruby-identifier">manifest</span>
+19:         <span class="ruby-keyword kw">end</span>
+20:         
+21:         <span class="ruby-identifier">package</span>
+22:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000183" class="method-detail">
+        <a name="M000183"></a>
+
+        <div class="method-heading">
+          <a href="#M000183" class="method-signature">
+          <span class="method-name">attributes_path</span><span class="method-args">(attributes_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Package.html#M000182">resource_path</a> the named
+attributes file (ex &#8216;attributes/name.rb&#8217;).
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000183-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000183-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 181</span>
+181:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attributes_path</span>(<span class="ruby-identifier">attributes_name</span>)
+182:       <span class="ruby-identifier">resource_path</span>(<span class="ruby-value str">'attributes'</span>, <span class="ruby-identifier">attributes_name</span>)
+183:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000196" class="method-detail">
+        <a name="M000196"></a>
+
+        <div class="method-heading">
+          <a href="#M000196" class="method-signature">
+          <span class="method-name">build</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Builds the <a href="Package.html#M000175">files</a>, <a
+href="Package.html#M000176">templates</a>, and <a
+href="Package.html#M000177">recipes</a> for self. Returns self.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000196-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000196-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 297</span>
+297:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build</span>
+298:       <span class="ruby-identifier">files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">file_name</span><span class="ruby-operator">|</span>
+299:         <span class="ruby-identifier">build_file</span>(<span class="ruby-identifier">target_name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">file_name</span>)
+300:       <span class="ruby-keyword kw">end</span>
+301:       
+302:       <span class="ruby-identifier">templates</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">template_name</span><span class="ruby-operator">|</span>
+303:         <span class="ruby-identifier">build_template</span>(<span class="ruby-identifier">target_name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">template_name</span>)
+304:       <span class="ruby-keyword kw">end</span>
+305:       
+306:       <span class="ruby-identifier">recipes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">recipe_name</span><span class="ruby-operator">|</span>
+307:         <span class="ruby-identifier">build_recipe</span>(<span class="ruby-identifier">target_name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">recipe_name</span>)
+308:       <span class="ruby-keyword kw">end</span>
+309:       
+310:       <span class="ruby-keyword kw">self</span>
+311:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000193" class="method-detail">
+        <a name="M000193"></a>
+
+        <div class="method-heading">
+          <a href="#M000193" class="method-signature">
+          <span class="method-name">build_file</span><span class="method-args">(target_name, file_name=target_name, mode=0600)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Looks up the file with the specified name using <a
+href="Package.html#M000184">file_path</a> and registers it to target_name.
+Raises an error if the target is already registered.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000193-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000193-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 266</span>
+266:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_file</span>(<span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">file_name</span>=<span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">mode</span>=<span class="ruby-value">0600</span>)
+267:       <span class="ruby-identifier">register</span> <span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">file_path</span>(<span class="ruby-identifier">file_name</span>), <span class="ruby-identifier">mode</span>
+268:       <span class="ruby-keyword kw">self</span>
+269:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000195" class="method-detail">
+        <a name="M000195"></a>
+
+        <div class="method-heading">
+          <a href="#M000195" class="method-signature">
+          <span class="method-name">build_recipe</span><span class="method-args">(target_name, recipe_name=target_name, mode=0700)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Looks up the recipe with the specified name using <a
+href="Package.html#M000186">recipe_path</a>, evaluates it, and registers
+the result to target_name. Raises an error if the target is already
+registered. Returns self.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000195-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000195-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 287</span>
+287:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_recipe</span>(<span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">recipe_name</span>=<span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">mode</span>=<span class="ruby-value">0700</span>)
+288:       <span class="ruby-identifier">path</span> = <span class="ruby-identifier">recipe_path</span>(<span class="ruby-identifier">recipe_name</span>)
+289:       <span class="ruby-identifier">recipe</span> = <span class="ruby-identifier">setup_recipe</span>(<span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">mode</span>)
+290:       <span class="ruby-identifier">recipe</span>.<span class="ruby-identifier">instance_eval</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">path</span>), <span class="ruby-identifier">path</span>)
+291:       <span class="ruby-identifier">recipe</span>.<span class="ruby-identifier">close</span>
+292:       
+293:       <span class="ruby-keyword kw">self</span>
+294:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000194" class="method-detail">
+        <a name="M000194"></a>
+
+        <div class="method-heading">
+          <a href="#M000194" class="method-signature">
+          <span class="method-name">build_template</span><span class="method-args">(target_name, template_name=target_name, mode=0600, locals={'attrs' =&gt; env})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Looks up the template with the specified name using <a
+href="Package.html#M000185">template_path</a>, builds, and registers it to
+target_name. The locals will be set for access in the template <a
+href="Package.html#M000171">context</a>. Raises an error if the target is
+already registered. Returns self.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000194-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000194-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 275</span>
+275:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_template</span>(<span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">template_name</span>=<span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">mode</span>=<span class="ruby-value">0600</span>, <span class="ruby-identifier">locals</span>={<span class="ruby-value str">'attrs'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">env</span>})
+276:       <span class="ruby-identifier">content</span> = <span class="ruby-identifier">load_template</span>(<span class="ruby-identifier">template_name</span>).<span class="ruby-identifier">build</span>(<span class="ruby-identifier">locals</span>)
+277:       
+278:       <span class="ruby-identifier">target</span> = <span class="ruby-identifier">setup_tempfile</span>(<span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">mode</span>)
+279:       <span class="ruby-identifier">target</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">content</span>
+280:       <span class="ruby-identifier">target</span>.<span class="ruby-identifier">close</span>
+281:       <span class="ruby-keyword kw">self</span>
+282:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000200" class="method-detail">
+        <a name="M000200"></a>
+
+        <div class="method-heading">
+          <a href="#M000200" class="method-signature">
+          <span class="method-name">close</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Closes all tempfiles and returns self.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000200-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000200-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 335</span>
+335:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
+336:       <span class="ruby-identifier">tempfiles</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tempfile</span><span class="ruby-operator">|</span>
+337:         <span class="ruby-identifier">tempfile</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">tempfile</span>.<span class="ruby-identifier">closed?</span>
+338:       <span class="ruby-keyword kw">end</span>
+339:       <span class="ruby-keyword kw">self</span>
+340:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000174" class="method-detail">
+        <a name="M000174"></a>
+
+        <div class="method-heading">
+          <a href="#M000174" class="method-signature">
+          <span class="method-name">config</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the linecook configs in env, as keyed by CONFIG_KEY. Defaults to an
+empty hash.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000174-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000174-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 89</span>
+89:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config</span>
+90:       <span class="ruby-identifier">context</span>[<span class="ruby-constant">PACKAGE_KEY</span>] <span class="ruby-operator">||=</span> {}
+91:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000197" class="method-detail">
+        <a name="M000197"></a>
+
+        <div class="method-heading">
+          <a href="#M000197" class="method-signature">
+          <span class="method-name">content</span><span class="method-args">(target_name, length=nil, offset=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Package.html#M000197">content</a> of the <a
+href="Package.html#M000198">source_path</a> for target_name, as registered
+in self. Returns nil if the target is not registered.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000197-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000197-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 315</span>
+315:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content</span>(<span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">length</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">offset</span>=<span class="ruby-keyword kw">nil</span>)
+316:       <span class="ruby-identifier">path</span> = <span class="ruby-identifier">source_path</span>(<span class="ruby-identifier">target_name</span>)
+317:       <span class="ruby-identifier">path</span> <span class="ruby-value">? </span><span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">length</span>, <span class="ruby-identifier">offset</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+318:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000171" class="method-detail">
+        <a name="M000171"></a>
+
+        <div class="method-heading">
+          <a href="#M000171" class="method-signature">
+          <span class="method-name">context</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the linecook <a href="Package.html#M000171">context</a> in env, as
+keyed by CONTEXT_KEY. Defaults to an empty hash.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000171-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000171-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 70</span>
+70:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">context</span>
+71:       <span class="ruby-identifier">env</span>[<span class="ruby-constant">CONTEXT_KEY</span>] <span class="ruby-operator">||=</span> {}
+72:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000202" class="method-detail">
+        <a name="M000202"></a>
+
+        <div class="method-heading">
+          <a href="#M000202" class="method-signature">
+          <span class="method-name">export</span><span class="method-args">(dir, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Closes self and exports the <a href="Package.html#M000173">registry</a> to
+dir by copying or moving the registered source paths to the target path
+under dir. By default tempfiles are moved while all other <a
+href="Package.html#M000175">files</a> are copied.
+</p>
+<p>
+Returns <a href="Package.html#M000173">registry</a>, which is re-written to
+reflect the <a href="Package.html#M000170">new</a> source paths.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000202-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000202-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 357</span>
+357:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">export</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">options</span>={})
+358:       <span class="ruby-identifier">close</span>
+359:       
+360:       <span class="ruby-identifier">options</span> = {
+361:         <span class="ruby-identifier">:allow_move</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>
+362:       }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+363:       
+364:       <span class="ruby-identifier">allow_move</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:allow_move</span>]
+365:       
+366:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">dir</span>)
+367:         <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_r</span>(<span class="ruby-identifier">dir</span>)
+368:       <span class="ruby-keyword kw">end</span>
+369:       
+370:       <span class="ruby-identifier">registry</span>.<span class="ruby-identifier">each_key</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">target_name</span><span class="ruby-operator">|</span>
+371:         <span class="ruby-identifier">export_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">target_name</span>)
+372:         <span class="ruby-identifier">export_dir</span>  = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">export_path</span>)
+373:         <span class="ruby-identifier">source_path</span>, <span class="ruby-identifier">mode</span> = <span class="ruby-identifier">registry</span>[<span class="ruby-identifier">target_name</span>]
+374:         
+375:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">source_path</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">export_path</span>
+376:         
+377:         <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">export_dir</span>)
+378:           <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">export_dir</span>)
+379:         <span class="ruby-keyword kw">end</span>
+380:         
+381:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">allow_move</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">tempfile?</span>(<span class="ruby-identifier">source_path</span>)
+382:           <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mv</span>(<span class="ruby-identifier">source_path</span>, <span class="ruby-identifier">export_path</span>)
+383:         <span class="ruby-keyword kw">else</span>
+384:           <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">cp</span>(<span class="ruby-identifier">source_path</span>, <span class="ruby-identifier">export_path</span>)
+385:         <span class="ruby-keyword kw">end</span>
+386:         
+387:         <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">chmod</span>(<span class="ruby-identifier">mode</span>, <span class="ruby-identifier">export_path</span>)
+388:         
+389:         <span class="ruby-identifier">registry</span>[<span class="ruby-identifier">target_name</span>] = [<span class="ruby-identifier">export_path</span>, <span class="ruby-identifier">mode</span>]
+390:       <span class="ruby-keyword kw">end</span>
+391:       
+392:       <span class="ruby-identifier">tempfiles</span>.<span class="ruby-identifier">clear</span>
+393:       <span class="ruby-identifier">registry</span>
+394:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000184" class="method-detail">
+        <a name="M000184"></a>
+
+        <div class="method-heading">
+          <a href="#M000184" class="method-signature">
+          <span class="method-name">file_path</span><span class="method-args">(file_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Package.html#M000182">resource_path</a> the named file
+(ex &#8216;files/name&#8217;)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000184-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000184-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 186</span>
+186:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_path</span>(<span class="ruby-identifier">file_name</span>)
+187:       <span class="ruby-identifier">resource_path</span>(<span class="ruby-value str">'files'</span>, <span class="ruby-identifier">file_name</span>)
+188:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000175" class="method-detail">
+        <a name="M000175"></a>
+
+        <div class="method-heading">
+          <a href="#M000175" class="method-signature">
+          <span class="method-name">files</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the hash of (source, target) pairs identifying which of the <a
+href="Package.html#M000175">files</a> will be built into self by <a
+href="Package.html#M000196">build</a>. Files are identified by FILES_KEY in
+<a href="Package.html#M000174">config</a>, and normalized the same way as
+<a href="Package.html#M000177">recipes</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000175-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000175-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 96</span>
+96:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">files</span>
+97:       <span class="ruby-identifier">config</span>[<span class="ruby-constant">FILES_KEY</span>] = <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">hashify</span>(<span class="ruby-identifier">config</span>[<span class="ruby-constant">FILES_KEY</span>])
+98:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000187" class="method-detail">
+        <a name="M000187"></a>
+
+        <div class="method-heading">
+          <a href="#M000187" class="method-signature">
+          <span class="method-name">load_attributes</span><span class="method-args">(attributes_name=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Loads the named attributes file into and returns an instance of <a
+href="Attributes.html">Attributes</a>. The loading mechanism depends on the
+attributes file extname.
+</p>
+<pre>
+  .rb: evaluate in the context of attributes
+  .yml,.yaml,.json: load as YAML and merge into attributes
+</pre>
+<p>
+All other file types raise an error. Simply returns a <a
+href="Package.html#M000170">new</a> <a
+href="Attributes.html">Attributes</a> instance if no name is given.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000187-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000187-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 209</span>
+209:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_attributes</span>(<span class="ruby-identifier">attributes_name</span>=<span class="ruby-keyword kw">nil</span>)
+210:       <span class="ruby-identifier">attributes</span> = <span class="ruby-constant">Attributes</span>.<span class="ruby-identifier">new</span>
+211:       
+212:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attributes_name</span>
+213:         <span class="ruby-identifier">path</span> = <span class="ruby-identifier">attributes_path</span>(<span class="ruby-identifier">attributes_name</span>)
+214:         
+215:         <span class="ruby-keyword kw">case</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-identifier">path</span>)
+216:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'.rb'</span>
+217:           <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">instance_eval</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">path</span>), <span class="ruby-identifier">path</span>)
+218:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'.yml'</span>, <span class="ruby-value str">'.yaml'</span>, <span class="ruby-value str">'.json'</span>
+219:           <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">attrs</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">path</span>))
+220:         <span class="ruby-keyword kw">else</span>
+221:           <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;invalid attributes format: #{path.inspect}&quot;</span>
+222:         <span class="ruby-keyword kw">end</span>
+223:       <span class="ruby-keyword kw">end</span>
+224:       
+225:       <span class="ruby-identifier">attributes</span>
+226:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000189" class="method-detail">
+        <a name="M000189"></a>
+
+        <div class="method-heading">
+          <a href="#M000189" class="method-signature">
+          <span class="method-name">load_helper</span><span class="method-args">(helper_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Loads and returns the helper constant specified by helper_name. The
+helper_name is underscored to determine a require path and camelized to
+determine the constant name.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000189-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000189-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 237</span>
+237:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_helper</span>(<span class="ruby-identifier">helper_name</span>)
+238:       <span class="ruby-identifier">require</span> <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">underscore</span>(<span class="ruby-identifier">helper_name</span>)
+239:       <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">constantize</span>(<span class="ruby-identifier">helper_name</span>)
+240:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000188" class="method-detail">
+        <a name="M000188"></a>
+
+        <div class="method-heading">
+          <a href="#M000188" class="method-signature">
+          <span class="method-name">load_template</span><span class="method-args">(template_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Load the template file with the specified name and wraps as a <a
+href="Template.html">Template</a>. Returns the <a
+href="Package.html#M000170">new</a> <a href="Template.html">Template</a>
+object.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000188-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000188-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 230</span>
+230:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_template</span>(<span class="ruby-identifier">template_name</span>)
+231:       <span class="ruby-constant">Template</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">template_path</span>(<span class="ruby-identifier">template_name</span>)
+232:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000172" class="method-detail">
+        <a name="M000172"></a>
+
+        <div class="method-heading">
+          <a href="#M000172" class="method-signature">
+          <span class="method-name">manifest</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Package.html#M000172">manifest</a> in <a
+href="Package.html#M000174">config</a>, as keyed by MANIFEST_KEY. Defaults
+to an empty hash.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000172-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000172-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 76</span>
+76:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">manifest</span>
+77:       <span class="ruby-identifier">context</span>[<span class="ruby-constant">MANIFEST_KEY</span>] <span class="ruby-operator">||=</span> {}
+78:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000199" class="method-detail">
+        <a name="M000199"></a>
+
+        <div class="method-heading">
+          <a href="#M000199" class="method-signature">
+          <span class="method-name">mode</span><span class="method-args">(target_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Package.html#M000199">mode</a> for target_name, as
+registered in self. Returns nil if the target is not registered.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000199-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000199-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 329</span>
+329:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mode</span>(<span class="ruby-identifier">target_name</span>)
+330:       <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">registry</span>[<span class="ruby-identifier">target_name</span>]
+331:       <span class="ruby-identifier">entry</span> <span class="ruby-value">? </span><span class="ruby-identifier">entry</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+332:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000179" class="method-detail">
+        <a name="M000179"></a>
+
+        <div class="method-heading">
+          <a href="#M000179" class="method-signature">
+          <span class="method-name">next_target_name</span><span class="method-args">(target_name='file')</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Increments target_name until an unregistered name is found and returns the
+result.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000179-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000179-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 141</span>
+141:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_target_name</span>(<span class="ruby-identifier">target_name</span>=<span class="ruby-value str">'file'</span>)
+142:       <span class="ruby-identifier">count</span> = <span class="ruby-value">0</span>
+143:       <span class="ruby-identifier">registry</span>.<span class="ruby-identifier">each_key</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+144:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">target_name</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+145:           <span class="ruby-identifier">count</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+146:         <span class="ruby-keyword kw">end</span>
+147:       <span class="ruby-keyword kw">end</span>
+148:       
+149:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+150:         <span class="ruby-identifier">target_name</span> = <span class="ruby-node">&quot;#{target_name}.#{count}&quot;</span>
+151:       <span class="ruby-keyword kw">end</span>
+152:       
+153:       <span class="ruby-identifier">target_name</span>
+154:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000180" class="method-detail">
+        <a name="M000180"></a>
+
+        <div class="method-heading">
+          <a href="#M000180" class="method-signature">
+          <span class="method-name">next_variable_name</span><span class="method-args">(context)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a package-unique variable with base &#8216;name&#8217;.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000180-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000180-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 157</span>
+157:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_variable_name</span>(<span class="ruby-identifier">context</span>)
+158:       <span class="ruby-identifier">context</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">to_s</span>
+159:       
+160:       <span class="ruby-identifier">count</span> = <span class="ruby-identifier">counters</span>[<span class="ruby-identifier">context</span>]
+161:       <span class="ruby-identifier">counters</span>[<span class="ruby-identifier">context</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+162:       
+163:       <span class="ruby-node">&quot;#{context}#{count}&quot;</span>
+164:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000186" class="method-detail">
+        <a name="M000186"></a>
+
+        <div class="method-heading">
+          <a href="#M000186" class="method-signature">
+          <span class="method-name">recipe_path</span><span class="method-args">(recipe_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Package.html#M000182">resource_path</a> the named
+recipe file (ex &#8216;recipes/name.rb&#8217;).
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000186-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000186-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 196</span>
+196:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">recipe_path</span>(<span class="ruby-identifier">recipe_name</span>)
+197:       <span class="ruby-identifier">resource_path</span>(<span class="ruby-value str">'recipes'</span>, <span class="ruby-identifier">recipe_name</span>)
+198:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000177" class="method-detail">
+        <a name="M000177"></a>
+
+        <div class="method-heading">
+          <a href="#M000177" class="method-signature">
+          <span class="method-name">recipes</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the hash of (source, target) pairs identifying which <a
+href="Package.html#M000177">recipes</a> will be built into self by <a
+href="Package.html#M000196">build</a>. Recipes are identified by
+RECIPES_KEY in <a href="Package.html#M000174">config</a>.
+</p>
+<p>
+Non-hash <a href="Package.html#M000177">recipes</a> are normalized by
+expanding arrays into a redundant hash, such that each entry has the same
+source and target (more concretely, the &#8216;example&#8217; recipe is
+registered as the &#8216;example&#8217; script). Strings are split along
+colons into an array and then expanded.
+</p>
+<p>
+For example:
+</p>
+<pre>
+  package = Package.new('linecook' =&gt; {'package' =&gt; {'recipes' =&gt; 'a:b:c'}})
+  package.recipes   # =&gt; {'a' =&gt; 'a', 'b' =&gt; 'b', 'c' =&gt; 'c'}
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000177-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000177-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 121</span>
+121:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">recipes</span>
+122:       <span class="ruby-identifier">config</span>[<span class="ruby-constant">RECIPES_KEY</span>] = <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">hashify</span>(<span class="ruby-identifier">config</span>[<span class="ruby-constant">RECIPES_KEY</span>])
+123:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000178" class="method-detail">
+        <a name="M000178"></a>
+
+        <div class="method-heading">
+          <a href="#M000178" class="method-signature">
+          <span class="method-name">register</span><span class="method-args">(target_name, source_path, mode=0600)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Registers the <a href="Package.html#M000198">source_path</a> to target_name
+in the <a href="Package.html#M000173">registry</a> and revese_registry.
+Raises an error if the <a href="Package.html#M000198">source_path</a> is
+already registered.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000178-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000178-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 128</span>
+128:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">register</span>(<span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">source_path</span>, <span class="ruby-identifier">mode</span>=<span class="ruby-value">0600</span>)
+129:       <span class="ruby-identifier">source_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">source_path</span>)
+130:       
+131:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">registry</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">target_name</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">registry</span>[<span class="ruby-identifier">target_name</span>] <span class="ruby-operator">!=</span> [<span class="ruby-identifier">source_path</span>, <span class="ruby-identifier">mode</span>]
+132:         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;already registered: #{target_name} (%s, %o)&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">registry</span>[<span class="ruby-identifier">target_name</span>]
+133:       <span class="ruby-keyword kw">end</span>
+134:       
+135:       <span class="ruby-identifier">registry</span>[<span class="ruby-identifier">target_name</span>] = [<span class="ruby-identifier">source_path</span>, <span class="ruby-identifier">mode</span>]
+136:       <span class="ruby-identifier">target_name</span>
+137:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000173" class="method-detail">
+        <a name="M000173"></a>
+
+        <div class="method-heading">
+          <a href="#M000173" class="method-signature">
+          <span class="method-name">registry</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Package.html#M000173">registry</a> in <a
+href="Package.html#M000174">config</a>, as keyed by REGISTRY_KEY. Defaults
+to an empty hash. A hash of (target_name, <a
+href="Package.html#M000198">source_path</a>) pairs identifying <a
+href="Package.html#M000175">files</a> that should be included in a package
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000173-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000173-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 83</span>
+83:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">registry</span>
+84:       <span class="ruby-identifier">context</span>[<span class="ruby-constant">REGISTRY_KEY</span>] <span class="ruby-operator">||=</span> {}
+85:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000201" class="method-detail">
+        <a name="M000201"></a>
+
+        <div class="method-heading">
+          <a href="#M000201" class="method-signature">
+          <span class="method-name">reset</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Closes and clears all tempfiles, the <a
+href="Package.html#M000173">registry</a>, callbacks, and counters.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000201-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000201-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 343</span>
+343:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset</span>
+344:       <span class="ruby-identifier">close</span>
+345:       <span class="ruby-identifier">registry</span>.<span class="ruby-identifier">clear</span>
+346:       <span class="ruby-identifier">tempfiles</span>.<span class="ruby-identifier">clear</span>
+347:       <span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">clear</span>
+348:       <span class="ruby-identifier">counters</span>.<span class="ruby-identifier">clear</span>
+349:       <span class="ruby-keyword kw">self</span>
+350:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000181" class="method-detail">
+        <a name="M000181"></a>
+
+        <div class="method-heading">
+          <a href="#M000181" class="method-signature">
+          <span class="method-name">resource?</span><span class="method-args">(type, path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if there is a path for the specified resource in <a
+href="Package.html#M000172">manifest</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000181-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000181-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 167</span>
+167:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">resource?</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">path</span>)
+168:       <span class="ruby-identifier">resources</span> = <span class="ruby-identifier">manifest</span>[<span class="ruby-identifier">type</span>]
+169:       <span class="ruby-identifier">resources</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">resources</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">path</span>)
+170:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000182" class="method-detail">
+        <a name="M000182"></a>
+
+        <div class="method-heading">
+          <a href="#M000182" class="method-signature">
+          <span class="method-name">resource_path</span><span class="method-args">(type, path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the path to the resource in manfiest. Raises an error if there is
+no such resource.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000182-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000182-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 174</span>
+174:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">resource_path</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">path</span>)
+175:       <span class="ruby-identifier">resources</span> = <span class="ruby-identifier">manifest</span>[<span class="ruby-identifier">type</span>]
+176:       <span class="ruby-identifier">resource_path</span> = <span class="ruby-identifier">resources</span> <span class="ruby-value">? </span><span class="ruby-identifier">resources</span>[<span class="ruby-identifier">path</span>] <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+177:       <span class="ruby-identifier">resource_path</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;no such resource in manifest: #{type.inspect} #{path.inspect}&quot;</span>
+178:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000190" class="method-detail">
+        <a name="M000190"></a>
+
+        <div class="method-heading">
+          <a href="#M000190" class="method-signature">
+          <span class="method-name">setup_recipe</span><span class="method-args">(target_name = next_target_name, mode=0700)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a recipe bound to self.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000190-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000190-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 243</span>
+243:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_recipe</span>(<span class="ruby-identifier">target_name</span> = <span class="ruby-identifier">next_target_name</span>, <span class="ruby-identifier">mode</span>=<span class="ruby-value">0700</span>)
+244:       <span class="ruby-constant">Recipe</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">mode</span>)
+245:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000191" class="method-detail">
+        <a name="M000191"></a>
+
+        <div class="method-heading">
+          <a href="#M000191" class="method-signature">
+          <span class="method-name">setup_tempfile</span><span class="method-args">(target_name = next_target_name, mode=0600)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Generates a tempfile for the target path and registers it with self. As
+with <a href="Package.html#M000178">register</a>, the target_name will be
+incremented as needed. Returns the open tempfile.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000191-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000191-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 250</span>
+250:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_tempfile</span>(<span class="ruby-identifier">target_name</span> = <span class="ruby-identifier">next_target_name</span>, <span class="ruby-identifier">mode</span>=<span class="ruby-value">0600</span>)
+251:       <span class="ruby-identifier">tempfile</span> = <span class="ruby-constant">Tempfile</span>.<span class="ruby-identifier">new</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">target_name</span>)
+252:       
+253:       <span class="ruby-identifier">register</span>(<span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">tempfile</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">mode</span>)
+254:       <span class="ruby-identifier">tempfiles</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">tempfile</span>
+255:       
+256:       <span class="ruby-identifier">tempfile</span>
+257:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000198" class="method-detail">
+        <a name="M000198"></a>
+
+        <div class="method-heading">
+          <a href="#M000198" class="method-signature">
+          <span class="method-name">source_path</span><span class="method-args">(target_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Package.html#M000198">source_path</a> for target_name,
+as registered in self. Returns nil if the target is not registered.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000198-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000198-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 322</span>
+322:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">source_path</span>(<span class="ruby-identifier">target_name</span>)
+323:       <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">registry</span>[<span class="ruby-identifier">target_name</span>]
+324:       <span class="ruby-identifier">entry</span> <span class="ruby-value">? </span><span class="ruby-identifier">entry</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+325:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000192" class="method-detail">
+        <a name="M000192"></a>
+
+        <div class="method-heading">
+          <a href="#M000192" class="method-signature">
+          <span class="method-name">tempfile?</span><span class="method-args">(source_path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if the <a href="Package.html#M000198">source_path</a> is for a
+tempfile generated by self.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000192-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000192-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 260</span>
+260:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tempfile?</span>(<span class="ruby-identifier">source_path</span>)
+261:       <span class="ruby-identifier">tempfiles</span>.<span class="ruby-identifier">any?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">tempfile</span><span class="ruby-operator">|</span> <span class="ruby-identifier">tempfile</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">source_path</span> }
+262:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000185" class="method-detail">
+        <a name="M000185"></a>
+
+        <div class="method-heading">
+          <a href="#M000185" class="method-signature">
+          <span class="method-name">template_path</span><span class="method-args">(template_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Package.html#M000182">resource_path</a> the named
+template file (ex &#8216;templates/name.erb&#8217;).
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000185-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000185-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 191</span>
+191:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template_path</span>(<span class="ruby-identifier">template_name</span>)
+192:       <span class="ruby-identifier">resource_path</span>(<span class="ruby-value str">'templates'</span>, <span class="ruby-identifier">template_name</span>)
+193:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000176" class="method-detail">
+        <a name="M000176"></a>
+
+        <div class="method-heading">
+          <a href="#M000176" class="method-signature">
+          <span class="method-name">templates</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the hash of (source, target) pairs identifying which <a
+href="Package.html#M000176">templates</a> will be built into self by <a
+href="Package.html#M000196">build</a>. Templates are identified by
+TEMPLATES_KEY in <a href="Package.html#M000174">config</a>, and normalized
+the same way as <a href="Package.html#M000177">recipes</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000176-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000176-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/package.rb, line 103</span>
+103:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">templates</span>
+104:       <span class="ruby-identifier">config</span>[<span class="ruby-constant">TEMPLATES_KEY</span>] = <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">hashify</span>(<span class="ruby-identifier">config</span>[<span class="ruby-constant">TEMPLATES_KEY</span>])
+105:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

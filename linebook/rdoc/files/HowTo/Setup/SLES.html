@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: SLES</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>SLES</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>HowTo/Setup/SLES
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Jul 24 20:39:37 -0600 2011</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>SLES</h1>
+<p>
+<em>Note these instructions are for building a dev box only. In particular
+they allow the linecook user to sudo without a password and disable the
+firewall, which may not be in you best production interests.</em>
+</p>
+<p>
+Build a SLES11 base box using the following:
+</p>
+<pre>
+  - name: sles
+  - Linux/Linux 2.6
+  - 256 MB memory
+  - 8 GB dynamically resizing drive
+</pre>
+<p>
+Add the netinst.iso to the cd/dvd device under Settings &gt; Storage. Now
+start the server and install (use default settings unless specified):
+</p>
+<pre>
+  - Server Base Scenario: Virtual Machine (middle option)
+  - Installation (1.2 GB):
+      Base System
+      Novell AppArmor
+      Minimal System
+      c/c++ Compiler and Tools
+  - root password: linecook
+  - network settings:
+      hostname: sles
+      domain: pinnacol.com
+      [ ] change hostname via DHCP
+      [x] write hostname to /etc/hosts
+      (Change &gt; Network Interfaces &gt; Hostname/DNS)
+      Name Server 1: 10.2.24.11
+      Name Server 2: 65.125.146.66
+      (Change &gt; Firewall &gt; Disable Firewall Automatic Starting)
+  - configure novell customer stuff later
+  - user/password: linecook
+</pre>
+<p>
+When the server has rebooted and is ready at the login screen, remove the
+install iso, take a snapshot and setup port forwarding.
+</p>
+<pre>
+  (Devices &gt; CD/DVD Devices &gt; Remove disk from virtual drive)
+  VBoxManage snapshot sles take RAW
+  VBoxManage controlvm sles poweroff
+  # wait to fully power off
+  VBoxManage modifyvm sles --natpf1 'sles-ssh,tcp,,2223,,22'
+  VBoxManage -q snapshot sles restore RAW
+  VBoxManage startvm sles
+</pre>
+<p>
+Transfer your ssh key to the vm. Help to generate ssh keys can be found on
+GitHub (<a
+href="http://help.github.com/key-setup-redirect">help.github.com/key-setup-redirect</a>):
+</p>
+<pre>
+  scp -P 2223 -o UserKnownHostsFile=/dev/null ~/.ssh/id_rsa.pub linecook@localhost:id_rsa.pub
+</pre>
+<p>
+Login as root and setup su for the linecook user:
+</p>
+<pre>
+  vm: vi /etc/pam.d/su
+
+  # insert:
+  #   auth       sufficient pam_wheel.so trust
+
+  vm: vi /etc/pam.d/su-l
+
+  # insert:
+  #   auth       sufficient pam_wheel.so trust
+
+  vm: p=$(id -gn linecook)
+  vm: g=$(id -Gn linecook | sed &quot;s/$p //&quot; | sed &quot;s/ /,/g&quot;)
+  vm: groupadd linecook
+  vm: usermod -g linecook -G &quot;wheel,$g&quot; linecook
+</pre>
+<p>
+Setup SSH for the linecook user:
+</p>
+<pre>
+  vm: su -l linecook
+  vm: mkdir .ssh
+  vm: mv id_rsa.pub .ssh/authorized_keys
+  vm: chmod 0700 .ssh
+  vm: chmod 0600 .ssh/authorized_keys
+  vm: exit
+  vm: exit
+</pre>
+<p>
+Now take the standard snapshots:
+</p>
+<pre>
+  VBoxManage snapshot sles take BASE
+  VBoxManage snapshot sles take CURRENT
+  VBoxManage controlvm sles poweroff
+</pre>
+<p>
+To cleanup the port forwarding (run later, if ever):
+</p>
+<pre>
+  VBoxManage modifyvm sles --natpf1 delete 'sles-ssh'
+</pre>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

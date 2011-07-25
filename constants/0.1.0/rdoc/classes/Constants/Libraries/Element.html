@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Constants::Libraries::Element</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Constants::Libraries::Element</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/constants/libraries/element_rb.html">
+                lib/constants/libraries/element.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="Element.html">Element</a> is a library of elements in the periodic
+table, and includes <a href="Element.html#M000082">mass</a>, isotope, and
+<a href="Element.html#M000084">abundance</a> information.
+</p>
+<pre>
+   e = Element::He
+   e.name                    # =&gt; &quot;Helium&quot;
+   e.symbol                  # =&gt; &quot;He&quot;
+   e.atomic_number           # =&gt; 2
+   e.mass                    # =&gt; 4.0026032497
+   e.isotopes                # =&gt; [3, 4]
+   e.abundances              # =&gt; [0.000137, 99.999863]
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000084">abundance</a>&nbsp;&nbsp;
+      <a href="#M000085">abundance_uncertainty</a>&nbsp;&nbsp;
+      <a href="#M000080">has_isotope?</a>&nbsp;&nbsp;
+      <a href="#M000081">index_isotope</a>&nbsp;&nbsp;
+      <a href="#M000082">mass</a>&nbsp;&nbsp;
+      <a href="#M000083">mass_uncertainty</a>&nbsp;&nbsp;
+      <a href="#M000079">new</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="../Library.html">Constants::Library</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ag</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ag&quot;, &quot;Silver&quot;, 47, &quot;107:106.905093(6):51.839(8);109:108.904756(3):48.161(8)&quot;, &quot;107.8682(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Al</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Al&quot;, &quot;Aluminum&quot;, 13, &quot;27:26.98153844(14):100&quot;, &quot;26.981538(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ar</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ar&quot;, &quot;Argon&quot;, 18, &quot;36:35.96754628(27):0.3365(30);38:37.9627322(5):0.0632(5);40:39.962383123(3):99.6003(30)&quot;, &quot;39.948(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">As</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;As&quot;, &quot;Arsenic&quot;, 33, &quot;75:74.9215964(18):100&quot;, &quot;74.92160(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Au</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Au&quot;, &quot;Gold&quot;, 79, &quot;197:196.966552(3):100&quot;, &quot;196.96655(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">B</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;B&quot;, &quot;Boron&quot;, 5, &quot;10:10.0129370(4):19.9(7);11:11.0093055(5):80.1(7)&quot;, &quot;10.811(7)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ba</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ba&quot;, &quot;Barium&quot;, 56, &quot;130:129.906310(7):0.106(1);132:131.905056(3):0.101(1);134:133.904503(3):2.417(18);135:134.905683(3):6.592(12);136:135.904570(3):7.854(24);137:136.905821(3):11.232(24);138:137.905241(3):71.698(42)&quot;, &quot;137.327(7)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Be</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Be&quot;, &quot;Beryllium&quot;, 4, &quot;9:9.0121821(4):100&quot;, &quot;9.012182(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Bi</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Bi&quot;, &quot;Bismuth&quot;, 83, &quot;209:208.980383(3):100&quot;, &quot;208.98038(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Br</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Br&quot;, &quot;Bromine&quot;, 35, &quot;79:78.9183376(20):50.69(7);81:80.916291(3):49.31(7)&quot;, &quot;79.904(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">C</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;C&quot;, &quot;Carbon&quot;, 6, &quot;12:12.0000000(0):98.93(8);13:13.0033548378(10):1.07(8)&quot;, &quot;12.0107(8)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ca</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ca&quot;, &quot;Calcium&quot;, 20, &quot;40:39.9625912(3):96.941(156);42:41.9586183(4):0.647(23);43:42.9587668(5):0.135(10);44:43.9554811(9):2.086(110);46:45.9536928(25):0.004(3);48:47.952534(4):0.187(21)&quot;, &quot;40.078(4)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Cd</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Cd&quot;, &quot;Cadmium&quot;, 48, &quot;106:105.906458(6):1.25(6);108:107.904183(6):0.89(3);110:109.903006(3):12.49(18);111:110.904182(3):12.80(12);112:111.9027572(30):24.13(21);113:112.9044009(30):12.22(12);114:113.9033581(30):28.73(42);116:115.904755(3):7.49(18)&quot;, &quot;112.411(8)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ce</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ce&quot;, &quot;Cerium&quot;, 58, &quot;136:135.907140(50):0.185(2);138:137.905986(11):0.251(2);140:139.905434(3):88.450(51);142:141.909240(4):11.114(51)&quot;, &quot;140.116(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Cl</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Cl&quot;, &quot;Chlorine&quot;, 17, &quot;35:34.96885271(4):75.78(4);37:36.96590260(5):24.22(4)&quot;, &quot;35.453(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Co</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Co&quot;, &quot;Cobalt&quot;, 27, &quot;59:58.9332002(15):100&quot;, &quot;58.933200(9)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Cr</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Cr&quot;, &quot;Chromium&quot;, 24, &quot;50:49.9460496(14):4.345(13);52:51.9405119(15):83.789(18);53:52.9406538(15):9.501(17);54:53.9388849(15):2.365(7)&quot;, &quot;51.9961(6)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Cs</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Cs&quot;, &quot;Cesium&quot;, 55, &quot;133:132.905447(3):100&quot;, &quot;132.90545(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Cu</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Cu&quot;, &quot;Copper&quot;, 29, &quot;63:62.9296011(15):69.17(3);65:64.9277937(19):30.83(3)&quot;, &quot;63.546(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Dy</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Dy&quot;, &quot;Dysprosium&quot;, 66, &quot;156:155.924278(7):0.06(1);158:157.924405(4):0.10(1);160:159.925194(3):2.34(8);161:160.926930(3):18.91(24);162:161.926795(3):25.51(26);163:162.928728(3):24.90(16);164:163.929171(3):28.18(37)&quot;, &quot;162.500(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Er</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Er&quot;, &quot;Erbium&quot;, 68, &quot;162:161.928775(4):0.14(1);164:163.929197(4):1.61(3);166:165.930290(3):33.61(35);167:166.932045(3):22.93(17);168:167.932368(3):26.78(26);170:169.935460(3):14.93(27)&quot;, &quot;167.259(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Eu</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Eu&quot;, &quot;Europium&quot;, 63, &quot;151:150.919846(3):47.81(3);153:152.921226(3):52.19(3)&quot;, &quot;151.964(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">F</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;F&quot;, &quot;Fluorine&quot;, 9, &quot;19:18.99840320(7):100&quot;, &quot;18.9984032(5)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Fe</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Fe&quot;, &quot;Iron&quot;, 26, &quot;54:53.9396148(14):5.845(35);56:55.9349421(15):91.754(36);57:56.9353987(15):2.119(10);58:57.9332805(15):0.282(4)&quot;, &quot;55.845(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ga</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ga&quot;, &quot;Gallium&quot;, 31, &quot;69:68.925581(3):60.108(9);71:70.9247050(19):39.892(9)&quot;, &quot;69.723(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Gd</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Gd&quot;, &quot;Gadolinium&quot;, 64, &quot;152:151.919788(3):0.20(1);154:153.920862(3):2.18(3);155:154.922619(3):14.80(12);156:155.922120(3):20.47(9);157:156.923957(3):15.65(2);158:157.924101(3):24.84(7);160:159.927051(3):21.86(19)&quot;, &quot;157.25(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ge</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ge&quot;, &quot;Germanium&quot;, 32, &quot;70:69.9242504(19):20.84(87);72:71.9220762(16):27.54(34);73:72.9234594(16):7.73(5);74:73.9211782(16):36.28(73);76:75.9214027(16):7.61(38)&quot;, &quot;72.64(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">H</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;H&quot;, &quot;Hydrogen&quot;, 1, &quot;1:1.0078250321(4):99.9885(70);2:2.0141017780(4):0.0115(70)&quot;, &quot;1.00794(7)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">He</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;He&quot;, &quot;Helium&quot;, 2, &quot;3:3.0160293097(9):0.000137(3);4:4.0026032497(10):99.999863(3)&quot;, &quot;4.002602(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Hf</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Hf&quot;, &quot;Hafnium&quot;, 72, &quot;174:173.940040(3):0.16(1);176:175.9414018(29):5.26(7);177:176.9432200(27):18.60(9);178:177.9436977(27):27.28(7);179:178.9458151(27):13.62(2);180:179.9465488(27):35.08(16)&quot;, &quot;178.49(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Hg</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Hg&quot;, &quot;Mercury&quot;, 80, &quot;196:195.965815(4):0.15(1);198:197.966752(3):9.97(20);199:198.968262(3):16.87(22);200:199.968309(3):23.10(19);201:200.970285(3):13.18(9);202:201.970626(3):29.86(26);204:203.973476(3):6.87(15)&quot;, &quot;200.59(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ho</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ho&quot;, &quot;Holmium&quot;, 67, &quot;165:164.930319(3):100&quot;, &quot;164.93032(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">I</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;I&quot;, &quot;Iodine&quot;, 53, &quot;127:126.904468(4):100&quot;, &quot;126.90447(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">In</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;In&quot;, &quot;Indium&quot;, 49, &quot;113:112.904061(4):4.29(5);115:114.903878(5):95.71(5)&quot;, &quot;114.818(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ir</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ir&quot;, &quot;Iridium&quot;, 77, &quot;191:190.960591(3):37.3(2);193:192.962924(3):62.7(2)&quot;, &quot;192.217(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">K</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;K&quot;, &quot;Potassium&quot;, 19, &quot;39:38.9637069(3):93.2581(44);40:39.96399867(29):0.0117(1);41:40.96182597(28):6.7302(44)&quot;, &quot;39.0983(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Kr</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Kr&quot;, &quot;Krypton&quot;, 36, &quot;78:77.920386(7):0.35(1);80:79.916378(4):2.28(6);82:81.9134846(28):11.58(14);83:82.914136(3):11.49(6);84:83.911507(3):57.00(4);86:85.9106103(12):17.30(22)&quot;, &quot;83.798(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">La</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;La&quot;, &quot;Lanthanum&quot;, 57, &quot;138:137.907107(4):0.090(1);139:138.906348(3):99.910(1)&quot;, &quot;138.9055(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Li</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Li&quot;, &quot;Lithium&quot;, 3, &quot;6:6.0151223(5):7.59(4);7:7.0160040(5):92.41(4)&quot;, &quot;6.941(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Lu</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Lu&quot;, &quot;Lutetium&quot;, 71, &quot;175:174.9407679(28):97.41(2);176:175.9426824(28):2.59(2)&quot;, &quot;174.967(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Mg</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Mg&quot;, &quot;Magnesium&quot;, 12, &quot;24:23.98504190(20):78.99(4);25:24.98583702(20):10.00(1);26:25.98259304(21):11.01(3)&quot;, &quot;24.3050(6)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Mn</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Mn&quot;, &quot;Manganese&quot;, 25, &quot;55:54.9380496(14):100&quot;, &quot;54.938049(9)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Mo</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Mo&quot;, &quot;Molybdenum&quot;, 42, &quot;100:99.907477(6):9.63(23);92:91.906810(4):14.84(35);94:93.9050876(20):9.25(12);95:94.9058415(20):15.92(13);96:95.9046789(20):16.68(2);97:96.9060210(20):9.55(8);98:97.9054078(20):24.13(31)&quot;, &quot;95.94(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">N</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;N&quot;, &quot;Nitrogen&quot;, 7, &quot;14:14.0030740052(9):99.632(7);15:15.0001088984(9):0.368(7)&quot;, &quot;14.0067(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Na</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Na&quot;, &quot;Sodium&quot;, 11, &quot;23:22.98976967(23):100&quot;, &quot;22.989770(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Nb</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Nb&quot;, &quot;Niobium&quot;, 41, &quot;93:92.9063775(24):100&quot;, &quot;92.90638(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Nd</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Nd&quot;, &quot;Neodymium&quot;, 60, &quot;142:141.907719(3):27.2(5);143:142.909810(3):12.2(2);144:143.910083(3):23.8(3);145:144.912569(3):8.3(1);146:145.913112(3):17.2(3);148:147.916889(3):5.7(1);150:149.920887(4):5.6(2)&quot;, &quot;144.24(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ne</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ne&quot;, &quot;Neon&quot;, 10, &quot;20:19.9924401759(20):90.48(3);21:20.99384674(4):0.27(1);22:21.99138551(23):9.25(3)&quot;, &quot;20.1797(6)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ni</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ni&quot;, &quot;Nickel&quot;, 28, &quot;58:57.9353479(15):68.0769(89);60:59.9307906(15):26.2231(77);61:60.9310604(15):1.1399(6);62:61.9283488(15):3.6345(17);64:63.9279696(16):0.9256(9)&quot;, &quot;58.6934(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">O</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;O&quot;, &quot;Oxygen&quot;, 8, &quot;16:15.9949146221(15):99.757(16);17:16.99913150(22):0.038(1);18:17.9991604(9):0.205(14)&quot;, &quot;15.9994(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Os</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Os&quot;, &quot;Osmium&quot;, 76, &quot;184:183.952491(3):0.02(1);186:185.953838(3):1.59(3);187:186.9557479(30):1.96(2);188:187.9558360(30):13.24(8);189:188.9581449(30):16.15(5);190:189.958445(3):26.26(2);192:191.961479(4):40.78(19)&quot;, &quot;190.23(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">P</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;P&quot;, &quot;Phosphorus&quot;, 15, &quot;31:30.97376151(20):100&quot;, &quot;30.973761(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Pa</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Pa&quot;, &quot;Protactinium&quot;, 91, &quot;231:231.0358789(28):100&quot;, &quot;231.03588(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Pb</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Pb&quot;, &quot;Lead&quot;, 82, &quot;204:203.973029(3):1.4(1);206:205.974449(3):24.1(1);207:206.975881(3):22.1(1);208:207.976636(3):52.4(1)&quot;, &quot;207.2(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Pd</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Pd&quot;, &quot;Palladium&quot;, 46, &quot;102:101.905608(3):1.02(1);104:103.904035(5):11.14(8);105:104.905084(5):22.33(8);106:105.903483(5):27.33(3);108:107.903894(4):26.46(9);110:109.905152(12):11.72(9)&quot;, &quot;106.42(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Pr</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Pr&quot;, &quot;Praseodymium&quot;, 59, &quot;141:140.907648(3):100&quot;, &quot;140.90765(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Pt</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Pt&quot;, &quot;Platinum&quot;, 78, &quot;190:189.959930(7):0.014(1);192:191.961035(4):0.782(7);194:193.962664(3):32.967(99);195:194.964774(3):33.832(10);196:195.964935(3):25.242(41);198:197.967876(4):7.163(55)&quot;, &quot;195.078(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Rb</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Rb&quot;, &quot;Rubidium&quot;, 37, &quot;85:84.9117893(25):72.17(2);87:86.9091835(27):27.83(2)&quot;, &quot;85.4678(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Re</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Re&quot;, &quot;Rhenium&quot;, 75, &quot;185:184.9529557(30):37.40(2);187:186.9557508(30):62.60(2)&quot;, &quot;186.207(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Rh</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Rh&quot;, &quot;Rhodium&quot;, 45, &quot;103:102.905504(3):100&quot;, &quot;102.90550(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ru</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ru&quot;, &quot;Ruthenium&quot;, 44, &quot;100:99.9042197(22):12.60(7);101:100.9055822(22):17.06(2);102:101.9043495(22):31.55(14);104:103.905430(4):18.62(27);96:95.907598(8):5.54(14);98:97.905287(7):1.87(3);99:98.9059393(21):12.76(14)&quot;, &quot;101.07(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">S</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;S&quot;, &quot;Sulfur&quot;, 16, &quot;32:31.97207069(12):94.93(31);33:32.97145850(12):0.76(2);34:33.96786683(11):4.29(28);36:35.96708088(25):0.02(1)&quot;, &quot;32.065(5)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Sb</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Sb&quot;, &quot;Antimony&quot;, 51, &quot;121:120.9038180(24):57.21(5);123:122.9042157(22):42.79(5)&quot;, &quot;121.760(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Sc</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Sc&quot;, &quot;Scandium&quot;, 21, &quot;45:44.9559102(12):100&quot;, &quot;44.955910(8)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Se</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Se&quot;, &quot;Selenium&quot;, 34, &quot;74:73.9224766(16):0.89(4);76:75.9192141(16):9.37(29);77:76.9199146(16):7.63(16);78:77.9173095(16):23.77(28);80:79.9165218(20):49.61(41);82:81.9167000(22):8.73(22)&quot;, &quot;78.96(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Si</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Si&quot;, &quot;Silicon&quot;, 14, &quot;28:27.9769265327(20):92.2297(7);29:28.97649472(3):4.6832(5);30:29.97377022(5):3.0872(5)&quot;, &quot;28.0855(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Sm</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Sm&quot;, &quot;Samarium&quot;, 62, &quot;144:143.911995(4):3.07(7);147:146.914893(3):14.99(18);148:147.914818(3):11.24(10);149:148.917180(3):13.82(7);150:149.917271(3):7.38(1);152:151.919728(3):26.75(16);154:153.922205(3):22.75(29)&quot;, &quot;150.36(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Sn</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Sn&quot;, &quot;Tin&quot;, 50, &quot;112:111.904821(5):0.97(1);114:113.902782(3):0.66(1);115:114.903346(3):0.34(1);116:115.901744(3):14.54(9);117:116.902954(3):7.68(7);118:117.901606(3):24.22(9);119:118.903309(3):8.59(4);120:119.9021966(27):32.58(9);122:121.9034401(29):4.63(3);124:123.9052746(15):5.79(5)&quot;, &quot;118.710(7)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Sr</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Sr&quot;, &quot;Strontium&quot;, 38, &quot;84:83.913425(4):0.56(1);86:85.9092624(24):9.86(1);87:86.9088793(24):7.00(1);88:87.9056143(24):82.58(1)&quot;, &quot;87.62(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ta</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ta&quot;, &quot;Tantalum&quot;, 73, &quot;180:179.947466(3):0.012(2);181:180.947996(3):99.988(2)&quot;, &quot;180.9479(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Tb</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Tb&quot;, &quot;Terbium&quot;, 65, &quot;159:158.925343(3):100&quot;, &quot;158.92534(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Te</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Te&quot;, &quot;Tellurium&quot;, 52, &quot;120:119.904020(11):0.09(1);122:121.9030471(20):2.55(12);123:122.9042730(19):0.89(3);124:123.9028195(16):4.74(14);125:124.9044247(20):7.07(15);126:125.9033055(20):18.84(25);128:127.9044614(19):31.74(8);130:129.9062228(21):34.08(62)&quot;, &quot;127.60(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Th</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Th&quot;, &quot;Thorium&quot;, 90, &quot;232:232.0380504(22):100&quot;, &quot;232.0381(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Ti</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Ti&quot;, &quot;Titanium&quot;, 22, &quot;46:45.9526295(12):8.25(3);47:46.9517638(10):7.44(2);48:47.9479471(10):73.72(3);49:48.9478708(10):5.41(2);50:49.9447921(11):5.18(2)&quot;, &quot;47.867(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Tl</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Tl&quot;, &quot;Thallium&quot;, 81, &quot;203:202.972329(3):29.524(14);205:204.974412(3):70.476(14)&quot;, &quot;204.3833(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Tm</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Tm&quot;, &quot;Thulium&quot;, 69, &quot;169:168.934211(3):100&quot;, &quot;168.93421(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">U</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;U&quot;, &quot;Uranium&quot;, 92, &quot;234:234.0409456(21):0.0055(2);235:235.0439231(21):0.7200(51);238:238.0507826(21):99.2745(106)&quot;, &quot;238.02891(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">V</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;V&quot;, &quot;Vanadium&quot;, 23, &quot;50:49.9471628(14):0.250(4);51:50.9439637(14):99.750(4)&quot;, &quot;50.9415(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">W</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;W&quot;, &quot;Tungsten&quot;, 74, &quot;180:179.946706(5):0.12(1);182:181.948206(3):26.50(16);183:182.9502245(29):14.31(4);184:183.9509326(29):30.64(2);186:185.954362(3):28.43(19)&quot;, &quot;183.84(1)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Xe</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Xe&quot;, &quot;Xenon&quot;, 54, &quot;124:123.9058958(21):0.09(1);126:125.904269(7):0.09(1);128:127.9035304(15):1.92(3);129:128.9047795(9):26.44(24);130:129.9035079(10):4.08(2);131:130.9050819(10):21.18(3);132:131.9041545(12):26.89(6);134:133.9053945(9):10.44(10);136:135.907220(8):8.87(16)&quot;, &quot;131.293(6)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Y</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Y&quot;, &quot;Yttrium&quot;, 39, &quot;89:88.9058479(25):100&quot;, &quot;88.90585(2)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Yb</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Yb&quot;, &quot;Ytterbium&quot;, 70, &quot;168:167.933894(5):0.13(1);170:169.934759(3):3.04(15);171:170.936322(3):14.28(57);172:171.9363777(30):21.83(67);173:172.9382068(30):16.13(27);174:173.9388581(30):31.83(92);176:175.942568(3):12.76(41)&quot;, &quot;173.04(3)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Zn</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Zn&quot;, &quot;Zinc&quot;, 30, &quot;64:63.9291466(18):48.63(60);66:65.9260368(16):27.90(27);67:66.9271309(17):4.10(13);68:67.9248476(17):18.75(51);70:69.925325(4):0.62(3)&quot;, &quot;65.409(4)&quot;)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Zr</td>
+          <td>=</td>
+          <td class="context-item-value">Element.new(&quot;Zr&quot;, &quot;Zirconium&quot;, 40, &quot;90:89.9047037(23):51.45(40);91:90.9056450(23):11.22(5);92:91.9050401(23):17.15(8);94:93.9063158(25):17.38(28);96:95.908276(3):2.80(9)&quot;, &quot;91.224(2)&quot;)</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">abundances</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+An array the isotopic abundances of element isotopes in <a
+href="Element.html#M000082">mass</a> order ([98.93, 1.07])
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">atomic_number</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The atomic number of the element, ie the number of protons in the element
+(6)
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">index_max_abundance</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The index of the most abundant isotope (0)
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">isotopes</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+An array the <a href="Element.html#M000082">mass</a> numbers of element
+isotopes in <a href="Element.html#M000082">mass</a> order ([12, 13])
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">masses</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+An array the masses of element isotopes in <a
+href="Element.html#M000082">mass</a> order ([12.0 Da, 13.0033548378 Da])
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">name</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The name of the element (Carbon)
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">std_atomic_weight</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The standard atomic weight of the element, ie the mean relative atomic <a
+href="Element.html#M000082">mass</a> of an element in the Earth&#8216;s
+crust and atmosphere as determined by IUPAC (12.0107 Da)
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">symbol</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The symbol of the element (C)
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000079" class="method-detail">
+        <a name="M000079"></a>
+
+        <div class="method-heading">
+          <a href="Element.src/M000079.html" target="Code" class="method-signature"
+            onclick="popupCode('Element.src/M000079.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(symbol, name, atomic_number, attributes, std_atomic_weight)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000084" class="method-detail">
+        <a name="M000084"></a>
+
+        <div class="method-heading">
+          <a href="Element.src/M000084.html" target="Code" class="method-signature"
+            onclick="popupCode('Element.src/M000084.html');return false;">
+          <span class="method-name">abundance</span><span class="method-args">(n=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Gets the <a href="Element.html#M000084">abundance</a> of the isotope with
+the given <a href="Element.html#M000082">mass</a> number. By default,
+returns the <a href="Element.html#M000084">abundance</a> of the most
+abundant isotope.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000085" class="method-detail">
+        <a name="M000085"></a>
+
+        <div class="method-heading">
+          <a href="Element.src/M000085.html" target="Code" class="method-signature"
+            onclick="popupCode('Element.src/M000085.html');return false;">
+          <span class="method-name">abundance_uncertainty</span><span class="method-args">(n=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the uncertainty of the <a href="Element.html#M000084">abundance</a>
+of the isotope with the given <a href="Element.html#M000082">mass</a>
+number. By default, returns the <a
+href="Element.html#M000084">abundance</a> uncertainty of the most abundant
+isotope.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000080" class="method-detail">
+        <a name="M000080"></a>
+
+        <div class="method-heading">
+          <a href="Element.src/M000080.html" target="Code" class="method-signature"
+            onclick="popupCode('Element.src/M000080.html');return false;">
+          <span class="method-name">has_isotope?</span><span class="method-args">(n)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+True if the element contains an isotope of the given <a
+href="Element.html#M000082">mass</a> number.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000081" class="method-detail">
+        <a name="M000081"></a>
+
+        <div class="method-heading">
+          <a href="Element.src/M000081.html" target="Code" class="method-signature"
+            onclick="popupCode('Element.src/M000081.html');return false;">
+          <span class="method-name">index_isotope</span><span class="method-args">(n)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Index of the isotope in isotopes, masses, and <a
+href="Element.html#M000084">abundance</a> of the given <a
+href="Element.html#M000082">mass</a> number.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000082" class="method-detail">
+        <a name="M000082"></a>
+
+        <div class="method-heading">
+          <a href="Element.src/M000082.html" target="Code" class="method-signature"
+            onclick="popupCode('Element.src/M000082.html');return false;">
+          <span class="method-name">mass</span><span class="method-args">(n=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Element.html#M000082">mass</a> of the isotope with the
+given <a href="Element.html#M000082">mass</a> number. By default, returns
+the <a href="Element.html#M000082">mass</a> of the most abundant isotope.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000083" class="method-detail">
+        <a name="M000083"></a>
+
+        <div class="method-heading">
+          <a href="Element.src/M000083.html" target="Code" class="method-signature"
+            onclick="popupCode('Element.src/M000083.html');return false;">
+          <span class="method-name">mass_uncertainty</span><span class="method-args">(n=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the uncertainty of the <a href="Element.html#M000082">mass</a> of
+the isotope with the given <a href="Element.html#M000082">mass</a> number.
+By default, returns the <a href="Element.html#M000082">mass</a> uncertainty
+of the most abundant isotope.
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

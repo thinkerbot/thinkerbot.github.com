@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_mass_values_vs_mascot (ResidueTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/molecules/libraries/residue_test.rb, line 153</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_mass_values_vs_mascot</span>
+    <span class="ruby-identifier">str</span> = <span class="ruby-value str">%Q{
+Alanine C3H5NO  Ala   A   71.03712  71.08   Ala
+Arginine C6H12N4O   Arg   R   156.10112   156.19  Arg
+Asparagine C4H6N2O2   Asn   N   114.04293   114.10  Asn
+Aspartic acid C4H5NO3   Asp   D   115.02695   115.09  Asp
+Cysteine C3H5NOS  Cys   C   103.00919   103.14  Cys
+Glutamic acid C5H7NO3   Glu   E   129.04260   129.12  Glu
+Glutamine C5H8N2O2  Gln   Q   128.05858   128.13  Gln
+Glycine C2H3NO  Gly   G   57.02147  57.05   Gly
+Histidine C6H7N3O   His   H   137.05891   137.14  His
+Isoleucine C6H11NO  Ile   I   113.08407   113.16  Ile
+Leucine C6H11NO   Leu   L   113.08407   113.16  Leu
+Lysine C6H12N2O   Lys   K   128.09497   128.17  Lys
+Methionine C5H9NOS  Met   M   131.04049   131.19  Met
+Phenylalanine C9H9NO  Phe   F   147.06842   147.18  Phe
+Proline C5H7NO  Pro   P   97.05277  97.12   Pro
+Serine C3H5NO2  Ser   S   87.03203  87.08   Ser
+Threonine C4H7NO2   Thr   T   101.04768   101.10  Thr
+Selenocysteine C3H5NOSe   SeC   U   150.95364   150.03  SeC
+Tryptophan C11H10N2O  Trp   W   186.07932   186.21  Trp
+Tyrosine C9H9NO2  Tyr   Y   163.06333   163.18  Tyr
+Valine C5H9NO   Val   V   99.06842  99.13   Val}</span>
+
+    <span class="ruby-identifier">composites</span> = <span class="ruby-value str">%Q{
+Asn or Asp  Asx   B      
+Glu or Gln  Glx   Z 
+Unknown   Xaa   X}</span>
+
+    <span class="ruby-identifier">residues</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\n/</span>)
+    <span class="ruby-identifier">residues</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">residue_str</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">residue_str</span>.<span class="ruby-identifier">empty?</span>
+      
+      <span class="ruby-identifier">residue_str</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/(.*)\s+([\w\d]+)\s+(\w\w\w)\s+(\w)\s+(\d+\.\d+)\s+(\d+\.\d+)\s+\w\w\w/</span>
+      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">$1</span>
+      <span class="ruby-identifier">formula</span> = <span class="ruby-identifier">$2</span>
+      <span class="ruby-identifier">abbr</span> = <span class="ruby-identifier">$3</span>
+      <span class="ruby-identifier">letter</span> = <span class="ruby-identifier">$4</span>
+      <span class="ruby-identifier">monoisotopic</span> = <span class="ruby-identifier">$5</span>.<span class="ruby-identifier">to_f</span>
+      <span class="ruby-identifier">average</span> = <span class="ruby-identifier">$6</span>.<span class="ruby-identifier">to_f</span>
+
+      <span class="ruby-identifier">residue</span> = <span class="ruby-constant">Residue</span>[<span class="ruby-identifier">letter</span>]
+      <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-identifier">residue</span>, <span class="ruby-identifier">residue_str</span>
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">upcase</span>, <span class="ruby-identifier">residue</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">upcase</span>, <span class="ruby-identifier">residue_str</span>
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">abbr</span>.<span class="ruby-identifier">upcase</span>, <span class="ruby-identifier">residue</span>.<span class="ruby-identifier">abbr</span>.<span class="ruby-identifier">upcase</span>, <span class="ruby-identifier">residue_str</span>
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">formula</span>, <span class="ruby-identifier">residue</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\(|\)/</span>, <span class="ruby-value str">&quot;&quot;</span>), <span class="ruby-identifier">residue_str</span>
+      
+      <span class="ruby-identifier">assert_in_delta</span> <span class="ruby-identifier">monoisotopic</span>, <span class="ruby-identifier">residue</span>.<span class="ruby-identifier">mass</span>, <span class="ruby-identifier">delta_mass</span>, <span class="ruby-identifier">residue_str</span> 
+      <span class="ruby-comment cmt"># TODO -- check average mass</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

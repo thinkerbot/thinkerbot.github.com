@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_mass_values_vs_proteome_commons (ElementTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/constants/libraries/element_test.rb, line 88</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_mass_values_vs_proteome_commons</span>
+    <span class="ruby-identifier">str</span> = <span class="ruby-value str">%Q{
+H 1.0078250321  0.999885
+H2  2.014101778 1.15E-4
+O 15.9949146221 0.9975700000000001
+O17 16.9991315  3.7999999999999997E-4
+O18 17.9991604  0.0020499999999999997
+N14 14.0030740052 0.9963200000000001
+N15 15.0001088984 0.00368
+C12 12.0  0.9893000000000001
+C13 13.0033548378 0.010700000000000001
+P31 30.97376151 1.0
+S32 31.97207069 0.9493
+S33 32.9714585  0.0076
+S34 33.96786683 0.0429
+S36 35.96708088 2.0E-4}</span>
+
+    <span class="ruby-identifier">atoms</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\n/</span>)
+    <span class="ruby-identifier">atoms</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">atom_str</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">atom_str</span>.<span class="ruby-identifier">empty?</span>
+      
+      <span class="ruby-identifier">name</span>, <span class="ruby-identifier">mass</span>, <span class="ruby-identifier">abundance</span> = <span class="ruby-identifier">atom_str</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\s+/</span>)
+      <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/(\w)(\d*)/</span>
+      <span class="ruby-identifier">symbol</span> = <span class="ruby-identifier">$1</span>
+      <span class="ruby-identifier">isotope</span> = <span class="ruby-identifier">$2</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">$2</span>.<span class="ruby-identifier">to_i</span>
+      <span class="ruby-identifier">mass</span> = <span class="ruby-identifier">mass</span>.<span class="ruby-identifier">to_f</span>
+      <span class="ruby-identifier">abundance</span> = <span class="ruby-identifier">abundance</span>.<span class="ruby-identifier">to_f</span> <span class="ruby-operator">*</span> <span class="ruby-value">100</span>
+      
+      <span class="ruby-identifier">element</span> = <span class="ruby-constant">Element</span>[<span class="ruby-identifier">symbol</span>]
+      <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-identifier">element</span>, <span class="ruby-identifier">atom_str</span>
+      <span class="ruby-identifier">assert</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">has_isotope?</span>(<span class="ruby-identifier">isotope</span>), <span class="ruby-identifier">atom_str</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">isotope</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+      
+      <span class="ruby-identifier">assert_in_delta</span> <span class="ruby-identifier">mass</span>, <span class="ruby-identifier">element</span>.<span class="ruby-identifier">mass</span>(<span class="ruby-identifier">isotope</span>), <span class="ruby-identifier">delta_mass</span>, <span class="ruby-identifier">atom_str</span> 
+      <span class="ruby-identifier">assert_in_delta</span> <span class="ruby-identifier">abundance</span>, <span class="ruby-identifier">element</span>.<span class="ruby-identifier">abundance</span>(<span class="ruby-identifier">isotope</span>), <span class="ruby-identifier">delta_abundance</span>, <span class="ruby-identifier">atom_str</span> 
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

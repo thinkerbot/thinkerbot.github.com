@@ -1,0 +1,244 @@
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+
+    Methods
+
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Methods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="rdoc-style.css" type="text/css" />
+  <base target="docwin" />
+</head>
+<body>
+<div id="index">
+  <h1 class="section-bar">Methods</h1>
+  <div id="index-entries">
+    <a href="classes/Linecook/Test/ShellTest.html#M000062">_assert_alike (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000060">_assert_output_equal (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000056">_assert_script (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000058">_assert_script_match (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Utils.html#M000077">arrayify (Linecook::Utils)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000061">assert_alike (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000059">assert_output_equal (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Test.html#M000021">assert_recipe (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Test.html#M000022">assert_recipe_matches (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000055">assert_script (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000057">assert_script_match (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000143">attributes (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Package.html#M000183">attributes_path (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000144">attrs (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Template.html#M000204">build (Linecook::Template)</a><br />
+    <a href="classes/Linecook/Commands/Helper.html#M000129">build (Linecook::Commands::Helper)</a><br />
+    <a href="classes/Linecook/Package.html#M000196">build (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Package.html#M000193">build_file (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Test.html#M000023">build_package (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Test.html#M000025">build_project (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Package.html#M000195">build_recipe (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Package.html#M000194">build_template (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Commands/Command.html#M000096">call (Linecook::Commands::Command)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000163">callback (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Utils.html#M000081">camelize (Linecook::Utils)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000152">capture_block (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000151">capture_path (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000153">capture_str (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000160">chain (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000161">chain? (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000162">chain_proxy (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Test/FileTest.html#M000032">class_dir (Linecook::Test::FileTest)</a><br />
+    <a href="classes/Linecook/Test/FileTest/ClassMethods.html#M000046">cleanup (Linecook::Test::FileTest::ClassMethods)</a><br />
+    <a href="classes/Linecook/Test/FileTest.html#M000035">cleanup (Linecook::Test::FileTest)</a><br />
+    <a href="classes/Linecook/Test/FileTest.html#M000034">cleanup_methods (Linecook::Test::FileTest)</a><br />
+    <a href="classes/Linecook/Test/FileTest/ClassMethods.html#M000039">cleanup_methods (Linecook::Test::FileTest::ClassMethods)</a><br />
+    <a href="classes/Linecook/Test/FileTest/ClassMethods.html#M000045">cleanup_paths (Linecook::Test::FileTest::ClassMethods)</a><br />
+    <a href="classes/Linecook/Package.html#M000200">close (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000139">close (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000140">close! (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000141">closed? (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Package.html#M000174">config (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000205">config_file (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Utils.html#M000083">constantize (Linecook::Utils)</a><br />
+    <a href="classes/Linecook/Package.html#M000197">content (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Package.html#M000171">context (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Test.html#M000011">cookbook (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Utils.html#M000079">deep_merge (Linecook::Utils)</a><br />
+    <a href="classes/Linecook/Utils.html#M000080">deep_merge? (Linecook::Utils)</a><br />
+    <a href="classes/Linecook/Commands/Ssh.html#M000136">default_host (Linecook::Commands::Ssh)</a><br />
+    <a href="classes/Linecook/Commands/Package.html#M000122">default_package_dir (Linecook::Commands::Package)</a><br />
+    <a href="classes/Linecook/Commands/Helper.html#M000128">default_sources (Linecook::Commands::Helper)</a><br />
+    <a href="classes/Linecook/Test/FileTest/ClassMethods.html#M000042">define_method_cleanup (Linecook::Test::FileTest::ClassMethods)</a><br />
+    <a href="classes/Linecook.html#M000004">disable_nest_hash (Linecook)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000111">discardstate (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000103">each_host (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000104">each_vm_name (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Test/RegexpEscape.html#M000072">escape (Linecook::Test::RegexpEscape)</a><br />
+    <a href="classes/Linecook/Package.html#M000202">export (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000148">file_path (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Package.html#M000184">file_path (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Package.html#M000175">files (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Commands/Run.html#M000086">format (Linecook::Commands::Run)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000214">full_gem_paths (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000208">gems (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000211">gems (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000216">glob (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Commands/Build.html#M000131">glob_helpers (Linecook::Commands::Build)</a><br />
+    <a href="classes/Linecook/Commands/Run.html#M000084">glob_package_dirs (Linecook::Commands::Run)</a><br />
+    <a href="classes/Linecook/Commands/Build.html#M000132">glob_package_files (Linecook::Commands::Build)</a><br />
+    <a href="classes/Linecook/Utils.html#M000078">hashify (Linecook::Utils)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000145">helpers (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Test.html#M000015">helpers (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Test/ClassMethods.html#M000065">host (Linecook::Test::ClassMethods)</a><br />
+    <a href="classes/Linecook/Test.html#M000017">host (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000100">host_list (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000101">host_map (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Test/FileTest/ModuleMethods.html#M000049">included (Linecook::Test::FileTest::ModuleMethods)</a><br />
+    <a href="classes/Linecook/Test/ModuleMethods.html#M000068">included (Linecook::Test::ModuleMethods)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000158">indent (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Commands/Command.html#M000091">inherited (Linecook::Commands::Command)</a><br />
+    <a href="classes/Linecook/Package.html#M000169">init (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000207">init (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Test/FileTest/ClassMethods.html#M000041">initialize (Linecook::Test::FileTest::ClassMethods)</a><br />
+    <a href="classes/Linecook/Test.html#M000027">linecook (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Test.html#M000028">linecook_cmd (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Package.html#M000187">load_attributes (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Utils.html#M000076">load_config (Linecook::Utils)</a><br />
+    <a href="classes/Linecook/Package.html#M000189">load_helper (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000098">load_hosts (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Package.html#M000188">load_template (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Commands/Command.html#M000093">log (Linecook::Commands::Command)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000217">manifest (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Package.html#M000172">manifest (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000218">merge (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Test/FileTest/ClassMethods.html#M000048">method_added (Linecook::Test::FileTest::ClassMethods)</a><br />
+    <a href="classes/Linecook/Test.html#M000007">method_dir (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Test/FileTest.html#M000033">method_dir (Linecook::Test::FileTest)</a><br />
+    <a href="classes/Linecook/Proxy.html#M000166">method_missing (Linecook::Proxy)</a><br />
+    <a href="classes/MiniTest/Unit/TestCase.html#M000001">method_name (MiniTest::Unit::TestCase)</a><br />
+    <a href="classes/Linecook/Package.html#M000199">mode (Linecook::Package)</a><br />
+    <a href="classes/Linecook.html#M000003">nest_hash (Linecook)</a><br />
+    <a href="classes/Linecook.html#M000005">new (Linecook)</a><br />
+    <a href="classes/Linecook/Proxy.html#M000165">new (Linecook::Proxy)</a><br />
+    <a href="classes/Linecook/Test/CommandParser.html#M000069">new (Linecook::Test::CommandParser)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000138">new (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Commands/CommandError.html#M000130">new (Linecook::Commands::CommandError)</a><br />
+    <a href="classes/Linecook/Package.html#M000170">new (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Template.html#M000203">new (Linecook::Template)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000209">new (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Commands/Command.html#M000092">new (Linecook::Commands::Command)</a><br />
+    <a href="classes/Linecook/Test/RegexpEscape.html#M000074">new (Linecook::Test::RegexpEscape)</a><br />
+    <a href="classes/Linecook/Package.html#M000179">next_target_name (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Package.html#M000180">next_variable_name (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Test/FileTest/ClassMethods.html#M000047">no_cleanup (Linecook::Test::FileTest::ClassMethods)</a><br />
+    <a href="classes/Linecook/Test/ClassMethods.html#M000067">only_hosts (Linecook::Test::ClassMethods)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000063">outdent (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000159">outdent (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000213">overrides (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Test.html#M000013">package (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Commands/Package.html#M000121">package_dependencies (Linecook::Commands::Package)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000146">package_dir (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Test/CommandParser.html#M000071">parse (Linecook::Test::CommandParser)</a><br />
+    <a href="classes/Linecook/Test/CommandParser.html#M000070">parse_cmd (Linecook::Test::CommandParser)</a><br />
+    <a href="classes/Linecook/Commands/Snapshot.html#M000117">parse_snapshots (Linecook::Commands::Snapshot)</a><br />
+    <a href="classes/Linecook/Test/FileTest.html#M000036">path (Linecook::Test::FileTest)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000210">paths (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Commands/Init.html#M000125">prepare (Linecook::Commands::Init)</a><br />
+    <a href="classes/Linecook/Test/FileTest.html#M000037">prepare (Linecook::Test::FileTest)</a><br />
+    <a href="classes/Linecook/Commands/Start.html#M000115">process (Linecook::Commands::Start)</a><br />
+    <a href="classes/Linecook/Commands/Snapshot.html#M000116">process (Linecook::Commands::Snapshot)</a><br />
+    <a href="classes/Linecook/Commands/Run.html#M000085">process (Linecook::Commands::Run)</a><br />
+    <a href="classes/Linecook/Commands/Env.html#M000089">process (Linecook::Commands::Env)</a><br />
+    <a href="classes/Linecook/Commands/Stop.html#M000114">process (Linecook::Commands::Stop)</a><br />
+    <a href="classes/Linecook/Commands/State.html#M000135">process (Linecook::Commands::State)</a><br />
+    <a href="classes/Linecook/Commands/Init.html#M000124">process (Linecook::Commands::Init)</a><br />
+    <a href="classes/Linecook/Commands/Ssh.html#M000137">process (Linecook::Commands::Ssh)</a><br />
+    <a href="classes/Linecook/Commands/Command.html#M000097">process (Linecook::Commands::Command)</a><br />
+    <a href="classes/Linecook/Commands/Package.html#M000120">process (Linecook::Commands::Package)</a><br />
+    <a href="classes/Linecook/Commands/Helper.html#M000127">process (Linecook::Commands::Helper)</a><br />
+    <a href="classes/Linecook/Commands/Build.html#M000133">process (Linecook::Commands::Build)</a><br />
+    <a href="classes/Linecook/Test/RegexpEscape.html#M000073">quote (Linecook::Test::RegexpEscape)</a><br />
+    <a href="classes/Linecook/Test.html#M000020">recipe (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Package.html#M000186">recipe_path (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000150">recipe_path (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Package.html#M000177">recipes (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Package.html#M000178">register (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Package.html#M000173">registry (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Commands/Command.html#M000090">registry (Linecook::Commands::Command)</a><br />
+    <a href="classes/Linecook/Test.html#M000008">remote_dir (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Test/FileTest.html#M000038">remove (Linecook::Test::FileTest)</a><br />
+    <a href="classes/Linecook/Test/FileTest/ClassMethods.html#M000043">remove_method_cleanup (Linecook::Test::FileTest::ClassMethods)</a><br />
+    <a href="classes/Linecook/Package.html#M000201">reset (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Test/FileTest/ClassMethods.html#M000040">reset_cleanup_methods (Linecook::Test::FileTest::ClassMethods)</a><br />
+    <a href="classes/Linecook/Commands/Snapshot.html#M000118">reset_snapshot (Linecook::Commands::Snapshot)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000102">resolve_vm_names (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Package.html#M000181">resource? (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Package.html#M000182">resource_path (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000110">restore (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000142">result (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000156">rewrite (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000215">rewrite (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000212">rewrites (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000157">rstrip (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Test.html#M000024">run_package (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Test.html#M000026">run_project (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Test.html#M000018">runlist (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000107">running? (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Commands/Env.html#M000087">select (Linecook::Commands::Env)</a><br />
+    <a href="classes/Linecook/Commands/Env.html#M000088">serialize (Linecook::Commands::Env)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000052">set_env (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Test/FileTest.html#M000029">setup (Linecook::Test::FileTest)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000050">setup (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Cookbook.html#M000206">setup (Linecook::Cookbook)</a><br />
+    <a href="classes/Linecook/Package.html#M000168">setup (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Test.html#M000010">setup_cookbook (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Test.html#M000012">setup_package (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Package.html#M000190">setup_recipe (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Test.html#M000019">setup_recipe (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Package.html#M000191">setup_tempfile (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000054">sh (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Commands/Command.html#M000094">sh (Linecook::Commands::Command)</a><br />
+    <a href="classes/Linecook/Commands/Command.html#M000095">sh! (Linecook::Commands::Command)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000112">share (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Test/Unit/TestCase.html#M000002">skip_test (Test::Unit::TestCase)</a><br />
+    <a href="classes/Linecook/Commands/Snapshot.html#M000119">snapshot (Linecook::Commands::Snapshot)</a><br />
+    <a href="classes/Linecook/Commands/Init.html#M000123">source_dir (Linecook::Commands::Init)</a><br />
+    <a href="classes/Linecook/Package.html#M000198">source_path (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000105">ssh (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000106">ssh! (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Test.html#M000009">ssh_config_file (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000099">ssh_config_file= (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000108">start (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000113">start_ssh_socket (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Commands/State.html#M000134">state (Linecook::Commands::State)</a><br />
+    <a href="classes/Linecook/Commands/VboxCommand.html#M000109">stop (Linecook::Commands::VboxCommand)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000147">target_path (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Test/FileTest.html#M000030">teardown (Linecook::Test::FileTest)</a><br />
+    <a href="classes/Linecook/Package.html#M000192">tempfile? (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Commands/Init.html#M000126">template (Linecook::Commands::Init)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000149">template_path (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Package.html#M000185">template_path (Linecook::Package)</a><br />
+    <a href="classes/Linecook/Package.html#M000176">templates (Linecook::Package)</a><br />
+    <a href="classes/Linecook.html#M000006">to_hash (Linecook)</a><br />
+    <a href="classes/Linecook/Test/RegexpEscape.html#M000075">to_s (Linecook::Test::RegexpEscape)</a><br />
+    <a href="classes/Linecook/Proxy.html#M000167">to_s (Linecook::Proxy)</a><br />
+    <a href="classes/Linecook/Test/FileTest/ClassMethods.html#M000044">undef_method_cleanup (Linecook::Test::FileTest::ClassMethods)</a><br />
+    <a href="classes/Linecook/Utils.html#M000082">underscore (Linecook::Utils)</a><br />
+    <a href="classes/Linecook/Test.html#M000014">use_helpers (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Test.html#M000016">use_host (Linecook::Test)</a><br />
+    <a href="classes/Linecook/Test/ClassMethods.html#M000066">use_host (Linecook::Test::ClassMethods)</a><br />
+    <a href="classes/Linecook/Test/FileTest.html#M000031">user_dir (Linecook::Test::FileTest)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000051">verbose? (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000064">whitespace_escape (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Test/ShellTest.html#M000053">with_env (Linecook::Test::ShellTest)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000154">write (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000164">write_callback (Linecook::Recipe)</a><br />
+    <a href="classes/Linecook/Recipe.html#M000155">writeln (Linecook::Recipe)</a><br />
+  </div>
+</div>
+</body>
+</html>

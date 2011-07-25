@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>parse (Molecules::EmpiricalFormula)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/molecules/empirical_formula.rb, line 89</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">chemical_formula</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+        <span class="ruby-comment cmt"># Remove whitespace </span>
+        <span class="ruby-identifier">formula</span> = <span class="ruby-identifier">chemical_formula</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\s+/</span>, <span class="ruby-value str">&quot;&quot;</span>)
+
+        <span class="ruby-comment cmt"># Split and handle multipart formulae</span>
+        <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">formula</span> 
+        <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/\+/</span>
+          <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">formula</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\+/</span>).<span class="ruby-identifier">inject</span>(<span class="ruby-constant">EmpiricalFormula</span>.<span class="ruby-identifier">new</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">current</span>, <span class="ruby-identifier">formula</span><span class="ruby-operator">|</span>
+            <span class="ruby-identifier">current</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">formula</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/-/</span>
+          <span class="ruby-identifier">splits</span> = <span class="ruby-identifier">formula</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/-/</span>)
+          <span class="ruby-identifier">first</span> = <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">splits</span>.<span class="ruby-identifier">shift</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+          <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">splits</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">first</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">current</span>, <span class="ruby-identifier">formula</span><span class="ruby-operator">|</span>
+            <span class="ruby-identifier">current</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">formula</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/[^A-Za-z0-9\\(\\)]/</span>
+          <span class="ruby-identifier">result</span> = <span class="ruby-identifier">block_given?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">formula</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+          <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">result</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">result</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+          
+          <span class="ruby-identifier">raise</span> <span class="ruby-constant">ParseError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;unexpected characters in formula: #{chemical_formula}&quot;</span>)
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-comment cmt"># factor is the number following an element, as 6 and 12 in 'C6H12'</span>
+        <span class="ruby-comment cmt"># factor == -1 indicates that a number has not been read for the </span>
+        <span class="ruby-comment cmt"># next element.  This state is used later to check for hanging </span>
+        <span class="ruby-comment cmt"># factors, as in '2C6' or (8OH)</span>
+        <span class="ruby-identifier">factor</span> = <span class="ruby-keyword kw">nil</span>
+
+        <span class="ruby-comment cmt"># multiplier is the latest cumulative factor for a parenthesis </span>
+        <span class="ruby-comment cmt"># expression.  A new multiplier is pushed on the stack for every new</span>
+        <span class="ruby-comment cmt"># parenthesis set, and popped off when the set terminates.</span>
+        <span class="ruby-comment cmt"># ex: for CH3(C(H)2)7CH </span>
+        <span class="ruby-comment cmt">#   At the period       Integer at the top of the stack equals</span>
+        <span class="ruby-comment cmt">#   CH3(C(H)2)7.CH      1</span>
+        <span class="ruby-comment cmt">#   CH3(C(H)2.)7CH      7</span>
+        <span class="ruby-comment cmt">#   CH3(C(H.)2)7CH      14</span>
+        <span class="ruby-comment cmt">#   CH3(C.(H)2)7CH      7</span>
+        <span class="ruby-comment cmt">#   CH3.(CH)2)7CH       1</span>
+        <span class="ruby-identifier">multiplier</span> = []
+        <span class="ruby-identifier">multiplier</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">1</span>
+
+        <span class="ruby-comment cmt"># composition will store the formula composition as it is parsed</span>
+        <span class="ruby-identifier">composition</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>)
+
+        <span class="ruby-comment cmt"># Parse elements and factors out of the formula from right to left     </span>
+        <span class="ruby-identifier">scanner</span> = <span class="ruby-constant">StringScanner</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">formula</span>.<span class="ruby-identifier">reverse</span>)
+        <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">rest_size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+
+          <span class="ruby-keyword kw">case</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">scan_full</span>(<span class="ruby-regexp re">/(\d+)/</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>)
+            <span class="ruby-comment cmt"># found a factor</span>
+            <span class="ruby-identifier">factor</span> = <span class="ruby-identifier">scanner</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">reverse</span>.<span class="ruby-identifier">to_i</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">scan_full</span>(<span class="ruby-regexp re">/([a-z]?[A-Z])/</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>)
+            <span class="ruby-comment cmt"># found an element</span>
+
+            <span class="ruby-comment cmt"># Adjust the factor by the multiplier.  If factor == nil </span>
+            <span class="ruby-comment cmt"># then a factor has not been read for the element, as would</span>
+            <span class="ruby-comment cmt"># be seen in NaOH; use 1 in this case instead.</span>
+            <span class="ruby-identifier">factor</span> = (<span class="ruby-identifier">factor</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-value">1</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">factor</span>) <span class="ruby-operator">*</span> <span class="ruby-identifier">multiplier</span>.<span class="ruby-identifier">last</span>
+
+            <span class="ruby-comment cmt"># Add the current factor to composition, remembering to reverse the symbol</span>
+            <span class="ruby-identifier">composition</span>[ <span class="ruby-identifier">scanner</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">reverse</span> ] <span class="ruby-operator">+=</span> <span class="ruby-identifier">factor</span>
+
+            <span class="ruby-comment cmt"># reset factor to nil</span>
+            <span class="ruby-identifier">factor</span> = <span class="ruby-keyword kw">nil</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">scan_full</span>(<span class="ruby-regexp re">/\)/</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>)
+            <span class="ruby-comment cmt"># When a parenthesis ends, the current multiplier must be</span>
+            <span class="ruby-comment cmt"># adujusted by the current factor.  If factor == nil then a </span>
+            <span class="ruby-comment cmt"># factor has not been read for the parenthesis, use 1 instead</span>
+            <span class="ruby-identifier">multiplier</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">factor</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-value">1</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">factor</span>) <span class="ruby-operator">*</span> <span class="ruby-identifier">multiplier</span>.<span class="ruby-identifier">last</span>
+
+            <span class="ruby-comment cmt"># reset factor to nil</span>
+            <span class="ruby-identifier">factor</span> = <span class="ruby-keyword kw">nil</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">scan_full</span>(<span class="ruby-regexp re">/\(/</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>)
+            <span class="ruby-comment cmt"># When a parenthesis starts, the current multiplier is</span>
+            <span class="ruby-comment cmt"># popped off.  Check for hanging factors and that after </span>
+            <span class="ruby-comment cmt"># popping a multiplier will remain.  If no multiplier will</span>
+            <span class="ruby-comment cmt"># remain, then the parenthesis must be mismatched</span>
+            <span class="ruby-identifier">raise</span> <span class="ruby-constant">ParseError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;the formula contains a hanging factor: #{chemical_formula}&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">factor</span>.<span class="ruby-identifier">nil?</span>
+            <span class="ruby-identifier">raise</span> <span class="ruby-constant">ParseError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;the formula contains mismatched parenthesis: #{chemical_formula}&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">multiplier</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+
+            <span class="ruby-identifier">multiplier</span>.<span class="ruby-identifier">pop</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">raise</span> <span class="ruby-constant">ParseError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;could not parse formula: #{chemical_formula}&quot;</span>)
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-comment cmt"># Check for hanging factors, that a multiplier remains, and that </span>
+        <span class="ruby-comment cmt"># elements were found during parsing</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ParseError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;the formula contains a hanging factor: #{chemical_formula}&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">factor</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ParseError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;the formula contains mismatched parenthesis: #{chemical_formula}&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">multiplier</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ParseError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;no elements could be found in the formula: #{chemical_formula}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">composition</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">formula</span>.<span class="ruby-identifier">empty?</span>
+
+        <span class="ruby-constant">EmpiricalFormula</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">composition_to_factors</span>(<span class="ruby-identifier">composition</span>))
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

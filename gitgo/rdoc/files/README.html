@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Jul 24 20:39:23 -0600 2011</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="../classes/Gitgo.html">Gitgo</a></h1>
+<p>
+<a href="../classes/Gitgo.html">Gitgo</a> &#8212; git-driven issues,
+comments, and a wiki&#8230; to go.
+</p>
+<h2>Description</h2>
+<p>
+<a href="../classes/Gitgo.html">Gitgo</a> is an issue tracker that stores
+issue information in a git repository.
+</p>
+<p>
+At present gitgo is in a developmental state. While the backend and data
+model both work and appear to be robust, the front-end is highly lacking.
+Usage will be difficult without insider knowledge.
+</p>
+<h2>Usage</h2>
+<p>
+In the working directory for a git repository:
+</p>
+<pre>
+  % gitgo
+</pre>
+<p>
+Then visit <a href="http://localhost:8080">localhost:8080</a> in a web
+browser.
+</p>
+<h2>Installation</h2>
+<p>
+<a href="../classes/Gitgo.html">Gitgo</a> is not available as a gem yet. To
+clone the project and build your own:
+</p>
+<pre>
+  % git clone git://github.com/pinnacol/gitgo.git
+  % cd gitgo
+  % rake gem
+  % gem install pkg/gitgo-...
+</pre>
+<h2>Development</h2>
+<p>
+<a href="../classes/Gitgo.html">Gitgo</a> is open-source and welcomes help
+from the community! To get started:
+</p>
+<pre>
+  % git clone git://github.com/pinnacol/gitgo.git
+  % cd gitgo
+  % rake test
+</pre>
+<p>
+To see bugs tracked in the gitgo repo:
+</p>
+<pre>
+  % bin/gitgo
+</pre>
+<h2>Info</h2>
+<table>
+<tr><td valign="top">Developer:</td><td><a href="http://bahuvrihi.wordpress.com">Simon Chiang</a>
+
+</td></tr>
+<tr><td valign="top">License:</td><td><a href="License_txt.html">MIT-Style</a>
+
+</td></tr>
+</table>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Lazydoc::Document</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Lazydoc::Document</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/lazydoc/document_rb.html">
+                lib/lazydoc/document.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+A <a href="Document.html">Document</a> tracks constant attributes and code
+comments for a particular source file. Documents may be assigned a
+default_const_name to be used when a constant attribute does not specify a
+constant.
+</p>
+<pre>
+  # KeyWithConst::key value a
+  # ::key value b
+
+  doc = Document.new(__FILE__, 'DefaultConst')
+  doc.resolve
+  doc['KeyWithConst']['key'].value      # =&gt; 'value a'
+  doc['DefaultConst']['key'].value      # =&gt; 'value b'
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000040">[]</a>&nbsp;&nbsp;
+      <a href="#M000041">const_names</a>&nbsp;&nbsp;
+      <a href="#M000039">default_const_name=</a>&nbsp;&nbsp;
+      <a href="#M000036">new</a>&nbsp;&nbsp;
+      <a href="#M000042">register</a>&nbsp;&nbsp;
+      <a href="#M000044">register___</a>&nbsp;&nbsp;
+      <a href="#M000043">register_method</a>&nbsp;&nbsp;
+      <a href="#M000037">reset</a>&nbsp;&nbsp;
+      <a href="#M000045">resolve</a>&nbsp;&nbsp;
+      <a href="#M000038">source_file=</a>&nbsp;&nbsp;
+      <a href="#M000046">to_hash</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">comments</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+An array of <a href="Comment.html">Comment</a> objects identifying lines
+resolved or to-be-resolved
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">const_attrs</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+A hash of [const_name, attributes] pairs tracking the constant attributes
+resolved or to-be-resolved for self. <a
+href="Attributes.html">Attributes</a> are hashes of [key, comment] pairs.
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">default_const_name</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The default constant name used when no constant name is specified for a
+constant attribute
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">resolved</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+Flag indicating whether or not self has been resolved
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">source_file</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The source file for self, used during <a
+href="Document.html#M000045">resolve</a>
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
+
+        <div class="method-heading">
+          <a href="Document.src/M000036.html" target="Code" class="method-signature"
+            onclick="popupCode('Document.src/M000036.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(source_file=nil, default_const_name='')</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+          <a href="Document.src/M000040.html" target="Code" class="method-signature"
+            onclick="popupCode('Document.src/M000040.html');return false;">
+          <span class="method-name">[]</span><span class="method-args">(const_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the attributes for the specified const_name.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
+
+        <div class="method-heading">
+          <a href="Document.src/M000041.html" target="Code" class="method-signature"
+            onclick="popupCode('Document.src/M000041.html');return false;">
+          <span class="method-name">const_names</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns an array of the <a href="Document.html#M000041">const_names</a> in
+self with at least one attribute.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
+
+        <div class="method-heading">
+          <a href="Document.src/M000039.html" target="Code" class="method-signature"
+            onclick="popupCode('Document.src/M000039.html');return false;">
+          <span class="method-name">default_const_name=</span><span class="method-args">(const_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets the default_const_name for self. Any const_attrs assigned to the
+previous default will be removed and merged with those already assigned to
+the <a href="Document.html#M000036">new</a> default.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
+
+        <div class="method-heading">
+          <a href="Document.src/M000042.html" target="Code" class="method-signature"
+            onclick="popupCode('Document.src/M000042.html');return false;">
+          <span class="method-name">register</span><span class="method-args">(line_number, comment_class=Comment)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Register the specified line number to self. Register may take an integer or
+a regexp for late-evaluation. See <a
+href="Comment.html#M000025">Comment#resolve</a> for more details.
+</p>
+<p>
+Returns a comment_class instance corresponding to the line.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+          <a href="Document.src/M000044.html" target="Code" class="method-signature"
+            onclick="popupCode('Document.src/M000044.html');return false;">
+          <span class="method-name">register___</span><span class="method-args">(comment_class=Comment, caller_index=0)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Registers the next comment.
+</p>
+<pre>
+  lazydoc = Document.new(__FILE__)
+
+  lazydoc.register___
+  # this is the comment
+  # that is registered
+  def method(a,b,c)
+  end
+
+  lazydoc.resolve
+  m = lazydoc.comments[0]
+  m.subject      # =&gt; &quot;def method(a,b,c)&quot;
+  m.to_s         # =&gt; &quot;this is the comment that is registered&quot;
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
+
+        <div class="method-heading">
+          <a href="Document.src/M000043.html" target="Code" class="method-signature"
+            onclick="popupCode('Document.src/M000043.html');return false;">
+          <span class="method-name">register_method</span><span class="method-args">(method_name, comment_class=Method)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Registers a regexp matching the first method by the specified name.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
+
+        <div class="method-heading">
+          <a href="Document.src/M000037.html" target="Code" class="method-signature"
+            onclick="popupCode('Document.src/M000037.html');return false;">
+          <span class="method-name">reset</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Resets self by clearing const_attrs, comments, and setting resolved to
+false. Generally NOT recommended as this clears any work you&#8216;ve done
+registering lines; to simply allow <a
+href="Document.html#M000045">resolve</a> to re-scan a document, manually
+set resolved to false.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <a href="Document.src/M000045.html" target="Code" class="method-signature"
+            onclick="popupCode('Document.src/M000045.html');return false;">
+          <span class="method-name">resolve</span><span class="method-args">(str=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Scans str for constant attributes and adds them to to self. Code comments
+are also resolved against str. If no str is specified, the contents of
+source_file are used instead.
+</p>
+<p>
+Resolve does nothing if resolved == true. Returns true if str was resolved,
+or false otherwise.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
+
+        <div class="method-heading">
+          <a href="Document.src/M000038.html" target="Code" class="method-signature"
+            onclick="popupCode('Document.src/M000038.html');return false;">
+          <span class="method-name">source_file=</span><span class="method-args">(source_file)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets the source file for self. Expands the source file path if necessary.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
+
+        <div class="method-heading">
+          <a href="Document.src/M000046.html" target="Code" class="method-signature"
+            onclick="popupCode('Document.src/M000046.html');return false;">
+          <span class="method-name">to_hash</span><span class="method-args">() {|comment| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

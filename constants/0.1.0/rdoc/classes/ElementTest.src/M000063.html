@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_mass_values_vs_unimod (ElementTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/constants/libraries/element_test.rb, line 132</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_mass_values_vs_unimod</span>
+    <span class="ruby-identifier">str</span> = <span class="ruby-value str">%Q{
+H Hydrogen  1.007825035 1.00794
+2H  Deuterium 2.014101779 2.014101779
+Li  Lithium 7.016003  6.941
+C Carbon  12  12.0107
+13C Carbon13  13.00335483 13.00335483
+N Nitrogen  14.003074 14.0067
+15N Nitrogen15  15.00010897 15.00010897
+O Oxygen  15.99491463 15.9994
+18O Oxygen18  17.9991603  17.9991603
+F Fluorine  18.99840322 18.9984032
+Na  Sodium  22.9897677  22.98977
+P Phosphorous 30.973762 30.973761
+S Sulfur  31.9720707  32.065
+Cl  Chlorine  34.96885272 35.453
+K Potassium 38.9637074  39.0983
+Ca  Calcium 39.9625906  40.078
+Fe  Iron  55.9349393  55.845
+Ni  Nickel  57.9353462  58.6934
+Cu  Copper  62.9295989  63.546
+Zn  Zinc  63.9291448  65.409
+Br  Bromine 78.9183361  79.904
+Se  Selenium  79.9165196  78.96
+Mo  Molybdenum  97.9054073  95.94
+Ag  Silver  106.905092  107.8682
+I Iodine  126.904473  126.90447
+Au  Gold  196.966543  196.96655
+Hg  Mercury 201.970617  200.59}</span>
+
+    <span class="ruby-identifier">atoms</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\n/</span>)
+    <span class="ruby-identifier">atoms</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">atom_str</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">atom_str</span>.<span class="ruby-identifier">empty?</span>
+      
+      <span class="ruby-identifier">symbol</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">monoisotopic</span>, <span class="ruby-identifier">average</span> = <span class="ruby-identifier">atom_str</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\s+/</span>)
+      <span class="ruby-identifier">symbol</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/(\d*)(\w+)/</span>
+      <span class="ruby-identifier">isotope</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_i</span>
+      <span class="ruby-identifier">symbol</span> = <span class="ruby-identifier">$2</span>
+      <span class="ruby-identifier">monoisotopic</span> = <span class="ruby-identifier">monoisotopic</span>.<span class="ruby-identifier">to_f</span>
+      <span class="ruby-identifier">average</span> = <span class="ruby-identifier">average</span>.<span class="ruby-identifier">to_f</span>
+      
+      <span class="ruby-identifier">element</span> = <span class="ruby-constant">Element</span>[<span class="ruby-identifier">symbol</span>]
+      <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-identifier">element</span>, <span class="ruby-identifier">atom_str</span>
+      <span class="ruby-identifier">assert</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">has_isotope?</span>(<span class="ruby-identifier">isotope</span>), <span class="ruby-identifier">atom_str</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">isotope</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+
+      <span class="ruby-identifier">assert_in_delta</span> <span class="ruby-identifier">monoisotopic</span>, <span class="ruby-identifier">element</span>.<span class="ruby-identifier">mass</span>(<span class="ruby-identifier">isotope</span>), <span class="ruby-identifier">delta_mass</span>, <span class="ruby-identifier">atom_str</span> 
+      <span class="ruby-comment cmt"># TODO -- check average mass</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

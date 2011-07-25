@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Linecook</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Linecook</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/linecook_rb.html">
+                lib/linecook.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/attributes_rb.html">
+                lib/linecook/attributes.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/commands/command_rb.html">
+                lib/linecook/commands/command.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/commands/command_error_rb.html">
+                lib/linecook/commands/command_error.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/commands/env_rb.html">
+                lib/linecook/commands/env.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/commands/helper_rb.html">
+                lib/linecook/commands/helper.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/commands/helpers_rb.html">
+                lib/linecook/commands/helpers.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/commands/init_rb.html">
+                lib/linecook/commands/init.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/commands/package_rb.html">
+                lib/linecook/commands/package.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/commands/vbox_rb.html">
+                lib/linecook/commands/vbox.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/cookbook_rb.html">
+                lib/linecook/cookbook.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/helper_rb.html">
+                lib/linecook/helper.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/package_rb.html">
+                lib/linecook/package.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/recipe_rb.html">
+                lib/linecook/recipe.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/shell_rb.html">
+                lib/linecook/shell.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/shell/posix_rb.html">
+                lib/linecook/shell/posix.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/shell/test_rb.html">
+                lib/linecook/shell/test.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/shell/unix_rb.html">
+                lib/linecook/shell/unix.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/shell/utils_rb.html">
+                lib/linecook/shell/utils.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/template_rb.html">
+                lib/linecook/template.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/test_rb.html">
+                lib/linecook/test.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/test/file_test_rb.html">
+                lib/linecook/test/file_test.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/test/regexp_escape_rb.html">
+                lib/linecook/test/regexp_escape.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/utils_rb.html">
+                lib/linecook/utils.rb
+                </a>
+        <br />
+                <a href="../files/lib/linecook/version_rb.html">
+                lib/linecook/version.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Generated by <a href="Linecook.html">Linecook</a>, do not edit.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="Linecook/Commands.html" class="link">Linecook::Commands</a><br />
+Module <a href="Linecook/Shell.html" class="link">Linecook::Shell</a><br />
+Module <a href="Linecook/Test.html" class="link">Linecook::Test</a><br />
+Module <a href="Linecook/Utils.html" class="link">Linecook::Utils</a><br />
+Class <a href="Linecook/Attributes.html" class="link">Linecook::Attributes</a><br />
+Class <a href="Linecook/Cookbook.html" class="link">Linecook::Cookbook</a><br />
+Class <a href="Linecook/Helper.html" class="link">Linecook::Helper</a><br />
+Class <a href="Linecook/Package.html" class="link">Linecook::Package</a><br />
+Class <a href="Linecook/Recipe.html" class="link">Linecook::Recipe</a><br />
+Class <a href="Linecook/Template.html" class="link">Linecook::Template</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MAJOR</td>
+          <td>=</td>
+          <td class="context-item-value">0</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MINOR</td>
+          <td>=</td>
+          <td class="context-item-value">6</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">TINY</td>
+          <td>=</td>
+          <td class="context-item-value">2</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VERSION</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;#{MAJOR}.#{MINOR}.#{TINY}&quot;</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">WEBSITE</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;http://github.com/pinnacol/linecook&quot;</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

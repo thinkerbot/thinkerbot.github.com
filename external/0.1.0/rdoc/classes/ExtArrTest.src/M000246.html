@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_entry_to_str_and_str_to_entry_are_inverse_functions_for_objects_responding_to_to_yaml (ExtArrTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/ext_arr_test.rb, line 201</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_entry_to_str_and_str_to_entry_are_inverse_functions_for_objects_responding_to_to_yaml</span>
+    [
+      <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>,
+      <span class="ruby-identifier">:a</span>, <span class="ruby-identifier">:symbol</span>,
+      <span class="ruby-value str">''</span>, <span class="ruby-value str">'a'</span>, <span class="ruby-value str">&quot;abcde fghij&quot;</span>, <span class="ruby-value str">&quot;1234&quot;</span>, <span class="ruby-value str">&quot;with\nnewline&quot;</span>, <span class="ruby-value str">&quot; \r \n \t  &quot;</span>, <span class="ruby-value str">&quot; &quot;</span>, <span class="ruby-value str">&quot;\t&quot;</span>, [<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>].<span class="ruby-identifier">to_yaml</span>, 
+      <span class="ruby-value">0</span>, <span class="ruby-value">1</span>, <span class="ruby-value">-1</span>, <span class="ruby-value">1.1</span>, <span class="ruby-value">18446744073709551615</span>,
+      [], [<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>], 
+      {}, {<span class="ruby-identifier">:key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'value'</span>, <span class="ruby-value str">'another'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>}, 
+      <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+    ].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">obj</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">str</span> = <span class="ruby-identifier">ea</span>.<span class="ruby-identifier">entry_to_str</span>(<span class="ruby-identifier">obj</span>)
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">obj</span>, <span class="ruby-identifier">ea</span>.<span class="ruby-identifier">str_to_entry</span>(<span class="ruby-identifier">str</span>)
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># FLUNK CASES! </span>
+    [<span class="ruby-value str">&quot;\r&quot;</span>, <span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;\r\n&quot;</span>, <span class="ruby-value str">&quot;string_with_\r\n_internal&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">obj</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">str</span> = <span class="ruby-identifier">ea</span>.<span class="ruby-identifier">entry_to_str</span>(<span class="ruby-identifier">obj</span>)
+      <span class="ruby-identifier">assert_not_equal</span> <span class="ruby-identifier">obj</span>, <span class="ruby-identifier">ea</span>.<span class="ruby-identifier">str_to_entry</span>(<span class="ruby-identifier">str</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

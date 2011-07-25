@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_documentation (ReadMeDocTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/readme_doc_test.rb, line 37</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_documentation</span>
+    <span class="ruby-comment cmt"># Element predefines all chemical elements</span>
+    <span class="ruby-identifier">c</span> = <span class="ruby-constant">Element</span><span class="ruby-operator">::</span><span class="ruby-constant">C</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value str">&quot;Carbon&quot;</span>, <span class="ruby-identifier">c</span>.<span class="ruby-identifier">name</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value str">&quot;C&quot;</span>, <span class="ruby-identifier">c</span>.<span class="ruby-identifier">symbol</span> 
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">6</span>, <span class="ruby-identifier">c</span>.<span class="ruby-identifier">atomic_number</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">12.0</span>, <span class="ruby-identifier">c</span>.<span class="ruby-identifier">mass</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">13.0033548378</span>, <span class="ruby-identifier">c</span>.<span class="ruby-identifier">mass</span>(<span class="ruby-value">13</span>)
+
+    <span class="ruby-identifier">assert</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Element</span>[<span class="ruby-value str">'Carbon'</span>]
+    <span class="ruby-identifier">assert</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Element</span>[<span class="ruby-value str">'C'</span>]
+    <span class="ruby-identifier">assert</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Element</span>[<span class="ruby-value">6</span>]
+  
+    <span class="ruby-comment cmt">###</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-constant">Residue</span><span class="ruby-operator">::</span><span class="ruby-constant">D</span>, <span class="ruby-constant">Residue</span>[<span class="ruby-value str">'D'</span>]
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-constant">Residue</span><span class="ruby-operator">::</span><span class="ruby-constant">A</span>, <span class="ruby-constant">Residue</span>[<span class="ruby-value str">'ALA'</span>]
+
+    <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value str">'ALA'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Residue</span><span class="ruby-operator">::</span><span class="ruby-constant">A</span>, <span class="ruby-value str">'CYS'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Residue</span><span class="ruby-operator">::</span><span class="ruby-constant">C</span>, <span class="ruby-value str">'ASP'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Residue</span><span class="ruby-operator">::</span><span class="ruby-constant">D</span>}, <span class="ruby-constant">Residue</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">'upcase abbr'</span>))
+    <span class="ruby-identifier">const_ordered_assert_equal</span>([<span class="ruby-value str">&quot;Alanine&quot;</span>, <span class="ruby-value str">&quot;Cysteine&quot;</span>, <span class="ruby-value str">&quot;Aspartic Acid&quot;</span>], <span class="ruby-constant">Residue</span>.<span class="ruby-identifier">collection</span>(<span class="ruby-value str">'name'</span>))
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

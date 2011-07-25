@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_scan_collect_with_subsets (HOLD)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/ext_arr_test.rb, line 487</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_scan_collect_with_subsets</span>
+    <span class="ruby-identifier">aio_test</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">aio</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">case_test</span>(
+        <span class="ruby-comment cmt">#[0] =&gt; ['a'],</span>
+        <span class="ruby-comment cmt">#[1] =&gt; ['a'],</span>
+        <span class="ruby-comment cmt">#[-4] =&gt; nil,</span>
+        [<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">1</span>] =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">'a'</span>,<span class="ruby-value str">'d'</span>],
+        [<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-value">1</span>] =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">'a'</span>],
+        [<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-value">0</span>] =<span class="ruby-operator">&gt;</span> [],
+        [<span class="ruby-value">0</span>, <span class="ruby-value">2</span>] =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">'a'</span>,<span class="ruby-value str">'d'</span>],
+        [<span class="ruby-value">0</span>, <span class="ruby-value">0</span>] =<span class="ruby-operator">&gt;</span> []
+      ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">subset</span>, <span class="ruby-identifier">expected</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">indicies</span> = []
+        <span class="ruby-identifier">result</span> = <span class="ruby-identifier">aio</span>.<span class="ruby-identifier">scan_collect</span>(<span class="ruby-identifier">aio</span>.<span class="ruby-identifier">index</span>[<span class="ruby-operator">*</span><span class="ruby-identifier">subset</span>]) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">scanner</span>, <span class="ruby-identifier">offset</span>, <span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">indicies</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">index</span>
+          <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/\w/</span>)
+        <span class="ruby-keyword kw">end</span>
+        
+        <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">index</span>[<span class="ruby-operator">*</span><span class="ruby-identifier">subset</span>], <span class="ruby-identifier">indicies</span>, <span class="ruby-identifier">subset</span>
+        <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">expected</span>, <span class="ruby-identifier">result</span>, <span class="ruby-identifier">subset</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

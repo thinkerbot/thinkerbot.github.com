@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_mass_values_vs_vg_analytical (ResidueTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/molecules/libraries/residue_test.rb, line 207</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_mass_values_vs_vg_analytical</span>
+    <span class="ruby-identifier">common</span> = <span class="ruby-value str">%Q{
+Ala A Alanine C3H5NO 71.03711 71.0788
+Arg R Arginine C6H12N4O 156.10111 156.1875
+Asn N Asparagine C4H6N2O2 114.04293 114.1038
+Asp D Aspartic Acid C4H5NO3 115.02694 115.0886
+Cys C Cysteine C3H5NOS 103.00919 103.1388
+Glu E Glutamic Acid C5H7NO3 129.04259 129.115
+Gln Q Glutamine C5H8N2O2 128.05858 128.1307
+Gly G Glycine C2H3NO 57.02146 57.0519
+His H Histidine C6H7N3O 137.05891 137.1411
+Ile I Isoleucine C6H11NO 113.08406 113.1594
+Leu L Leucine C6H11NO 113.08406 113.1594
+Lys K Lysine C6H12N2O 128.09496 128.1741
+Met M Methionine C5H9NOS 131.04049 131.1926
+Phe F Phenylalanine C9H9NO 147.06841 147.1766
+Pro P Proline C5H7NO 97.05276 97.1167
+Ser S Serine C3H5NO2 87.03203 87.0782
+Thr T Threonine C4H7NO2 101.04768 101.1051
+Trp W Tryptophan C11H10N2O 186.07931 186.2132
+Tyr Y Tyrosine C9H9NO2 163.06333 163.1760
+Val V Valine C5H9NO 99.06841 99.1326}</span>
+
+    <span class="ruby-identifier">residues</span> = <span class="ruby-identifier">common</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\n/</span>)
+    <span class="ruby-identifier">residues</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">residue_str</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">residue_str</span>.<span class="ruby-identifier">empty?</span>
+      
+      <span class="ruby-identifier">residue_str</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/(\w\w\w) (\w) (\w+( Acid)?) ([\w\d]+) (\d+\.\d+) (\d+\.\d+)/</span>
+      <span class="ruby-identifier">abbr</span> = <span class="ruby-identifier">$1</span>
+      <span class="ruby-identifier">letter</span> = <span class="ruby-identifier">$2</span>
+      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">$3</span>
+      <span class="ruby-identifier">formula</span> = <span class="ruby-identifier">$5</span>
+      <span class="ruby-identifier">monoisotopic</span> = <span class="ruby-identifier">$6</span>.<span class="ruby-identifier">to_f</span>
+      <span class="ruby-identifier">average</span> = <span class="ruby-identifier">$7</span>.<span class="ruby-identifier">to_f</span>
+
+      <span class="ruby-identifier">residue</span> = <span class="ruby-constant">Residue</span>[<span class="ruby-identifier">letter</span>]
+      <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-identifier">residue</span>, <span class="ruby-identifier">residue_str</span>
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">residue</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">residue_str</span>
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">abbr</span>, <span class="ruby-identifier">residue</span>.<span class="ruby-identifier">abbr</span>, <span class="ruby-identifier">residue_str</span>
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">formula</span>, <span class="ruby-identifier">residue</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\(|\)/</span>, <span class="ruby-value str">&quot;&quot;</span>), <span class="ruby-identifier">residue_str</span>
+      
+      <span class="ruby-identifier">assert_in_delta</span> <span class="ruby-identifier">monoisotopic</span>, <span class="ruby-identifier">residue</span>.<span class="ruby-identifier">mass</span>, <span class="ruby-identifier">delta_mass</span>, <span class="ruby-identifier">residue_str</span> 
+      <span class="ruby-comment cmt"># TODO -- check average mass</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-identifier">uncommon</span> = <span class="ruby-value str">%Q{
+Orn Ornithine C5H10N2O 114.07931 114.1472
+Aba Aminobutyric Acid C4H7NO 85.05276 85.1057
+AECys Aminoethylcysteine C5H10N2OS 146.05138 146.2072
+Aib alpha-Aminoisobutyric Acid C4H7NO 85.05276 85.1057
+CMCys Carboxymethylcysteine C5H7NO3S 161.01466 161.1755
+Dha Dehydroalanine C3H3NO 69.02146 69.0629
+Dhb Dehydroamino-alpha-butyric Acid C4H5NO 83.03711 83.0898
+Hyl Hydroxylysine C6H12N2O2 144.08988 144.1735
+Hyp Hydroxyproline C5H7NO2 113.04768 113.1161
+Iva Isovaline C5H9NO 99.06841 99.1326
+nLeu Norleucine C6H11NO 113.08406 113.1594
+Pip 2-Piperidinecarboxylic Acid C6H9NO 111.06841 111.1436
+pGlu Pyroglutamic Acid C5H5NO2 111.03203 111.1002
+Sar Sarcosine C3H5NO 71.03711 71.0788}</span>
+
+    <span class="ruby-identifier">residues</span> = <span class="ruby-identifier">uncommon</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\n/</span>)
+    <span class="ruby-identifier">residues</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">residue_str</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">residue_str</span>.<span class="ruby-identifier">empty?</span>
+      
+      <span class="ruby-identifier">residue_str</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/(\w+) ([\w-]+( Acid)?) ([\w\d]+) (\d+\.\d+) (\d+\.\d+)/</span>
+      <span class="ruby-identifier">abbr</span> = <span class="ruby-identifier">$1</span>
+      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">$2</span>
+      <span class="ruby-identifier">formula</span> = <span class="ruby-identifier">$4</span>
+      <span class="ruby-identifier">monoisotopic</span> = <span class="ruby-identifier">$5</span>.<span class="ruby-identifier">to_f</span>
+      <span class="ruby-identifier">average</span> = <span class="ruby-identifier">$6</span>.<span class="ruby-identifier">to_f</span>
+      
+      <span class="ruby-identifier">residue</span> = <span class="ruby-constant">Residue</span>[<span class="ruby-identifier">abbr</span>]
+      <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-identifier">residue</span>, <span class="ruby-identifier">residue_str</span>
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">residue</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">residue_str</span>
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">formula</span>, <span class="ruby-identifier">residue</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\(|\)/</span>, <span class="ruby-value str">&quot;&quot;</span>), <span class="ruby-identifier">residue_str</span>
+      
+      <span class="ruby-identifier">assert_in_delta</span> <span class="ruby-identifier">monoisotopic</span>, <span class="ruby-identifier">residue</span>.<span class="ruby-identifier">mass</span>, <span class="ruby-identifier">delta_mass</span>, <span class="ruby-identifier">residue_str</span> 
+      <span class="ruby-comment cmt"># TODO -- check average mass</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Jul 24 20:39:52 -0600 2011</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="../classes/Molecules.html">Molecules</a></h1>
+<p>
+A library of molecules for scientific calculations in Ruby.
+</p>
+<h2>Description</h2>
+<p>
+<a href="../classes/Molecules.html">Molecules</a> provides libraries of
+commonly used molecules (currently just amino acid residues and
+polypeptides). Library classes inherit from EmpiricalFormula which allows
+calculation of molecular composition and mass, as well as
+adding/subtraction of other molecules.
+</p>
+<p>
+I have attempted to use reputable sources and to adhere to standards when
+applicable. Please notify me of any errors and send me suggestions!
+</p>
+<ul>
+<li><a href="http://rubyforge.org/projects/bioactive">Rubyforge</a>
+
+</li>
+<li><a
+href="http://bahuvrihi.lighthouseapp.com/projects/13518-molecules/overview">Lighthouse</a>
+
+</li>
+<li><a href="http://github.com/bahuvrihi/molecules/tree/master">Github</a>
+
+</li>
+</ul>
+<h2>Usage</h2>
+<pre>
+  require 'molecules'
+  include Molecules::Libraries
+
+  # Residue predefines all common amino acids
+  # as well as some uncommon ones.
+  r = Residue::A
+  r.name               # =&gt; &quot;Alanine&quot;
+  r.abbr               # =&gt; &quot;Ala&quot;
+  r.letter             # =&gt; &quot;A&quot;
+  r.side_chain.to_s    # =&gt; &quot;CH(3)&quot;
+  r.mass               # =&gt; 71.03711
+  r.immonium_ion_mass  # =&gt; 44.0500
+
+  # Polypeptide allows for creation of polypeptides
+  # from residue sequences.
+  p = Polypeptide.new(&quot;RPPGFSPFR&quot;)
+  p.to_s               # =&gt; &quot;C(50)H(71)N(15)O(10)&quot;
+  p.mass               # =&gt; 1041.5508
+
+  # Generic molecules may be specified with EmpiricalFormula.
+  caffeine = Molecules::EmpiricalFormula.parse(&quot;C8H10N4O2&quot;)
+  coffee = Molecules::EmpiricalFormula.parse(&quot;C8H10N4O2 + H2O&quot;)
+</pre>
+<h3>Mass Calculator (tap task)</h3>
+<p>
+<a href="../classes/Molecules.html">Molecules</a> provides a mass
+calculator tap task. <a href="http://tap.rubyforge.org">Tap</a> is not
+required by molecules in general, but you get this bonus if you have tap
+installed:
+</p>
+<pre>
+  % tap -- molecules/calc &quot;:RPPGFSPFR + H2O&quot;
+    I[15:34:30]         1077.57 Da :RPPGFSPFR + H2O
+</pre>
+<h2>Known Issues</h2>
+<ul>
+<li>Polypeptide only allows common residues
+
+</li>
+<li>No &#8216;Molecule&#8217; class is defined, pending the potential addition
+of more molecule data (ex: <a
+href="http://en.wikipedia.org/wiki/Simplified_molecular_input_line_entry_specification">SMILES</a>
+data)
+
+</li>
+<li>No mechanism for defining large libraries of molecules has been chosen. A
+database solution may be adopted to this end.
+
+</li>
+</ul>
+<h2>Installation</h2>
+<p>
+<a href="../classes/Molecules.html">Molecules</a> is available as a gem
+through <a href="http://rubyforge.org/projects/bioactive">RubyForge</a>.
+Use:
+</p>
+<pre>
+  % gem install molecules
+</pre>
+<h2>Info</h2>
+<p>
+Copyright (c) 2006-2008, Regents of the University of Colorado.
+</p>
+<table>
+<tr><td valign="top">Developer:</td><td><a href="http://bahuvrihi.wordpress.com">Simon Chiang</a>, <a
+href="http://biomol.uchsc.edu/">Biomolecular Structure Program</a>, <a
+href="http://hsc-proteomics.uchsc.edu/hansenlab/">Hansen Lab</a>
+
+</td></tr>
+<tr><td valign="top">Support:</td><td>CU Denver School of Medicine Deans Academic Enrichment Fund
+
+</td></tr>
+<tr><td valign="top">Licence:</td><td>MIT-Style
+
+</td></tr>
+</table>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>file_length (External::Utils)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/external/patches/windows_utils.rb, line 10</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_length</span>(<span class="ruby-identifier">io</span>)
+      <span class="ruby-identifier">io</span>.<span class="ruby-identifier">fsync</span>
+
+      <span class="ruby-comment cmt"># I would have liked to use win32/file/stat to do this... however, some issue</span>
+      <span class="ruby-comment cmt"># arose involving FileUtils.cp, File.stat, and File::Stat.mode.  cp raised an </span>
+      <span class="ruby-comment cmt"># error because the mode would be nil for files.  I wasn't sure how to fix it, </span>
+      <span class="ruby-comment cmt"># so I've lifted the relevant code for pulling the large file size.</span>
+
+      <span class="ruby-comment cmt"># Note this is a simplified version... if you base.path point to a chardev, </span>
+      <span class="ruby-comment cmt"># this may need to be changed, because apparently the call to the Win32API </span>
+      <span class="ruby-comment cmt"># may fail</span>
+
+      <span class="ruby-identifier">stat_buf</span> = [<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'ISSssssIILILILIL'</span>)
+      <span class="ruby-constant">Win32API</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'msvcrt'</span>, <span class="ruby-value str">'_stat64'</span>, <span class="ruby-value str">'PP'</span>, <span class="ruby-value str">'I'</span>).<span class="ruby-identifier">call</span>(<span class="ruby-identifier">io</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">stat_buf</span>)
+      <span class="ruby-identifier">stat_buf</span>[<span class="ruby-value">24</span>, <span class="ruby-value">4</span>].<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">'L'</span>).<span class="ruby-identifier">first</span> <span class="ruby-comment cmt"># Size of file in bytes</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

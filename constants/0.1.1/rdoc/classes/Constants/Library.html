@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Constants::Library</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Constants::Library</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/constants/library_rb.html">
+                lib/constants/library.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="Library.html">Library</a> adds methods for convenient indexing and
+access of constants in a module. Usually <a href="Library.html">Library</a>
+is <a href="Library.html#M000013">included</a> after the constants have
+been defined.
+</p>
+<pre>
+  module Color
+    RED = 'red'
+    GREEN = 'green'
+    BLUE = 'blue'
+    GREY = 'grey'
+
+    include Constants::Library
+    library.index_by('name') {|c| c }
+  end
+</pre>
+<p>
+Now the Color constants can be accessed through the indicies hash or
+through [], which searches all indicies for the first match.
+</p>
+<pre>
+  Color.index('name')
+  # =&gt; {
+  # 'red' =&gt; Color::RED,
+  # 'blue' =&gt; Color::BLUE,
+  # 'green' =&gt; Color::GREEN,
+  # 'grey' =&gt; Color::GREY}
+
+  Color['red']                  # =&gt; Color::RED
+</pre>
+<p>
+Indexing is simplified for attributes. Notice that multiple values matching
+the same key are stashed into one group:
+</p>
+<pre>
+  Color.library.index_by_attribute 'length'
+  Color.index('length')
+  # =&gt; {
+  # 3 =&gt; Color::RED,
+  # 4 =&gt; [Color::BLUE, Color::GREY],
+  # 5 =&gt; Color::GREEN}
+
+  Color[4]                      # =&gt; [Color::BLUE, Color::GREY]
+</pre>
+<p>
+<a href="../Constants.html">Constants</a> may also be assembled into
+ordered collections, which may or may not contain all the constants.
+</p>
+<pre>
+  Color.library.collect('gstar') {|c| c =~ /^g/ ? c : nil }
+  Color.collection('gstar')     # =&gt; [Color::GREEN, Color::GREY]
+
+  Color.library.collect_attribute 'length'
+  Color.collection('length')    # =&gt; [3,5,4,4]
+</pre>
+<p>
+New constants (even &#8216;constants&#8217; that are not declared in the
+module) may be added manually, or by resetting the library. All indexes and
+collections are updated automatically.
+</p>
+<pre>
+  Color.library.add('yellow')
+  Color.index('length')
+  # =&gt; {
+  # 3 =&gt; Color::RED,
+  # 4 =&gt; [Color::BLUE, Color::GREY],
+  # 5 =&gt; Color::GREEN,
+  # 6 =&gt; 'yellow'}
+
+  module Color
+    ORANGE = 'orange'
+    reset_library
+  end
+
+  Color.index('length')
+  # =&gt; {
+  # 3 =&gt; Color::RED,
+  # 4 =&gt; [Color::BLUE, Color::GREY],
+  # 5 =&gt; Color::GREEN,
+  # 6 =&gt; Color::ORANGE}
+</pre>
+<p>
+Notice &#8216;yellow&#8217; was removed when the library was reset. The
+yellow example illustrates the fact that library only tracks the values of
+constants, not the constants themselves. If, for some reason, you
+dynamically reset a constant value then the change will not be reflected in
+the library until the library is reset.
+</p>
+<h4>Ruby 1.8</h4>
+<p>
+Ruby doesn&#8216;t track of the order of constant declaration until Ruby
+1.9&#8230; this may cause collected values to be re-ordered in an
+unpredictable fashion. For instance in the Color example:
+</p>
+<pre>
+  Color[4] # may equal [Color::BLUE, Color::GREY] or [Color::GREY, Color::BLUE].
+</pre>
+<p>
+In any case, the constants will be ordered as in Color.constants.
+</p>
+<h2>Performance Considerations</h2>
+<p>
+ConstantsLibrary makes access of constants easier, but at the expense of
+performance. Naturally the constant itself is the highest-performing way of
+accessing the constant value.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000015">[]</a>&nbsp;&nbsp;
+      <a href="#M000017">collection</a>&nbsp;&nbsp;
+      <a href="#M000014">extended</a>&nbsp;&nbsp;
+      <a href="#M000013">included</a>&nbsp;&nbsp;
+      <a href="#M000016">index</a>&nbsp;&nbsp;
+      <a href="#M000018">reset_library</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">library</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+Accesses the module constant library.
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="Library.src/M000014.html" target="Code" class="method-signature"
+            onclick="popupCode('Library.src/M000014.html');return false;">
+          <span class="method-name">extended</span><span class="method-args">(mod)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="Library.src/M000013.html" target="Code" class="method-signature"
+            onclick="popupCode('Library.src/M000013.html');return false;">
+          <span class="method-name">included</span><span class="method-args">(mod)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="Library.src/M000015.html" target="Code" class="method-signature"
+            onclick="popupCode('Library.src/M000015.html');return false;">
+          <span class="method-name">[]</span><span class="method-args">(identifier)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for library[identifier] (see <a
+href="ConstantLibrary.html">Constants::ConstantLibrary</a>#[])
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
+
+        <div class="method-heading">
+          <a href="Library.src/M000017.html" target="Code" class="method-signature"
+            onclick="popupCode('Library.src/M000017.html');return false;">
+          <span class="method-name">collection</span><span class="method-args">(name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Library.html#M000017">collection</a> by the specified
+name.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+          <a href="Library.src/M000016.html" target="Code" class="method-signature"
+            onclick="popupCode('Library.src/M000016.html');return false;">
+          <span class="method-name">index</span><span class="method-args">(name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="Library.html#M000016">index</a> by the specified name.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+          <a href="Library.src/M000018.html" target="Code" class="method-signature"
+            onclick="popupCode('Library.src/M000018.html');return false;">
+          <span class="method-name">reset_library</span><span class="method-args">(&amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Resets the library using constants from self. A block can be provided to
+filter constants, see <a
+href="ConstantLibrary.html#M000027">Constants::ConstantLibrary#add_constants_from</a>
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

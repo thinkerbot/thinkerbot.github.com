@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Linebook::Os::Posix::Variable</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Linebook::Os::Posix::Variable</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../../files/lib/linebook/os/posix/variable_rb.html">
+                lib/linebook/os/posix/variable.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000120">&lt;</a>&nbsp;&nbsp;
+      <a href="#M000118">==</a>&nbsp;&nbsp;
+      <a href="#M000119">&gt;</a>&nbsp;&nbsp;
+      <a href="#M000114">eq</a>&nbsp;&nbsp;
+      <a href="#M000111">gsub</a>&nbsp;&nbsp;
+      <a href="#M000116">gt</a>&nbsp;&nbsp;
+      <a href="#M000112">length</a>&nbsp;&nbsp;
+      <a href="#M000107">llstrip</a>&nbsp;&nbsp;
+      <a href="#M000106">lstrip</a>&nbsp;&nbsp;
+      <a href="#M000117">lt</a>&nbsp;&nbsp;
+      <a href="#M000115">ne</a>&nbsp;&nbsp;
+      <a href="#M000105">new</a>&nbsp;&nbsp;
+      <a href="#M000122">not_null?</a>&nbsp;&nbsp;
+      <a href="#M000121">null?</a>&nbsp;&nbsp;
+      <a href="#M000109">rrstrip</a>&nbsp;&nbsp;
+      <a href="#M000108">rstrip</a>&nbsp;&nbsp;
+      <a href="#M000110">sub</a>&nbsp;&nbsp;
+      <a href="#M000113">substring</a>&nbsp;&nbsp;
+      <a href="#M000123">to_s</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">default</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">varname</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000105" class="method-detail">
+        <a name="M000105"></a>
+
+        <div class="method-heading">
+          <a href="#M000105" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(varname, default=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000105-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000105-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 8</span>
+ 8:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">varname</span>, <span class="ruby-identifier">default</span>=<span class="ruby-keyword kw">nil</span>)
+ 9:           <span class="ruby-ivar">@varname</span> = <span class="ruby-identifier">varname</span>.<span class="ruby-identifier">to_s</span>
+10:           <span class="ruby-ivar">@default</span> = <span class="ruby-identifier">default</span>
+11:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000120" class="method-detail">
+        <a name="M000120"></a>
+
+        <div class="method-heading">
+          <a href="#M000120" class="method-signature">
+          <span class="method-name">&lt;</span><span class="method-args">(another)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000120-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000120-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 73</span>
+73:         <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&lt;</span>(<span class="ruby-identifier">another</span>)
+74:           <span class="ruby-node">&quot;[ #{self} &lt; #{another} ]&quot;</span>
+75:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000118" class="method-detail">
+        <a name="M000118"></a>
+
+        <div class="method-heading">
+          <a href="#M000118" class="method-signature">
+          <span class="method-name">==</span><span class="method-args">(another)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000118-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000118-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 61</span>
+61:         <span class="ruby-keyword kw">def</span> <span class="ruby-operator">==</span>(<span class="ruby-identifier">another</span>)
+62:           <span class="ruby-node">&quot;[ #{self} = #{another} ]&quot;</span>
+63:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000119" class="method-detail">
+        <a name="M000119"></a>
+
+        <div class="method-heading">
+          <a href="#M000119" class="method-signature">
+          <span class="method-name">&gt;</span><span class="method-args">(another)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def !=(another)
+</p>
+<pre>
+  &quot;[ #{self} != #{another} ]&quot;
+</pre>
+<p>
+end
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000119-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000119-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 69</span>
+69:         <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&gt;</span>(<span class="ruby-identifier">another</span>)
+70:           <span class="ruby-node">&quot;[ #{self} &gt; #{another} ]&quot;</span>
+71:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000114" class="method-detail">
+        <a name="M000114"></a>
+
+        <div class="method-heading">
+          <a href="#M000114" class="method-signature">
+          <span class="method-name">eq</span><span class="method-args">(another)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000114-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000114-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 45</span>
+45:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">eq</span>(<span class="ruby-identifier">another</span>)
+46:           <span class="ruby-node">&quot;[ #{self} -eq #{another} ]&quot;</span>
+47:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000111" class="method-detail">
+        <a name="M000111"></a>
+
+        <div class="method-heading">
+          <a href="#M000111" class="method-signature">
+          <span class="method-name">gsub</span><span class="method-args">(pattern, replacement)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000111-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000111-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 33</span>
+33:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gsub</span>(<span class="ruby-identifier">pattern</span>, <span class="ruby-identifier">replacement</span>)
+34:           <span class="ruby-node">&quot;${#{varname}//#{pattern}/#{replacement}}&quot;</span>
+35:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000116" class="method-detail">
+        <a name="M000116"></a>
+
+        <div class="method-heading">
+          <a href="#M000116" class="method-signature">
+          <span class="method-name">gt</span><span class="method-args">(another)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000116-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000116-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 53</span>
+53:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gt</span>(<span class="ruby-identifier">another</span>)
+54:           <span class="ruby-node">&quot;[ #{self} -gt #{another} ]&quot;</span>
+55:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000112" class="method-detail">
+        <a name="M000112"></a>
+
+        <div class="method-heading">
+          <a href="#M000112" class="method-signature">
+          <span class="method-name">length</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000112-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000112-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 37</span>
+37:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">length</span>
+38:           <span class="ruby-node">&quot;${##{varname}}&quot;</span>
+39:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000107" class="method-detail">
+        <a name="M000107"></a>
+
+        <div class="method-heading">
+          <a href="#M000107" class="method-signature">
+          <span class="method-name">llstrip</span><span class="method-args">(pattern)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000107-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000107-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 17</span>
+17:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">llstrip</span>(<span class="ruby-identifier">pattern</span>)
+18:           <span class="ruby-node">&quot;${#{varname}###{pattern}}&quot;</span>
+19:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000106" class="method-detail">
+        <a name="M000106"></a>
+
+        <div class="method-heading">
+          <a href="#M000106" class="method-signature">
+          <span class="method-name">lstrip</span><span class="method-args">(pattern)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000106-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000106-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 13</span>
+13:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">lstrip</span>(<span class="ruby-identifier">pattern</span>)
+14:           <span class="ruby-node">&quot;${#{varname}##{pattern}}&quot;</span>
+15:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000117" class="method-detail">
+        <a name="M000117"></a>
+
+        <div class="method-heading">
+          <a href="#M000117" class="method-signature">
+          <span class="method-name">lt</span><span class="method-args">(another)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000117-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000117-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 57</span>
+57:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">lt</span>(<span class="ruby-identifier">another</span>)
+58:           <span class="ruby-node">&quot;[ #{self} -lt #{another} ]&quot;</span>
+59:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000115" class="method-detail">
+        <a name="M000115"></a>
+
+        <div class="method-heading">
+          <a href="#M000115" class="method-signature">
+          <span class="method-name">ne</span><span class="method-args">(another)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000115-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000115-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 49</span>
+49:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ne</span>(<span class="ruby-identifier">another</span>)
+50:           <span class="ruby-node">&quot;[ #{self} -ne #{another} ]&quot;</span>
+51:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000122" class="method-detail">
+        <a name="M000122"></a>
+
+        <div class="method-heading">
+          <a href="#M000122" class="method-signature">
+          <span class="method-name">not_null?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000122-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000122-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 81</span>
+81:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">not_null?</span>
+82:           <span class="ruby-node">&quot;[ -n #{self} ]&quot;</span>
+83:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000121" class="method-detail">
+        <a name="M000121"></a>
+
+        <div class="method-heading">
+          <a href="#M000121" class="method-signature">
+          <span class="method-name">null?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000121-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000121-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 77</span>
+77:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">null?</span>
+78:           <span class="ruby-node">&quot;[ -z #{self} ]&quot;</span>
+79:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000109" class="method-detail">
+        <a name="M000109"></a>
+
+        <div class="method-heading">
+          <a href="#M000109" class="method-signature">
+          <span class="method-name">rrstrip</span><span class="method-args">(pattern)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000109-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000109-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 25</span>
+25:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rrstrip</span>(<span class="ruby-identifier">pattern</span>)
+26:           <span class="ruby-node">&quot;${#{varname}%%#{pattern}}&quot;</span>
+27:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000108" class="method-detail">
+        <a name="M000108"></a>
+
+        <div class="method-heading">
+          <a href="#M000108" class="method-signature">
+          <span class="method-name">rstrip</span><span class="method-args">(pattern)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000108-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000108-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 21</span>
+21:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rstrip</span>(<span class="ruby-identifier">pattern</span>)
+22:           <span class="ruby-node">&quot;${#{varname}%#{pattern}}&quot;</span>
+23:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000110" class="method-detail">
+        <a name="M000110"></a>
+
+        <div class="method-heading">
+          <a href="#M000110" class="method-signature">
+          <span class="method-name">sub</span><span class="method-args">(pattern, replacement)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000110-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000110-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 29</span>
+29:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sub</span>(<span class="ruby-identifier">pattern</span>, <span class="ruby-identifier">replacement</span>)
+30:           <span class="ruby-node">&quot;${#{varname}/#{pattern}/#{replacement}}&quot;</span>
+31:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000113" class="method-detail">
+        <a name="M000113"></a>
+
+        <div class="method-heading">
+          <a href="#M000113" class="method-signature">
+          <span class="method-name">substring</span><span class="method-args">(offset, length=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000113-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000113-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 41</span>
+41:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">substring</span>(<span class="ruby-identifier">offset</span>, <span class="ruby-identifier">length</span>=<span class="ruby-keyword kw">nil</span>)
+42:           <span class="ruby-identifier">length</span> <span class="ruby-value">? </span><span class="ruby-node">&quot;${#{varname}:#{offset}:#{length}}&quot;</span><span class="ruby-operator">:</span> <span class="ruby-node">&quot;${#{varname}:#{offset}}&quot;</span>
+43:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000123" class="method-detail">
+        <a name="M000123"></a>
+
+        <div class="method-heading">
+          <a href="#M000123" class="method-signature">
+          <span class="method-name">to_s</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000123-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000123-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/posix/variable.rb, line 85</span>
+85:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+86:           <span class="ruby-identifier">default</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-node">&quot;$#{varname}&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;${#{varname}:-#{default}}&quot;</span>
+87:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

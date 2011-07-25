@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Constants::ConstantLibrary::Index</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Constants::ConstantLibrary::Index</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/constants/constant_library_rb.html">
+                lib/constants/constant_library.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Hash
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+A hash-based <a href="../Stash.html">Stash</a> to index library objects.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000105">new</a>&nbsp;&nbsp;
+      <a href="#M000106">stash</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="../Stash.html">Constants::Stash</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">block</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The block used to calculate keys during <a
+href="Index.html#M000106">stash</a>
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">exclusion_value</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+Indicates when values are skipped during <a
+href="Index.html#M000106">stash</a>
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000105" class="method-detail">
+        <a name="M000105"></a>
+
+        <div class="method-heading">
+          <a href="Index.src/M000105.html" target="Code" class="method-signature"
+            onclick="popupCode('Index.src/M000105.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(exclusion_value=nil, nil_value=nil, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Initializes a <a href="Index.html#M000105">new</a> <a
+href="Index.html">Index</a> (a type of Hash).
+</p>
+<p>
+The block is used by <a href="Index.html#M000106">stash</a> to calculate
+the key for stashing a given value. If the key equals the exclusion value,
+then the value is skipped. The <a href="Index.html#M000105">new</a> index
+will return nil_value for unknown keys (ie it is the default value for
+self) and CANNOT be stashed (see <a href="../Stash.html">Stash</a>).
+</p>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000106" class="method-detail">
+        <a name="M000106"></a>
+
+        <div class="method-heading">
+          <a href="Index.src/M000106.html" target="Code" class="method-signature"
+            onclick="popupCode('Index.src/M000106.html');return false;">
+          <span class="method-name">stash</span><span class="method-args">(values)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Stashes the specified values using keys calculated by the block. Skips
+values when the block returns the exclusion value.
+</p>
+<p>
+See <a
+href="../ConstantLibrary.html#M000097">Constants::ConstantLibrary#index_by</a>
+for more details.
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

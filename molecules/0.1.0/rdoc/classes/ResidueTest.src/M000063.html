@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_immonium_ion_mass (ResidueTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/molecules/libraries/residue_test.rb, line 70</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_immonium_ion_mass</span>
+    {
+      <span class="ruby-value str">'A'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">44.05002</span>,
+      <span class="ruby-value str">'R'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">129.11402</span>,
+      <span class="ruby-value str">'N'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">87.05584</span>,
+      <span class="ruby-value str">'D'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">88.03985</span>,
+      <span class="ruby-value str">'C'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">76.02210</span>,
+      <span class="ruby-value str">'E'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">102.05550</span>,
+      <span class="ruby-value str">'Q'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">101.07149</span>,
+      <span class="ruby-value str">'G'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">30.03437</span>,
+      <span class="ruby-value str">'H'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">110.07182</span>,
+      <span class="ruby-value str">'I'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">86.09697</span>,
+      <span class="ruby-value str">'L'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">86.09697</span>,
+      <span class="ruby-value str">'K'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">101.10787</span>,
+      <span class="ruby-value str">'M'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">104.05340</span>,
+      <span class="ruby-value str">'O'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">184.15756</span>,
+      <span class="ruby-value str">'F'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">120.08132</span>,
+      <span class="ruby-value str">'P'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">70.06567</span>,
+      <span class="ruby-value str">'S'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">60.04494</span>,
+      <span class="ruby-value str">'T'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">74.06059</span>,
+      <span class="ruby-value str">'U'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">123.96654</span>,
+      <span class="ruby-value str">'W'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">159.09222</span>,
+      <span class="ruby-value str">'Y'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">136.07624</span>,
+      <span class="ruby-value str">'V'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">72.08132</span>
+    }.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">residue</span>, <span class="ruby-identifier">expected</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">assert_in_delta</span> <span class="ruby-identifier">expected</span>, <span class="ruby-constant">Residue</span>[<span class="ruby-identifier">residue</span>].<span class="ruby-identifier">immonium_ion_mass</span>, <span class="ruby-identifier">delta_mass</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

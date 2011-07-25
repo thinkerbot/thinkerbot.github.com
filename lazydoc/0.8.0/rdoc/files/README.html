@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Jul 24 20:39:31 -0600 2011</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="http://tap.rubyforge.org/lazydoc">Lazydoc</a></h1>
+<p>
+<a href="../classes/Lazydoc.html">Lazydoc</a> lazily pulls documentation
+out of source files and makes it available in code through lazy attributes.
+<a href="../classes/Lazydoc.html">Lazydoc</a> is used by the <a
+href="http://tap.rubyforge.org">Tap</a> framework.
+</p>
+<h2>Description</h2>
+<p>
+<a href="../classes/Lazydoc.html">Lazydoc</a> allows you to define lazy
+attributes that act as markers for documentation in a source file. When you
+call the lazy attribute, <a href="../classes/Lazydoc.html">Lazydoc</a>
+pulls out the documentation:
+</p>
+<pre>
+  # Sample::key &lt;value&gt;
+  # This is the comment content.  A content
+  # string can span multiple lines...
+  class Sample
+    extend Lazydoc::Attributes
+    lazy_attr :key
+  end
+
+  comment = Sample::key
+  comment.value      # =&gt; &quot;&lt;value&gt;&quot;
+  comment.comment    # =&gt; &quot;This is the comment content.  A content string can span multiple lines...&quot;
+</pre>
+<p>
+Comments support wrapping, allowing for easy presentation:
+</p>
+<pre>
+  thirtydots = &quot;\n#{'.' * 30}\n&quot;
+
+  &quot;#{thirtydots}#{comment.wrap(30)}#{thirtydots}&quot;
+  # =&gt; %q{
+  # ..............................
+  # This is the comment content.
+  # A content string can span
+  # multiple lines...
+  # ..............................
+  # }
+</pre>
+<p>
+In addition, <a href="../classes/Lazydoc.html">Lazydoc</a> provides helpers
+to register individual lines of code, particularly method definitions:
+</p>
+<pre>
+  class Helpers
+    extend Lazydoc::Attributes
+
+    lazy_register(:method_one)
+
+    # method_one is registered whenever it
+    # gets defined
+    def method_one(a, b='str', &amp;c)
+    end
+
+    # register_caller will register the line
+    # that *calls* method_two
+    def method_two
+      Lazydoc.register_caller
+    end
+  end
+
+  # *THIS* is the line that gets
+  # registered by method_two
+  Helpers.const_attrs[:method_two] = Helpers.new.method_two
+
+  doc = Helpers.lazydoc
+  doc.resolve
+
+  one = Helpers.const_attrs[:method_one]
+  one.method_name            # =&gt; &quot;method_one&quot;
+  one.arguments              # =&gt; [&quot;a&quot;, &quot;b='str'&quot;, &quot;&amp;c&quot;]
+  one.to_s                   # =&gt; &quot;method_one is registered whenever it gets defined&quot;
+
+  two = Helpers.const_attrs[:method_two]
+  two.subject                # =&gt; &quot;Helpers.const_attrs[:method_two] = Helpers.new.method_two&quot;
+  two.to_s                   # =&gt; &quot;*THIS* is the line that gets registered by method_two&quot;
+</pre>
+<p>
+Lazy accessors may be defined to map the registered lines as well:
+</p>
+<pre>
+  class Helpers
+    lazy_attr(:one, :method_one)
+    lazy_attr(:two, :method_two)
+  end
+
+  Helpers.one.method_name    # =&gt; &quot;method_one&quot;
+  Helpers.two.subject        # =&gt; &quot;Helpers.const_attrs[:method_two] = Helpers.new.method_two&quot;
+</pre>
+<p>
+Check out these links for development, and bug tracking.
+</p>
+<ul>
+<li><a href="http://tap.rubyforge.org/lazydoc">Website</a>
+
+</li>
+<li><a href="http://github.com/bahuvrihi/lazydoc/tree/master">Github</a>
+
+</li>
+<li><a
+href="http://bahuvrihi.lighthouseapp.com/projects/19948-lazydoc/tickets?q=all">Lighthouse</a>
+
+</li>
+<li><a href="http://groups.google.com/group/ruby-on-tap">Google Group</a>
+
+</li>
+</ul>
+<h2>Usage</h2>
+<p>
+<a href="../classes/Lazydoc.html">Lazydoc</a> can find two types of
+documentation, constant attributes and code comments. The distinction is
+primarily how they are found and parsed; both are represented by Comment
+objects.
+</p>
+<h3>Constant Attributes</h3>
+<p>
+Constant attributes are like constants in Ruby, but with an extra
+&#8216;key&#8217; that must consist of only lowercase letters and/or
+underscores. For example, these are constant attributes:
+</p>
+<pre>
+  # Const::Name::key
+  # Const::Name::key_with_underscores
+  # ::key
+</pre>
+<p>
+While these are not:
+</p>
+<pre>
+  # Const::Name::Key
+  # Const::Name::key2
+  # Const::Name::k@y
+</pre>
+<p>
+<a href="../classes/Lazydoc.html">Lazydoc</a> parses a <a
+href="../classes/Lazydoc/Comment.html">Lazydoc::Comment</a> for each
+constant attribute by using the remainder of the line as a value (ie
+subject) and parsing down for content. Parsing continues until a
+non-comment line, an end key, or a new attribute is reached; the comment is
+then stored by constant name and key.
+</p>
+<pre>
+  str = %Q{
+  # Const::Name::key value for key
+  # comment for key
+  # parsed until a
+  # non-comment line
+
+  # Const::Name::another value for another
+  # comment for another
+  # parsed to an end key
+  # Const::Name::another-
+  #
+  # ignored comment
+  }
+
+  doc = Lazydoc::Document.new
+  doc.resolve(str)
+
+  doc.summarize {|c| [c.value, c.comment] }
+  # =&gt; {
+  # 'Const::Name' =&gt; {
+  #   'key' =&gt;     ['value for key', 'comment for key parsed until a non-comment line'],
+  #   'another' =&gt; ['value for another', 'comment for another parsed to an end key']}
+  # }
+</pre>
+<p>
+Constant attributes are only parsed from commented lines. To turn off
+attribute parsing for a section of documentation, use start/stop keys:
+</p>
+<pre>
+  str = %Q{
+  Const::Name::not_parsed
+
+  # :::-
+  # Const::Name::not_parsed
+  # :::+
+  # Const::Name::parsed value
+  }
+
+  doc = Lazydoc::Document.new
+  doc.resolve(str)
+  doc.summarize {|comment| comment.value }   # =&gt; {'Const::Name' =&gt; {'parsed' =&gt; 'value'}}
+</pre>
+<p>
+To hide attributes from RDoc, make use of the RDoc <tt>:startdoc:</tt>
+document modifier like this (note that spaces are added to prevent RDoc
+from hiding the example):
+</p>
+<pre>
+  # :start doc::Const::Name::one hidden in RDoc
+  # * This line is visible in RDoc.
+  # :start doc::Const::Name::one-
+  #
+  #--
+  # Const::Name::two
+  # You can hide attribute comments like this.
+  # Const::Name::two-
+  #++
+  #
+  # * This line is also visible in RDoc.
+</pre>
+<p>
+As a side note, &#8216;Const::Name::key&#8217; is not a reference to the
+&#8216;key&#8217; constant (that would be invalid). In <b>very</b>
+idiomatic ruby &#8216;Const::Name::key&#8217; is equivalent to the method
+call &#8216;Const::Name.key&#8217;.
+</p>
+<h3>Code Comments</h3>
+<p>
+Code comments are lines registered for parsing if and when a <a
+href="../classes/Lazydoc.html">Lazydoc</a> gets resolved. Unlike constant
+attributes, the registered line is the comment subject (ie value) and
+contents are parsed up from it (basically mimicking the behavior of RDoc).
+</p>
+<pre>
+  str = %Q{
+  # comment lines for
+  # the method
+  def method
+  end
+
+  # as in RDoc, the comment can be
+  # separated from the method
+
+  def another_method
+  end
+  }
+
+  doc = Lazydoc::Document.new
+  doc.register(3)
+  doc.register(9)
+  doc.resolve(str)
+
+  doc.comments.collect {|c| [c.subject, c.comment] }
+  # =&gt; [
+  # ['def method', 'comment lines for the method'],
+  # ['def another_method', 'as in RDoc, the comment can be separated from the method']]
+</pre>
+<p>
+Comments may be registered to specific line numbers, or with a Proc or
+Regexp that will determine the line number during resolution. In the case
+of a Regexp, the first matching line is used; Procs receive an array of
+lines and should return the line number that should be used. See <a
+href="../classes/Lazydoc/Comment.html">Comment#parse_up</a> for more
+details.
+</p>
+<h2>Installation</h2>
+<p>
+<a href="../classes/Lazydoc.html">Lazydoc</a> is available as a gem on <a
+href="http://rubyforge.org/projects/tap">RubyForge</a>. Use:
+</p>
+<pre>
+  % gem install lazydoc
+</pre>
+<h2>Info</h2>
+<p>
+Copyright (c) 2008-2009, Regents of the University of Colorado.
+</p>
+<table>
+<tr><td valign="top">Developer:</td><td><a href="http://bahuvrihi.wordpress.com">Simon Chiang</a>, <a
+href="http://biomol.uchsc.edu/">Biomolecular Structure Program</a>, <a
+href="http://hsc-proteomics.uchsc.edu/hansenlab/">Hansen Lab</a>
+
+</td></tr>
+<tr><td valign="top">Support:</td><td>CU Denver School of Medicine Deans Academic Enrichment Fund
+
+</td></tr>
+<tr><td valign="top">Licence:</td><td><a href="MIT-LICENSE.html">MIT-Style</a>
+
+</td></tr>
+</table>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

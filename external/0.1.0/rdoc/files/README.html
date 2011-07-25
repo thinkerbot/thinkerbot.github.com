@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Jul 24 20:39:16 -0600 2011</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="../classes/External.html">External</a></h1>
+<p>
+Indexing and array-like access to data stored on disk rather than in
+memory.
+</p>
+<h2>Description</h2>
+<p>
+<a href="../classes/External.html">External</a> provides an easy way to
+index files such that array-like calls can store and retrieve entries
+directly from the file without loading it into memory. The indexes can be
+cached for performance or stored on disk alongside the data file, in
+essence giving you arbitrarily large arrays.
+</p>
+<p>
+The main classes of external provide array-like access to the following:
+</p>
+<ul>
+<li><a href="../classes/ExtInd.html">ExtInd</a> (<a
+href="../classes/External.html">External</a> Index) &#8212; formatted
+binary data
+
+</li>
+<li><a href="../classes/ExtArr.html">ExtArr</a> (<a
+href="../classes/External.html">External</a> Array) &#8212; externally
+stored ruby objects
+
+</li>
+<li><a href="../classes/ExtArc.html">ExtArc</a> (<a
+href="../classes/External.html">External</a> Archive) &#8212; externally
+stored string data
+
+</li>
+</ul>
+<p>
+<a href="../classes/ExtArc.html">ExtArc</a> is a subclass of <a
+href="../classes/ExtArr.html">ExtArr</a> specialized for string archival
+files, formats like FASTA where entries are strings delimited by
+&#8217;&gt;&#8217;:
+</p>
+<pre>
+        &gt;Q9BXQ0|Q9BXQ0_HUMAN Tissue transglutaminase (Fragment) - Homo sapiens (Human).
+        LEPFSGKALCSWSIC
+        &gt;P02452|CO1A1_HUMAN Collagen alpha-1(I) chain - Homo sapiens (Human).
+        MFSFVDLRLLLLLAATALLTHGQEEGQVEGQDEDIPPITCVQNGLRYHDRDVWKPEPCRI
+        CVCDNGKVLCDDVICDETKNCPGAEVPEGECCPVCPDGSESPTDQETTGVEGPKGDTGPR
+        GPRGPAGPPGRDGIPGQPGLPGPPGPPGPPGPPGLGGNFAPQLSYGYDEKSTGGISVPGP
+        ...
+</pre>
+<p>
+The array-like behavior of these classes is developed against modified
+versions of the Array tests themselves, and often uses the exact same
+tests. The idea is to eventually duck-type all Array methods, including
+sort and collect, with acceptable performance.
+</p>
+<h3>Bugs/Known Issues</h3>
+<ul>
+<li>only a limited set of array methods are currently supported
+
+</li>
+<li>reindexing of <a href="../classes/ExtArr.html">ExtArr</a> does not work for
+arrays containing yaml strings
+
+</li>
+<li>yaml serialization/deserialization of some strings do not reproduce
+identical input and so will not be faithfully store in <a
+href="../classes/ExtArr.html">ExtArr</a>. Carriage return string are
+notable: &quot;\r&quot;, &quot;\r\n&quot;,
+&quot;string_with_\r\n_internal&quot;, as are chains of newlines:
+&quot;\n&quot;, &quot;\n\n&quot;
+
+</li>
+<li>documentation is poor at the moment
+
+</li>
+</ul>
+<h2>Info</h2>
+<p>
+Copyright (c) 2006-2007, Regents of the University of Colorado.
+</p>
+<table>
+<tr><td valign="top">Developer:</td><td><a href="http://bahuvrihi.wordpress.com">Simon Chiang</a>, <a
+href="http://biomol.uchsc.edu/">Biomolecular Structure Program</a>, <a
+href="http://hsc-proteomics.uchsc.edu/hansenlab/">Hansen Lab</a>
+
+</td></tr>
+<tr><td valign="top">Support:</td><td>CU Denver School of Medicine Deans Academic Enrichment Fund
+
+</td></tr>
+<tr><td valign="top">Licence:</td><td>MIT-Style
+
+</td></tr>
+</table>
+<h2>Installation</h2>
+<p>
+<a href="../classes/External.html">External</a> is available from <a
+href="http://rubyforge.org/projects/external">RubyForge</a>. Use:
+</p>
+<pre>
+  % gem install external
+</pre>
+<h2>Usage</h2>
+<h3><a href="../classes/ExtArr.html">ExtArr</a></h3>
+<p>
+<a href="../classes/ExtArr.html">ExtArr</a> can be initialized from data
+using the [] operator and used as an array.
+</p>
+<pre>
+  ea = ExtArr[1, 2.2, &quot;cat&quot;, {:key =&gt; 'value'}]
+  ea[2]                # =&gt; &quot;cat&quot;
+  ea.last              # =&gt; {:key =&gt; 'value'}
+  ea &lt;&lt; [:a, :b]
+  ea.to_a              # =&gt; [1, 2.2, &quot;cat&quot;, {:key =&gt; 'value'}, [:a, :b]]
+</pre>
+<p>
+Behind the scenes, <a href="../classes/ExtArr.html">ExtArr</a> serializes
+and stores entries on a data source (io) and builds an <a
+href="../classes/ExtInd.html">ExtInd</a> that tracks where each entry
+begins and ends.
+</p>
+<pre>
+  ea.io.class          # =&gt; Tempfile
+  ea.io.rewind
+  ea.io.read           # =&gt; &quot;--- 1\n--- 2.2\n--- cat\n--- \n:key: value\n--- \n- :a\n- :b\n&quot;
+
+  ea.index.class       # =&gt; ExtInd
+  ea.index.to_a        # =&gt; [[0, 6], [6, 8], [14, 8], [22, 17], [39, 15]]
+</pre>
+<p>
+By default <a href="../classes/External.html">External</a> supports File,
+Tempfile, and StringIO data sources. If no data source is given (as above),
+the external array is initialized to a Tempfile so that it will be cleaned
+up on exit.
+</p>
+<p>
+<a href="../classes/ExtArr.html">ExtArr</a> can be initialized from
+existing data sources. In this case, <a
+href="../classes/ExtArr.html">ExtArr</a> tries to find and load an existing
+index; if the index doesn&#8216;t exist, then you have to reindex the data
+manually.
+</p>
+<pre>
+  File.open('path/to/file.txt', &quot;w+&quot;) do |file|
+    file &lt;&lt; &quot;--- 1\n--- 2.2\n--- cat\n--- \n:key: value\n--- \n- :a\n- :b\n&quot;
+    file.flush
+
+    index_filepath = ExtArr.default_index_filepath(file.path)
+    File.exists?(index_filepath)         # =&gt; false
+
+    ea = ExtArr.new(file)
+    ea.to_a              # =&gt; []
+    ea.reindex
+    ea.to_a              # =&gt; [1, 2.2, &quot;cat&quot;, {:key =&gt; 'value'}, [:a, :b]]
+  end
+</pre>
+<p>
+<a href="../classes/ExtArr.html">ExtArr</a> provides an open method for
+easy access to file data:
+</p>
+<pre>
+  ExtArr.open('path/to/file.txt') do |ea|
+    # ...
+  end
+</pre>
+<h3><a href="../classes/ExtArc.html">ExtArc</a></h3>
+<p>
+<a href="../classes/ExtArc.html">ExtArc</a> is a subclass of <a
+href="../classes/ExtArr.html">ExtArr</a> designed for string archival
+files. Rather than serialize and load ruby objects to and from the data
+file, <a href="../classes/ExtArc.html">ExtArc</a> simply read and writes
+strings. In addition, <a href="../classes/ExtArc.html">ExtArc</a> provides
+additional reindexing methods designed to make reindexing easy.
+</p>
+<pre>
+  arc = ExtArc[&quot;&gt;swift&quot;, &quot;&gt;brown&quot;, &quot;&gt;fox&quot;]
+  arc[2]                # =&gt; &quot;&gt;fox&quot;
+  arc.to_a              # =&gt; [&quot;&gt;swift&quot;, &quot;&gt;brown&quot;, &quot;&gt;fox&quot;]
+
+  arc.io.class          # =&gt; Tempfile
+  arc.io.rewind
+  arc.io.read           # =&gt; &quot;&gt;swift&gt;brown&gt;fox&quot;
+
+  File.open('path/to/file.txt', &quot;w+&quot;) do |file|
+    file &lt;&lt; &quot;&gt;swift&gt;brown&gt;fox&quot;
+    file.flush
+
+    # Reindex by a separation string
+    arc = ExtArc.new(file)
+    arc.to_a                                 # =&gt; []
+    arc.reindex_by_sep(:sep_string =&gt; &quot;&gt;&quot;, :entry_follows_sep =&gt; true)
+    arc.to_a                                 # =&gt; [&quot;&gt;swift&quot;, &quot;&gt;brown&quot;, &quot;&gt;fox&quot;]
+
+    # Reindex by scanning an entry
+    arc = ExtArc.new(file)
+    arc.to_a                                 # =&gt; []
+    arc.reindex_by_scan(/&gt;\w*/)
+    arc.to_a                                 # =&gt; [&quot;&gt;swift&quot;, &quot;&gt;brown&quot;, &quot;&gt;fox&quot;]
+  end
+</pre>
+<h3><a href="../classes/ExtInd.html">ExtInd</a></h3>
+<p>
+<a href="../classes/ExtInd.html">ExtInd</a> provides array-like access to
+formatted binary data. The index of <a
+href="../classes/ExtArr.html">ExtArr</a> is an <a
+href="../classes/ExtInd.html">ExtInd</a> constructed to access data
+formatted as &#8216;II&#8217;; two integers corresponding to the start
+position and length of entries in the <a
+href="../classes/ExtArr.html">ExtArr</a> data source. For simple,
+repetitive formats like &#8216;II&#8217;, processing is optimized to use a
+general format and frame.
+</p>
+<pre>
+  ea = ExtArr.new
+  ea.index.class        # =&gt; ExtInd
+  index = ea.index
+
+  index.format          # =&gt; 'I*'
+  index.frame           # =&gt; 2
+  index &lt;&lt; [1,2]
+  index &lt;&lt; [3,4]
+  index.to_a            # =&gt; [[1,2],[3,4]]
+</pre>
+<p>
+<a href="../classes/ExtInd.html">ExtInd</a> handles arbitrary packing
+formats, opening many possibilites:
+</p>
+<pre>
+  File.open('path/to/file', &quot;w+&quot;) do |file|
+    file &lt;&lt; [1,2,3].pack(&quot;IQS&quot;)
+    file &lt;&lt; [4,5,6].pack(&quot;IQS&quot;)
+    file &lt;&lt; [7,8,9].pack(&quot;IQS&quot;)
+    file.flush
+
+    index = ExtInd.new(file, :format =&gt; &quot;IQS&quot;)
+    index[1]          # =&gt; [4,5,6]
+    index.to_a        # =&gt; [[1,2,3],[4,5,6],[7,8,9]]
+  end
+</pre>
+<p>
+Note: at the moment formats must be specified longhand, ie
+&#8216;III&#8217; cannot be written as &#8216;I3&#8217;, and the native
+size directives for sSiIlL are not supported.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_signed_values_beyond_max_count_up_from_min_in_pack_and_unpack (PackCheck)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/check/pack_check.rb, line 35</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_signed_values_beyond_max_count_up_from_min_in_pack_and_unpack</span>
+    <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">LONG_MIN</span>], [<span class="ruby-constant">LONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'i'</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">'i'</span>)
+    <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">LONG_MIN</span>], [<span class="ruby-constant">LONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'l'</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">'l'</span>)
+    <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">LLONG_MIN</span>], [<span class="ruby-constant">LLONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'q'</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">'q'</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

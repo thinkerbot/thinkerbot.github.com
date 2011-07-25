@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Jul 24 20:39:15 -0600 2011</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="../classes/Constants.html">Constants</a></h1>
+<p>
+Libraries of physical and chemical constants for scientific calculations in
+Ruby.
+</p>
+<h2>Description</h2>
+<p>
+<a href="../classes/Constants.html">Constants</a> provides libraries of
+constant values such as the precise mass of carbon 13, or the spin of a
+strange quark. When applicable, the constant values include uncertainty and
+units (via <a
+href="http://rubyforge.org/projects/ruby-units">ruby-units</a>). Also
+provides <a href="../classes/Constants/Library.html">Constants::Library</a>
+to index and generate common collections of constant values.
+</p>
+<p>
+I have attempted to use reputable sources for the constants data (see
+below). Please notify me of any errors and send me suggestions for other
+constants to include.
+</p>
+<ul>
+<li><a href="http://rubyforge.org/projects/bioactive">Rubyforge</a>
+
+</li>
+<li><a
+href="http://bahuvrihi.lighthouseapp.com/projects/13504-constants/overview">Lighthouse</a>
+
+</li>
+<li><a href="http://github.com/bahuvrihi/constants/tree/master">Github</a>
+
+</li>
+</ul>
+<h2>Usage</h2>
+<pre>
+  require 'constants'
+  include Constants::Libraries
+
+  # Element predefines all chemical elements
+  c = Element::C
+  c.name                 # =&gt; &quot;Carbon&quot;
+  c.symbol               # =&gt; &quot;C&quot;
+  c.atomic_number        # =&gt; 6
+  c.mass                 # =&gt; 12.0
+  c.mass(13)             # =&gt; 13.0033548378
+
+  # A smorgasbord of lookups methods
+  Element['Carbon']      # =&gt; Element::C
+  Element['C']           # =&gt; Element::C
+  Element[6]             # =&gt; Element::C
+</pre>
+<h3>Custom Libraries</h3>
+<p>
+Making a new constants library is straightforward using the <a
+href="../classes/Constants/Library.html">Constants::Library</a> module. The
+following example is adapted from the <a
+href="http://github.com/bahuvrihi/molecules/tree/master">molecule</a>
+library (a subproject of constants).
+</p>
+<pre>
+  # A library of amino acid residues.
+  class Residue
+    attr_reader :letter, :abbr, :name
+
+    def initialize(letter, abbr, name)
+      @letter = letter
+      @abbr = abbr
+      @name = name
+    end
+
+    A = Residue.new('A', &quot;Ala&quot;, &quot;Alanine&quot;)
+    C = Residue.new('C', &quot;Cys&quot;, &quot;Cysteine&quot;)
+    D = Residue.new('D', &quot;Asp&quot;, &quot;Aspartic Acid&quot;)
+    # ... normally you'd add the rest here ...
+
+    include Constants::Library
+
+    # add an index by an attribute or method
+    library.index_by_attribute :letter
+
+    # add an index where keys are calculated by a block
+    library.index_by 'upcase abbr' do |residue|
+      residue.abbr.upcase
+    end
+
+    # add a collection (same basic idea, but using an array)
+    library.collect_attribute 'name'
+  end
+
+  # index access through []
+  Residue['D']                   # =&gt; Residue::D
+  Residue['ALA']                 # =&gt; Residue::A
+
+  # access an index hash or collection array
+  Residue.index('upcase abbr')   # =&gt; {'ALA' =&gt; Residue::A, 'CYS' =&gt; Residue::C, 'ASP' =&gt; Residue::D}
+  Residue.collection('name')     # =&gt; [&quot;Alanine&quot;, &quot;Cysteine&quot;, &quot;Aspartic Acid&quot;]
+</pre>
+<p>
+As you can see, <a
+href="../classes/Constants/Library.html">Constants::Library</a> allows the
+predefinition of common views generated for a set of constants. Nothing you
+couldn&#8216;t do yourself, but very handy.
+</p>
+<h2>Known Issues</h2>
+<ul>
+<li>Particle data is from an unreliable source
+
+</li>
+<li><a href="../classes/Constants/Constant.html">Constants::Constant</a> could
+use some development; constants should support mathematical operations and
+comparisons based on uncertainty as well as value.
+
+</li>
+<li>Ruby doesn&#8216;t track of the order of constant declaration until Ruby
+1.9. <a href="../classes/Constants.html">Constants</a> are
+indexed/collected as they appear in [module].constants
+
+</li>
+</ul>
+<h2>Installation</h2>
+<p>
+<a href="../classes/Constants.html">Constants</a> is available as a gem
+through <a href="http://rubyforge.org/projects/bioactive">RubyForge</a>.
+Use:
+</p>
+<pre>
+  % gem install constants
+</pre>
+<h2>Info</h2>
+<p>
+Copyright (c) 2006-2008, Regents of the University of Colorado.
+</p>
+<table>
+<tr><td valign="top">Developer:</td><td><a href="http://bahuvrihi.wordpress.com">Simon Chiang</a>, <a
+href="http://biomol.uchsc.edu/">Biomolecular Structure Program</a>, <a
+href="http://hsc-proteomics.uchsc.edu/hansenlab/">Hansen Lab</a>
+
+</td></tr>
+<tr><td valign="top">Support:</td><td>CU Denver School of Medicine Deans Academic Enrichment Fund
+
+</td></tr>
+<tr><td valign="top">Licence:</td><td>MIT-Style
+
+</td></tr>
+</table>
+<h3>Element Data</h3>
+<p>
+Element isotope, mass, and abundance information was obtained from the NIST
+<a
+href="http://www.physics.nist.gov/PhysRefData/Compositions/index.html">Atomic
+Weights and Isotopic Compositions</a> reference. All isotopes with a
+non-nil isotopic composition (ie relative abundance) were compiled from
+this <a
+href="http://www.physics.nist.gov/cgi-bin/Compositions/stand_alone.pl?ele=&all=all&ascii=ascii2&isotype=all">view</a>
+on 2008-01-22.
+</p>
+<h3>Physical Constant Data</h3>
+<p>
+The physical constant data is assembled from the NIST <a
+href="http://www.physics.nist.gov/cuu/Constants/Table/allascii.txt">Fundamental
+Physical Constants</a> on 2008-04-28.
+</p>
+<p>
+<a href="../classes/Constants.html">Constants</a> adds several units to
+ruby-units to support the physical constants reported in the NIST data.
+These are (as reported in the NIST data):
+</p>
+<table>
+<tr><td valign="top">electron-volt:</td><td>1.602176487e-19 joules
+
+</td></tr>
+<tr><td valign="top">kelvin:</td><td>1.3806504e-23 joules
+
+</td></tr>
+<tr><td valign="top">hartree:</td><td>4.35974394e-18 joules
+
+</td></tr>
+</table>
+<h3>Particle Data</h3>
+<p>
+Particle data was assembled from a non-ideal source, <a
+href="http://www.wikipedia.org/">wikipedia</a>, and will remain so until I
+have time to update it with something better.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

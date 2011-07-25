@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Molecules::Libraries::Residue</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Molecules::Libraries::Residue</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/molecules/libraries/residue_rb.html">
+                lib/molecules/libraries/residue.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                EmpiricalFormula
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+A library of amino acid residues.
+</p>
+<pre>
+   r = Residue::A
+   r.name               # =&gt; &quot;Alanine&quot;
+   r.abbr               # =&gt; &quot;Ala&quot;
+   r.letter             # =&gt; &quot;A&quot;
+   r.side_chain.to_s    # =&gt; &quot;CH(3)&quot;
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000067">common</a>&nbsp;&nbsp;
+      <a href="#M000071">common?</a>&nbsp;&nbsp;
+      <a href="#M000073">composite?</a>&nbsp;&nbsp;
+      <a href="#M000070">new</a>&nbsp;&nbsp;
+      <a href="#M000068">residue_index</a>&nbsp;&nbsp;
+      <a href="#M000069">residue_mass_index</a>&nbsp;&nbsp;
+      <a href="#M000072">standard?</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name">Constants::Library</span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">BACKBONE</td>
+          <td>=</td>
+          <td class="context-item-value">EmpiricalFormula.parse_simple('C(2)H(2)NO')</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+An <a href="../EmpiricalFormula.html">EmpiricalFormula</a> for the residue
+backbone
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DELTA_IMMONIUM</td>
+          <td>=</td>
+          <td class="context-item-value">EmpiricalFormula.parse('-CO+H')</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Add to a <a href="Residue.html">Residue</a> to achieve an immonium ion
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">A</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('A', &quot;Ala&quot;, &quot;Alanine&quot;, &quot;CH(3)&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">C</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('C', &quot;Cys&quot;, &quot;Cysteine&quot;, &quot;CH(3)S&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">D</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('D', &quot;Asp&quot;, &quot;Aspartic Acid&quot;, &quot;C(2)H(3)O(2)&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">E</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('E', &quot;Glu&quot;, &quot;Glutamic Acid&quot;, &quot;C(3)H(5)O(2)&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">F</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('F', &quot;Phe&quot;, &quot;Phenylalanine&quot;, &quot;C(7)H(7)&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">G</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('G', &quot;Gly&quot;, &quot;Glycine&quot;, &quot;H&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">H</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('H', &quot;His&quot;, &quot;Histidine&quot;, &quot;C(4)H(5)N(2)&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">I</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('I', &quot;Ile&quot;, &quot;Isoleucine&quot;, &quot;C(4)H(9)&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">K</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('K', &quot;Lys&quot;, &quot;Lysine&quot;, &quot;C(4)H(10)N&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">L</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('L', &quot;Leu&quot;, &quot;Leucine&quot;, &quot;C(4)H(9)&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">M</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('M', &quot;Met&quot;, &quot;Methionine&quot;, &quot;C(3)H(7)S&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">N</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('N', &quot;Asn&quot;, &quot;Asparagine&quot;, &quot;C(2)H(4)NO&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">O</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('O', &quot;Pyl&quot;, &quot;Pyrrolysine&quot;, &quot;C(9)H(17)NO&quot;, :standard)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">P</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('P', &quot;Pro&quot;, &quot;Proline&quot;, &quot;C(3)H(5)&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Q</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('Q', &quot;Gln&quot;, &quot;Glutamine&quot;, &quot;C(3)H(6)NO&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">R</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('R', &quot;Arg&quot;, &quot;Arginine&quot;, &quot;C(4)H(10)N(3)&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">S</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('S', &quot;Ser&quot;, &quot;Serine&quot;, &quot;CH(3)O&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">T</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('T', &quot;Thr&quot;, &quot;Threonine&quot;, &quot;C(2)H(5)O&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">U</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('U', &quot;Sec&quot;, &quot;Selenocysteine&quot;, &quot;CH(3)Se&quot;, :standard)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">V</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('V', &quot;Val&quot;, &quot;Valine&quot;, &quot;C(3)H(7)&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">W</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('W', &quot;Trp&quot;, &quot;Tryptophan&quot;, &quot;C(9)H(8)N&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Y</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new('Y', &quot;Tyr&quot;, &quot;Tyrosine&quot;, &quot;C(7)H(7)O&quot;, :common)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ORN</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil,   &quot;Orn&quot;,  &quot;Ornithine&quot;, &quot;C(3)H(8)N&quot;, :uncommon)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ABA</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil,   'Aba',  'Aminobutyric Acid', 'C(2)H(5)', :uncommon)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">AECYS</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil, 'AECys','Aminoethylcysteine', 'C(3)H(8)NS', :uncommon)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">AIB</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil,   'Aib',  'alpha-Aminoisobutyric Acid', 'C(2)H(5)', :uncommon)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CMCYS</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil, 'CMCys','Carboxymethylcysteine', 'C(3)H(5)O(2)S', :uncommon)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DHA</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil,   'Dha',  'Dehydroalanine', 'CH', :uncommon)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DHB</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil,   'Dhb',  'Dehydroamino-alpha-butyric Acid', 'C(2)H(3)', :uncommon)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">HYL</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil,   'Hyl',  'Hydroxylysine', 'C(4)H(10)NO', :uncommon)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">HYP</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil,   'Hyp',  'Hydroxyproline', 'C(3)H(5)O', :uncommon)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">IVA</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil,   'Iva',  'Isovaline', 'C(3)H(7)', :uncommon)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NLEU</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil,  'nLeu', 'Norleucine', 'C(4)H(9)', :uncommon)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">PIP</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil,   'Pip',  '2-Piperidinecarboxylic Acid', 'C(4)H(7)', :uncommon)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">PGLU</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil,  'pGlu', 'Pyroglutamic Acid', 'C(3)H(3)O', :uncommon)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SAR</td>
+          <td>=</td>
+          <td class="context-item-value">Residue.new(nil,   'Sar',  'Sarcosine', 'CH(3)', :uncommon)</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">abbr</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The (typically) 3-letter abbreviation of self
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">byte</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The byte corresponding to letter
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">immonium_ion_mass</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The unrounded mass of the immonium ion of self (residue_mass +
+DELTA_IMMONIUM.mass)
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">letter</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The letter code for self
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">name</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The full name of self
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">residue_mass</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The uncharged, unrounded, monoisotopic residue mass of self (the backbone
+plus side chain mass, with no N- or C-terminus)
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">side_chain</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+An <a href="../EmpiricalFormula.html">EmpiricalFormula</a> representing the
+side chain of self
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">side_chain_mass</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+The unrounded monoisotopic side chain mass of self
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">type</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc">
+A symbol classification of self
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000067" class="method-detail">
+        <a name="M000067"></a>
+
+        <div class="method-heading">
+          <a href="Residue.src/M000067.html" target="Code" class="method-signature"
+            onclick="popupCode('Residue.src/M000067.html');return false;">
+          <span class="method-name">common</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The 20 <a href="Residue.html#M000067">common</a> amino acids.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000070" class="method-detail">
+        <a name="M000070"></a>
+
+        <div class="method-heading">
+          <a href="Residue.src/M000070.html" target="Code" class="method-signature"
+            onclick="popupCode('Residue.src/M000070.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(letter, abbr, name, side_chain_formula, classification=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
+
+        <div class="method-heading">
+          <a href="Residue.src/M000068.html" target="Code" class="method-signature"
+            onclick="popupCode('Residue.src/M000068.html');return false;">
+          <span class="method-name">residue_index</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+An array of the residues indexed by the byte corresponding to the residue
+letter.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
+
+        <div class="method-heading">
+          <a href="Residue.src/M000069.html" target="Code" class="method-signature"
+            onclick="popupCode('Residue.src/M000069.html');return false;">
+          <span class="method-name">residue_mass_index</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+An array of the residue masses indexed by the byte corresponding to the
+residue letter.
+</p>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000071" class="method-detail">
+        <a name="M000071"></a>
+
+        <div class="method-heading">
+          <a href="Residue.src/M000071.html" target="Code" class="method-signature"
+            onclick="popupCode('Residue.src/M000071.html');return false;">
+          <span class="method-name">common?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+True if the residue of type :<a href="Residue.html#M000067">common</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000073" class="method-detail">
+        <a name="M000073"></a>
+
+        <div class="method-heading">
+          <a href="Residue.src/M000073.html" target="Code" class="method-signature"
+            onclick="popupCode('Residue.src/M000073.html');return false;">
+          <span class="method-name">composite?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+True if the residue is a composite representing a set of isobaric residues
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000072" class="method-detail">
+        <a name="M000072"></a>
+
+        <div class="method-heading">
+          <a href="Residue.src/M000072.html" target="Code" class="method-signature"
+            onclick="popupCode('Residue.src/M000072.html');return false;">
+          <span class="method-name">standard?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+True if the residue is type :<a href="Residue.html#M000067">common</a> or
+:standard.
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

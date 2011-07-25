@@ -1,6 +1,14 @@
 PROJECTS = %w{
+  thinkerbot/lazydoc
+  thinkerbot/constants
+  thinkerbot/molecules
+  thinkerbot/external
   thinkerbot/configurable
   thinkerbot/shell_test
+  pinnacol/linecook
+  pinnacol/linebook
+  pinnacol/gitgo
+  pinnacol/data_graph
 }
 ROOT_DIR = File.expand_path('../..', __FILE__)
 GEMS_DIR = File.expand_path('../gems', __FILE__)
@@ -73,7 +81,7 @@ task :rdoc do
         files =  spec.files.select {|file| File.extname(file) == '.rb' }
         files += spec.extra_rdoc_files
         FileUtils.mkdir_p File.dirname(rdoc_dir)
-        capture_sh "rdoc -o '#{rdoc_dir}' '#{spec.rdoc_options.join("' '")}' '#{files.join("' '")}'"
+        capture_sh "rdoc -o '#{rdoc_dir}' '#{spec.rdoc_options.join("' '")}' '#{files.join("' '")}'".gsub("''", "")
       end
     end
 

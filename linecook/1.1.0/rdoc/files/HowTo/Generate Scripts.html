@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: Generate Scripts</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>Generate Scripts</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>HowTo/Generate Scripts
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Jul 24 20:39:43 -0600 2011</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>Generate Scripts</h1>
+<p>
+<a href="../../classes/Linecook.html">Linecook</a> generates scripts and
+puts them into a directory. Once you have the scripts you can compress
+them, share them, run them, or do whatever you please
+</p>
+<ul>
+<li>at that point they&#8216;re ordinary files sitting in a directory. <a
+href="../../classes/Linecook.html">Linecook</a> refers
+
+</li>
+</ul>
+<p>
+to the directories containing generated scripts as packages.
+</p>
+<p>
+The best way to understand how <a
+href="../../classes/Linecook.html">Linecook</a> generates scripts is to
+start by making a package with a known script, and then rewrite the script
+using <a href="../../classes/Linecook.html">Linecook</a>. At each step of
+the rewrite you can rebuild the package and verify the script is
+reproduced.
+</p>
+<p>
+The command to rebuild a package is:
+</p>
+<pre>
+  linecook build -Ilib
+</pre>
+<p>
+Or if you have a proper Gemfile in your project dir:
+</p>
+<pre>
+  linecook build
+</pre>
+<p>
+This tutorial is designed such that if you make the files as specified, you
+can use it to rebuild the same package (functionally or literally) at the
+end of each section.
+</p>
+<h2>Packages</h2>
+<p>
+Packages are located in the packages directory by default. The simplest
+package is a directory containing a single executable script. Assuming a
+bare Ubuntu VM and a bash shell, start with this script to setup a minimal
+development environment:
+</p>
+<pre>
+  [packages/demo/run]
+  sudo apt-get -y install git
+  git config --global user.name &quot;John Doe&quot;
+  git config --global user.email &quot;john.doe@example.com&quot;
+  sudo apt-get -y install ruby
+</pre>
+<p>
+This package represents the end result of &#8216;linecook build&#8217;. To
+actually build it, a package file need to be made. The package file
+describes what goes into the package and is written in YAML; by default the
+package file is named like the final package, but with a .yml extension.
+</p>
+<p>
+As an example, this package file generates the &#8216;run&#8217; script
+from the &#8216;demo&#8217; recipe and puts it into the package during
+build.
+</p>
+<pre>
+  [packages/demo.yml]
+  linecook:
+    package:
+      recipes:
+        run: demo     # package/path: recipe_name
+</pre>
+<p>
+However this package file is overly verbose; the recipe with the same name
+as the package is used to generate the run script by default, so this
+equivalent:
+</p>
+<pre>
+  [packages/demo.yml]
+  {}
+</pre>
+<p>
+At this point a build (ie &#8216;linecook build&#8217;) raises an error; To
+see the package file in action we need the demo recipe.
+</p>
+<h2>Recipes</h2>
+<p>
+Recipes are ruby code that generates text during a build. Typically the
+text is shell script, and therefore the result of a recipe is a script
+file, but the text could be a config file, SQL, or whatever.
+</p>
+<p>
+Specifically recipes are code that gets executed in the context of a <a
+href="../../classes/Linecook/Recipe.html">Linecook::Recipe</a> instance.
+These instances have a &#8216;target&#8217; IO object (usually a Tempfile)
+to which the generated text is written. The most basic recipe simply writes
+the script content to the target.
+</p>
+<pre>
+  [recipes/demo.rb]
+  target.puts &lt;&lt;-SCRIPT
+  sudo apt-get -y install ruby1.8
+  sudo apt-get -y install git
+  git config --global user.name &quot;John Doe&quot;
+  git config --global user.email &quot;john.doe@example.com&quot;
+  SCRIPT
+</pre>
+<p>
+Now a build will write the script to the target, then move the
+corresponding Tempfile to become &#8216;packages/demo/run&#8217;. As code,
+recipes work like this:
+</p>
+<pre>
+  class Recipe
+    attr_accessor :target
+    def initialize
+      @target = &quot;&quot;
+    end
+  end
+
+  recipe = Recipe.new
+  recipe.instance_eval File.read('recipes/demo.rb')
+  recipe.target[0, 31]  # =&gt; &quot;sudo apt-get -y install ruby1.8&quot;
+</pre>
+<p>
+This exercise illustrates the great and powerful truth of recipes - they
+are simply a context to generate text and write it to a file. A direct
+consequence of this design is that commands (for example debugging command)
+can always be inserted into a script in a trivial manner.
+</p>
+<p>
+Obviously recipes can do more.
+</p>
+<h2>Attributes</h2>
+<p>
+Attributes allow variables to be separated from the recipe code, such that
+they may be overridden on a per-package basis, in the package file. Recipes
+have a nested &#8216;attrs&#8217; hash (which is literally a Hash) that
+merges together the defaults and overrides to provide attributes access.
+</p>
+<p>
+Using attributes:
+</p>
+<pre>
+  [attributes/git.rb]
+  attrs['git']['package'] = 'git'
+  attrs['git']['config']['user.name'] = 'John Doe'
+  attrs['git']['config']['user.email'] = 'john.doe@example.com'
+
+  [attributes/ruby.rb]
+  attrs['ruby']['package'] = 'ruby1.9.1'
+
+  [packages/demo.yml]
+  ruby:
+    package: ruby1.8
+
+  [recipes/demo.rb]
+  attributes 'ruby'
+  attributes 'git'
+  #########################################################################
+  target.puts &lt;&lt;-SCRIPT
+  sudo apt-get -y install #{attrs['ruby']['package']}
+  sudo apt-get -y install #{attrs['git']['package']}
+  git config --global user.name &quot;#{attrs['git']['config']['user.name']}&quot;
+  git config --global user.email &quot;#{attrs['git']['config']['user.email']}&quot;
+  SCRIPT
+</pre>
+<p>
+Attribute files must be included using the Recipe#attributes method; no
+attributes are included by default. This ensures that attributes will be
+deterministic in cases where two attribute files (unwisely) use the same
+namespace.
+</p>
+<p>
+The overrides specified in the package file are always available, however.
+They function as a kind of environment for recipes; since they are
+overrides, they take precedence over any values set by attribute files.
+</p>
+<p>
+Take note of two details. First, there is no special code needed to set
+nested attributes in an attributes file. Attributes files are executed in
+the context of a <a
+href="../../classes/Linecook/Attributes.html">Linecook::Attributes</a>
+instance which provides this auto-nesting behavior. Second, as a
+convention, attrs are accessed using string keys because it&#8216;s cleaner
+to use string keys in the package file.
+</p>
+<h2>Helpers</h2>
+<p>
+Helpers allow you to define methods that generate text. Helper methods are
+defined as ERB files under the &#8216;helpers&#8217; directory and compile
+into an ordinary module under the &#8216;lib&#8217; directory. For example
+(assuming the attribute and package files from above):
+</p>
+<pre>
+  [helpers/demo/install.erb]
+  Installs a package using apt-get.
+  (package)
+  --
+  sudo apt-get -y install &lt;%= package %&gt;
+
+  [helpers/demo/set_git_config.erb]
+  Sets a global git config.
+  (key, value)
+  --
+  git config --global &lt;%= key %&gt; &quot;&lt;%= value %&gt;&quot;
+
+  [recipes/demo.rb]
+  attributes 'ruby'
+  attributes 'git'
+  helpers 'demo'
+  #########################################################################
+  install attrs['ruby']['package']
+  install attrs['git']['package']
+  ['user.name', 'user.email'].each do |key|
+    set_git_config key, attrs['git']['config'][key]
+  end
+</pre>
+<p>
+When you define a helper, you&#8216;re literally defining a method in a
+module that you can use in your recipe to generate text. This example
+generates the &#8216;Demo&#8217; module which adds &#8216;install&#8217;
+and &#8216;set_git_config&#8217; into the recipe context. In fact the
+&#8216;helpers&#8217; method is equivalent to:
+</p>
+<pre>
+  require 'demo'
+  extend Demo
+</pre>
+<p>
+The exact details are elegant but unimportant to the workflow, which can be
+summed up like this: put an ERB template into a file, include the directory
+using Recipe#helpers, and now the template is available as a method with
+inputs. Whenever you call the method, you make text that gets written to
+target.
+</p>
+<p>
+To capture the output of a template without writing it to target, prefix
+the method with an underscore. The output can then be used as an input to
+another helper&#8230; see the <a href="../README.html">README</a> for an
+example.
+</p>
+<h2>Files</h2>
+<p>
+Files are files of any sort that you might want to include in a package.
+They could be an archive of some sort, a binary, or a stock script you
+don&#8216;t need a recipe to reproduce.
+</p>
+<p>
+Files are typically included via a recipe like this:
+</p>
+<pre>
+  [files/gitconfig]
+  [user]
+        name = John Doe
+        email = john.doe@example.com
+
+  [recipes/demo.rb]
+  target.puts &lt;&lt;-SCRIPT
+  sudo apt-get -y install ruby1.8
+  sudo apt-get -y install git
+  cp &quot;#{ file_path &quot;gitconfig&quot; }&quot; ~/.gitconfig
+  SCRIPT
+</pre>
+<p>
+The only &#8216;trick&#8217; here is that the return value of file_path is
+a path that will be correct at runtime, when the script is on the remote
+server (specifically it will be like &quot;${0%/run}/gitconfig&quot;, which
+works because $0 will be the full path to the recipe).
+</p>
+<h2>Templates</h2>
+<p>
+Templates work the same as files except, as you may imagine, they are ERB
+templates that evaluate with whatever locals you provide them. The attrs
+hash is local by default.
+</p>
+<pre>
+  [attributes/git.rb]
+  attrs['git']['package'] = 'git'
+  attrs['git']['config']['user.name'] = 'John Doe'
+  attrs['git']['config']['user.email'] = 'john.doe@example.com'
+
+  [templates/gitconfig.erb]
+  [user]
+        name = &lt;%= attrs['git']['config']['user.name'] %&gt;
+        email = &lt;%= attrs['git']['config']['user.email'] %&gt;
+
+  [recipes/demo.rb]
+  attributes 'git'
+  #########################################################################
+  target.puts &lt;&lt;-SCRIPT
+  sudo apt-get -y install ruby1.8
+  sudo apt-get -y install git
+  cp &quot;#{ template_path &quot;gitconfig.erb&quot; }&quot; ~/.gitconfig
+  SCRIPT
+</pre>
+<h2><a href="http://rubygems.org/gems/linebook/">Linebook</a></h2>
+<p>
+The techniques presented here are sufficient to work with many scripts in
+many situations but they are quite bare. Eventually, or perhaps
+immediately, you will want a suite of standard helpers. The canonical
+helper library is <a
+href="http://rubygems.org/gems/linebook/">Linebook</a>.
+</p>
+<p>
+See the <a href="http://rubydoc.info/gems/linebook/file/README">Linebook
+documentation</a> to learn helpers for flow control, file system tests,
+commands, chaining, redirection, heredocs, and other convenience methods.
+</p>
+<pre>
+  [recipes/demo.rb]
+  helpers 'linebook/shell'
+
+  unless_ _file?('/tmp/message') do
+    cat.to('/tmp/message').heredoc do
+      writeln 'hello world!'
+    end
+  end
+</pre>
+<p>
+Enjoy!
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

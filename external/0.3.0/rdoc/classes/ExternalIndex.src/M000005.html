@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (ExternalIndex)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/external_index.rb, line 105</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">io</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span>={})
+    <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">io</span>)
+    
+    <span class="ruby-identifier">options</span> = {
+      <span class="ruby-identifier">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;I&quot;</span>,
+      <span class="ruby-identifier">:nil_value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,
+      <span class="ruby-identifier">:buffer_size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_BUFFER_SIZE</span>
+    }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+  
+    <span class="ruby-comment cmt"># set the format, frame, and frame size</span>
+    <span class="ruby-identifier">format</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:format</span>]
+    <span class="ruby-ivar">@frame</span> = <span class="ruby-value">0</span>
+    <span class="ruby-ivar">@frame_size</span> = <span class="ruby-value">0</span>
+    <span class="ruby-ivar">@process_in_bulk</span> = <span class="ruby-keyword kw">true</span>
+    
+    <span class="ruby-identifier">scanner</span> = <span class="ruby-constant">StringScanner</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">format</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">skip</span>(<span class="ruby-regexp re">/\d+/</span>)
+      <span class="ruby-comment cmt"># skip leading numbers ... they are normally ignored</span>
+      <span class="ruby-comment cmt"># by pack and unpack but you could raise an error.</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">bulk_directive</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">directive</span> = <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/./</span>)
+      <span class="ruby-identifier">size</span> = <span class="ruby-constant">ExternalIndex</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-identifier">directive</span>)
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;cannot determine size of: '#{directive}'&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+      
+      <span class="ruby-comment cmt"># scan for a multiplicity factor</span>
+      <span class="ruby-identifier">multiplicity</span> = (<span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/\d+/</span>) <span class="ruby-operator">||</span> <span class="ruby-value">1</span>).<span class="ruby-identifier">to_i</span>
+      <span class="ruby-ivar">@frame</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">multiplicity</span>
+      <span class="ruby-ivar">@frame_size</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">size</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">multiplicity</span>
+      
+      <span class="ruby-comment cmt"># if the bulk directive changes, </span>
+      <span class="ruby-comment cmt"># processing in bulk is impossible</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">bulk_directive</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+        <span class="ruby-identifier">bulk_directive</span> = <span class="ruby-identifier">directive</span>
+      <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">bulk_directive</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">directive</span>
+        <span class="ruby-ivar">@process_in_bulk</span> = <span class="ruby-keyword kw">false</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># The &quot;a&quot; and &quot;A&quot; directives cannot be</span>
+    <span class="ruby-comment cmt"># processed in bulk.</span>
+    <span class="ruby-keyword kw">if</span> [<span class="ruby-value str">'a'</span>,<span class="ruby-value str">'A'</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">bulk_directive</span>)
+      <span class="ruby-ivar">@process_in_bulk</span> = <span class="ruby-keyword kw">false</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># Repetitive formats like &quot;I&quot;, &quot;II&quot;, &quot;I2I&quot;, </span>
+    <span class="ruby-comment cmt"># etc can be packed and unpacked in bulk.</span>
+    <span class="ruby-ivar">@format</span> = <span class="ruby-identifier">process_in_bulk</span> <span class="ruby-value">? </span><span class="ruby-node">&quot;#{bulk_directive}*&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">format</span>
+    
+    <span class="ruby-comment cmt"># set the buffer size</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">buffer_size</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:buffer_size</span>]
+    
+    <span class="ruby-comment cmt"># set the nil value to an array of zeros, or</span>
+    <span class="ruby-comment cmt"># to the specified nil value.  If a nil value</span>
+    <span class="ruby-comment cmt"># was specified, ensure it is of the correct</span>
+    <span class="ruby-comment cmt"># frame size and can be packed</span>
+    <span class="ruby-identifier">nil_value</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:nil_value</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> 
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">default_nil_value</span>(<span class="ruby-identifier">format</span>, <span class="ruby-identifier">frame</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:nil_value</span>]
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-keyword kw">begin</span> 
+      <span class="ruby-ivar">@nil_value</span> = <span class="ruby-identifier">nil_value</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>)
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">nil_value</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">frame</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@nil_value</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">nil_value</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-comment cmt"># just to invoke the rescue block</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">rescue</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, 
+        <span class="ruby-node">&quot;unacceptable nil value '#{nil_value}': the nil value must &quot;</span> <span class="ruby-operator">+</span>
+        <span class="ruby-node">&quot;be in frame and packable using the format '#{format}'&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

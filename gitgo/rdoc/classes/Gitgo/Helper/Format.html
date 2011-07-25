@@ -1,0 +1,987 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Gitgo::Helper::Format</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Gitgo::Helper::Format</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/gitgo/helper/format_rb.html">
+                lib/gitgo/helper/format.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000083">at</a>&nbsp;&nbsp;
+      <a href="#M000081">author</a>&nbsp;&nbsp;
+      <a href="#M000069">blob_a</a>&nbsp;&nbsp;
+      <a href="#M000088">branch</a>&nbsp;&nbsp;
+      <a href="#M000067">commit_a</a>&nbsp;&nbsp;
+      <a href="#M000080">content</a>&nbsp;&nbsp;
+      <a href="#M000082">date</a>&nbsp;&nbsp;
+      <a href="#M000072">doc_a</a>&nbsp;&nbsp;
+      <a href="#M000089">each_diff_a</a>&nbsp;&nbsp;
+      <a href="#M000075">each_path</a>&nbsp;&nbsp;
+      <a href="#M000066">full_path_a</a>&nbsp;&nbsp;
+      <a href="#M000086">graph</a>&nbsp;&nbsp;
+      <a href="#M000070">history_a</a>&nbsp;&nbsp;
+      <a href="#M000073">index_key_a</a>&nbsp;&nbsp;
+      <a href="#M000074">index_value_a</a>&nbsp;&nbsp;
+      <a href="#M000071">issue_a</a>&nbsp;&nbsp;
+      <a href="#M000057">new</a>&nbsp;&nbsp;
+      <a href="#M000084">origin</a>&nbsp;&nbsp;
+      <a href="#M000087">path</a>&nbsp;&nbsp;
+      <a href="#M000065">path_a</a>&nbsp;&nbsp;
+      <a href="#M000060">ref_name</a>&nbsp;&nbsp;
+      <a href="#M000059">refs</a>&nbsp;&nbsp;
+      <a href="#M000062">sha</a>&nbsp;&nbsp;
+      <a href="#M000064">sha_a</a>&nbsp;&nbsp;
+      <a href="#M000085">tags</a>&nbsp;&nbsp;
+      <a href="#M000061">text</a>&nbsp;&nbsp;
+      <a href="#M000063">textile</a>&nbsp;&nbsp;
+      <a href="#M000078">title</a>&nbsp;&nbsp;
+      <a href="#M000079">titles</a>&nbsp;&nbsp;
+      <a href="#M000076">tree</a>&nbsp;&nbsp;
+      <a href="#M000077">tree!</a>&nbsp;&nbsp;
+      <a href="#M000068">tree_a</a>&nbsp;&nbsp;
+      <a href="#M000058">url</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name">Rack::Utils</span>
+        <span class="include-name"><a href="Utils.html">Helper::Utils</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">controller</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
+
+        <div class="method-heading">
+          <a href="#M000057" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(controller)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000057-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000057-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 13</span>
+13:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">controller</span>)
+14:         <span class="ruby-ivar">@controller</span> = <span class="ruby-identifier">controller</span>
+15:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000083" class="method-detail">
+        <a name="M000083"></a>
+
+        <div class="method-heading">
+          <a href="#M000083" class="method-signature">
+          <span class="method-name">at</span><span class="method-args">(at)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000083-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000083-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 157</span>
+157:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">at</span>(<span class="ruby-identifier">at</span>)
+158:         <span class="ruby-identifier">at</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">at</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-value str">'(none)'</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">sha_a</span>(<span class="ruby-identifier">at</span>)
+159:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000081" class="method-detail">
+        <a name="M000081"></a>
+
+        <div class="method-heading">
+          <a href="#M000081" class="method-signature">
+          <span class="method-name">author</span><span class="method-args">(author)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000081-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000081-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 147</span>
+147:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">author</span>(<span class="ruby-identifier">author</span>)
+148:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">author</span>.<span class="ruby-identifier">nil?</span>
+149:         <span class="ruby-node">&quot;#{escape_html(author.name)} (&lt;a href=\&quot;#{url('timeline')}?#{build_query(:author =&gt; author.email)}\&quot;&gt;#{escape_html author.email}&lt;/a&gt;)&quot;</span>
+150:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
+
+        <div class="method-heading">
+          <a href="#M000069" class="method-signature">
+          <span class="method-name">blob_a</span><span class="method-args">(treeish, *path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000069-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000069-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 72</span>
+72:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">blob_a</span>(<span class="ruby-identifier">treeish</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">path</span>)
+73:         <span class="ruby-identifier">path_a</span>(<span class="ruby-value str">'blob'</span>, <span class="ruby-identifier">treeish</span>, <span class="ruby-identifier">path</span>)
+74:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000088" class="method-detail">
+        <a name="M000088"></a>
+
+        <div class="method-heading">
+          <a href="#M000088" class="method-signature">
+          <span class="method-name">branch</span><span class="method-args">(branch)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000088-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000088-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 185</span>
+185:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">branch</span>(<span class="ruby-identifier">branch</span>)
+186:         <span class="ruby-identifier">escape_html</span>(<span class="ruby-identifier">branch</span>)
+187:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000067" class="method-detail">
+        <a name="M000067"></a>
+
+        <div class="method-heading">
+          <a href="#M000067" class="method-signature">
+          <span class="method-name">commit_a</span><span class="method-args">(treeish)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000067-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000067-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 64</span>
+64:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">commit_a</span>(<span class="ruby-identifier">treeish</span>)
+65:         <span class="ruby-node">&quot;&lt;a class=\&quot;commit\&quot; href=\&quot;#{url('commit', treeish)}\&quot;&gt;#{escape_html treeish}&lt;/a&gt;&quot;</span>
+66:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000080" class="method-detail">
+        <a name="M000080"></a>
+
+        <div class="method-heading">
+          <a href="#M000080" class="method-signature">
+          <span class="method-name">content</span><span class="method-args">(str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000080-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000080-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 143</span>
+143:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content</span>(<span class="ruby-identifier">str</span>)
+144:         <span class="ruby-identifier">textile</span> <span class="ruby-identifier">text</span>(<span class="ruby-identifier">str</span>)
+145:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000082" class="method-detail">
+        <a name="M000082"></a>
+
+        <div class="method-heading">
+          <a href="#M000082" class="method-signature">
+          <span class="method-name">date</span><span class="method-args">(date)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000082-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000082-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 152</span>
+152:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">date</span>(<span class="ruby-identifier">date</span>)
+153:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">date</span>.<span class="ruby-identifier">nil?</span>
+154:         <span class="ruby-node">&quot;&lt;abbr title=\&quot;#{date.iso8601}\&quot;&gt;#{date.strftime('%Y/%m/%d %H:%M %p')}&lt;/abbr&gt;&quot;</span>
+155:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000072" class="method-detail">
+        <a name="M000072"></a>
+
+        <div class="method-heading">
+          <a href="#M000072" class="method-signature">
+          <span class="method-name">doc_a</span><span class="method-args">(doc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000072-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000072-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 85</span>
+85:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">doc_a</span>(<span class="ruby-identifier">doc</span>)
+86:         <span class="ruby-identifier">target</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">graph_head?</span> <span class="ruby-value">? </span><span class="ruby-identifier">doc</span>.<span class="ruby-identifier">graph_head</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{doc.graph_head}##{doc.sha}&quot;</span>
+87:         <span class="ruby-node">&quot;&lt;a id=\&quot;#{doc.sha}\&quot; href=\&quot;#{url(doc.type, target)}\&quot;&gt;#{escape_html doc.summary}&lt;/a&gt;&quot;</span>
+88:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000089" class="method-detail">
+        <a name="M000089"></a>
+
+        <div class="method-heading">
+          <a href="#M000089" class="method-signature">
+          <span class="method-name">each_diff_a</span><span class="method-args">(status) {|&quot;&lt;a class=\&quot;| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000089-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000089-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 189</span>
+189:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_diff_a</span>(<span class="ruby-identifier">status</span>)
+190:         <span class="ruby-identifier">status</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+191:           <span class="ruby-identifier">change</span>, <span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span> = <span class="ruby-identifier">status</span>[<span class="ruby-identifier">path</span>]
+192:           <span class="ruby-identifier">a_mode</span>, <span class="ruby-identifier">a_sha</span> = <span class="ruby-identifier">a</span>
+193:           <span class="ruby-identifier">b_mode</span>, <span class="ruby-identifier">b_sha</span> = <span class="ruby-identifier">b</span>
+194:           
+195:           <span class="ruby-keyword kw">yield</span> <span class="ruby-node">&quot;&lt;a class=\&quot;#{change}\&quot; href=\&quot;#{url('obj', b_sha.to_s)}\&quot; title=\&quot;#{a_sha || '-'} to #{b_sha || '-'}\&quot;&gt;#{path}&lt;/a&gt;&quot;</span>
+196:         <span class="ruby-keyword kw">end</span>
+197:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000075" class="method-detail">
+        <a name="M000075"></a>
+
+        <div class="method-heading">
+          <a href="#M000075" class="method-signature">
+          <span class="method-name">each_path</span><span class="method-args">(treeish, path) {|&quot;&lt;a href=\&quot;| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000075-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000075-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 98</span>
+ 98:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_path</span>(<span class="ruby-identifier">treeish</span>, <span class="ruby-identifier">path</span>)
+ 99:         <span class="ruby-identifier">paths</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;/&quot;</span>)
+100:         <span class="ruby-identifier">base</span> = <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">pop</span>
+101:         <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">treeish</span>)
+102: 
+103:         <span class="ruby-identifier">object_path</span> = [<span class="ruby-value str">'tree'</span>]
+104:         <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">collect!</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span> 
+105:           <span class="ruby-identifier">object_path</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">path</span>
+106:           <span class="ruby-keyword kw">yield</span> <span class="ruby-node">&quot;&lt;a href=\&quot;#{url(*object_path)}\&quot;&gt;#{escape_html path}&lt;/a&gt;&quot;</span>
+107:         <span class="ruby-keyword kw">end</span>
+108: 
+109:         <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">base</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">base</span>
+110:         <span class="ruby-identifier">paths</span>
+111:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000066" class="method-detail">
+        <a name="M000066"></a>
+
+        <div class="method-heading">
+          <a href="#M000066" class="method-signature">
+          <span class="method-name">full_path_a</span><span class="method-args">(type, treeish, path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000066-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000066-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 60</span>
+60:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">full_path_a</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">treeish</span>, <span class="ruby-identifier">path</span>)
+61:         <span class="ruby-node">&quot;&lt;a class=\&quot;#{type}\&quot; href=\&quot;#{url(type, treeish, *path)}\&quot;&gt;#{escape_html File.join(path)}&lt;/a&gt;&quot;</span>
+62:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000086" class="method-detail">
+        <a name="M000086"></a>
+
+        <div class="method-heading">
+          <a href="#M000086" class="method-signature">
+          <span class="method-name">graph</span><span class="method-args">(graph) {|sha, &quot;| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000086-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000086-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 170</span>
+170:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">graph</span>(<span class="ruby-identifier">graph</span>)
+171:         <span class="ruby-identifier">graph</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sha</span>, <span class="ruby-identifier">slot</span>, <span class="ruby-identifier">index</span>, <span class="ruby-identifier">current_slots</span>, <span class="ruby-identifier">transitions</span><span class="ruby-operator">|</span>
+172:           <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">sha</span>
+173:           <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">sha</span>, <span class="ruby-node">&quot;#{slot}:#{index}:#{current_slots.join(',')}:#{transitions.join(',')}&quot;</span>)
+174:         <span class="ruby-keyword kw">end</span>
+175:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000070" class="method-detail">
+        <a name="M000070"></a>
+
+        <div class="method-heading">
+          <a href="#M000070" class="method-signature">
+          <span class="method-name">history_a</span><span class="method-args">(treeish)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000070-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000070-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 76</span>
+76:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">history_a</span>(<span class="ruby-identifier">treeish</span>)
+77:         <span class="ruby-node">&quot;&lt;a class=\&quot;history\&quot; href=\&quot;#{url('commits', treeish)}\&quot; title=\&quot;#{escape_html treeish}\&quot;&gt;history&lt;/a&gt;&quot;</span>
+78:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000073" class="method-detail">
+        <a name="M000073"></a>
+
+        <div class="method-heading">
+          <a href="#M000073" class="method-signature">
+          <span class="method-name">index_key_a</span><span class="method-args">(key)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000073-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000073-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 90</span>
+90:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index_key_a</span>(<span class="ruby-identifier">key</span>)
+91:         <span class="ruby-node">&quot;&lt;a href=\&quot;#{url('repo', 'index', key)}\&quot;&gt;#{escape_html key}&lt;/a&gt;&quot;</span>
+92:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000074" class="method-detail">
+        <a name="M000074"></a>
+
+        <div class="method-heading">
+          <a href="#M000074" class="method-signature">
+          <span class="method-name">index_value_a</span><span class="method-args">(key, value)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000074-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000074-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 94</span>
+94:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index_value_a</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+95:         <span class="ruby-node">&quot;&lt;a href=\&quot;#{url('repo', 'index', key, value)}\&quot;&gt;#{escape_html value}&lt;/a&gt;&quot;</span>
+96:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000071" class="method-detail">
+        <a name="M000071"></a>
+
+        <div class="method-heading">
+          <a href="#M000071" class="method-signature">
+          <span class="method-name">issue_a</span><span class="method-args">(doc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000071-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000071-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 80</span>
+80:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">issue_a</span>(<span class="ruby-identifier">doc</span>)
+81:         <span class="ruby-identifier">target</span> = <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">graph_head?</span> <span class="ruby-value">? </span><span class="ruby-identifier">doc</span>.<span class="ruby-identifier">graph_head</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{doc.graph_head}##{doc.sha}&quot;</span>
+82:         <span class="ruby-node">&quot;&lt;a id=\&quot;#{doc.sha}\&quot; href=\&quot;#{url('issue', target)}\&quot;&gt;#{titles(doc.graph_titles)}&lt;/a&gt;&quot;</span>
+83:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000084" class="method-detail">
+        <a name="M000084"></a>
+
+        <div class="method-heading">
+          <a href="#M000084" class="method-signature">
+          <span class="method-name">origin</span><span class="method-args">(origin)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000084-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000084-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 161</span>
+161:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">origin</span>(<span class="ruby-identifier">origin</span>)
+162:         <span class="ruby-identifier">sha</span>(<span class="ruby-identifier">origin</span>)
+163:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000087" class="method-detail">
+        <a name="M000087"></a>
+
+        <div class="method-heading">
+          <a href="#M000087" class="method-signature">
+          <span class="method-name">path</span><span class="method-args">(path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+repo
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000087-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000087-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 181</span>
+181:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">path</span>(<span class="ruby-identifier">path</span>)
+182:         <span class="ruby-identifier">escape_html</span>(<span class="ruby-identifier">path</span>)
+183:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000065" class="method-detail">
+        <a name="M000065"></a>
+
+        <div class="method-heading">
+          <a href="#M000065" class="method-signature">
+          <span class="method-name">path_a</span><span class="method-args">(type, treeish, path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000065-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000065-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 56</span>
+56:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">path_a</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">treeish</span>, <span class="ruby-identifier">path</span>)
+57:         <span class="ruby-node">&quot;&lt;a class=\&quot;#{type}\&quot; href=\&quot;#{url(type, treeish, *path)}\&quot;&gt;#{escape_html(path.pop || treeish)}&lt;/a&gt;&quot;</span>
+58:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000060" class="method-detail">
+        <a name="M000060"></a>
+
+        <div class="method-heading">
+          <a href="#M000060" class="method-signature">
+          <span class="method-name">ref_name</span><span class="method-args">(sha)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000060-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000060-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 25</span>
+25:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ref_name</span>(<span class="ruby-identifier">sha</span>)
+26:         <span class="ruby-identifier">reference</span> = <span class="ruby-identifier">refs</span>.<span class="ruby-identifier">find</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">ref</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">commit</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">sha</span>}
+27:         <span class="ruby-identifier">reference</span> <span class="ruby-value">? </span><span class="ruby-identifier">reference</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">sha</span>
+28:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000059" class="method-detail">
+        <a name="M000059"></a>
+
+        <div class="method-heading">
+          <a href="#M000059" class="method-signature">
+          <span class="method-name">refs</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000059-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000059-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 21</span>
+21:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">refs</span>
+22:         <span class="ruby-ivar">@refs</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">repo</span>.<span class="ruby-identifier">git</span>.<span class="ruby-identifier">grit</span>.<span class="ruby-identifier">refs</span>
+23:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
+
+        <div class="method-heading">
+          <a href="#M000062" class="method-signature">
+          <span class="method-name">sha</span><span class="method-args">(sha)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000062-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 40</span>
+40:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sha</span>(<span class="ruby-identifier">sha</span>)
+41:         <span class="ruby-identifier">escape_html</span>(<span class="ruby-identifier">sha</span>)
+42:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000064" class="method-detail">
+        <a name="M000064"></a>
+
+        <div class="method-heading">
+          <a href="#M000064" class="method-signature">
+          <span class="method-name">sha_a</span><span class="method-args">(sha)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+links
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000064-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000064-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 52</span>
+52:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sha_a</span>(<span class="ruby-identifier">sha</span>)
+53:         <span class="ruby-node">&quot;&lt;a class=\&quot;sha\&quot; href=\&quot;#{url('obj', sha)}\&quot; title=\&quot;#{sha}\&quot;&gt;#{sha}&lt;/a&gt;&quot;</span>
+54:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000085" class="method-detail">
+        <a name="M000085"></a>
+
+        <div class="method-heading">
+          <a href="#M000085" class="method-signature">
+          <span class="method-name">tags</span><span class="method-args">(tags)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000085-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000085-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 165</span>
+165:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tags</span>(<span class="ruby-identifier">tags</span>)
+166:         <span class="ruby-identifier">tags</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'(unclassified)'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">empty?</span>
+167:         <span class="ruby-identifier">escape_html</span> <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">', '</span>)
+168:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000061" class="method-detail">
+        <a name="M000061"></a>
+
+        <div class="method-heading">
+          <a href="#M000061" class="method-signature">
+          <span class="method-name">text</span><span class="method-args">(str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+general formatters
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000061-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000061-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 34</span>
+34:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">text</span>(<span class="ruby-identifier">str</span>)
+35:         <span class="ruby-identifier">str</span> = <span class="ruby-identifier">escape_html</span>(<span class="ruby-identifier">str</span>)
+36:         <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/[A-Fa-f\d]{40}/</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">sha</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sha_a</span>(<span class="ruby-identifier">sha</span>) }
+37:         <span class="ruby-identifier">str</span>
+38:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000063" class="method-detail">
+        <a name="M000063"></a>
+
+        <div class="method-heading">
+          <a href="#M000063" class="method-signature">
+          <span class="method-name">textile</span><span class="method-args">(str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000063-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000063-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 44</span>
+44:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">textile</span>(<span class="ruby-identifier">str</span>)
+45:         <span class="ruby-operator">::</span><span class="ruby-constant">RedCloth</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">str</span>).<span class="ruby-identifier">to_html</span>
+46:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000078" class="method-detail">
+        <a name="M000078"></a>
+
+        <div class="method-heading">
+          <a href="#M000078" class="method-signature">
+          <span class="method-name">title</span><span class="method-args">(title)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000078-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000078-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 134</span>
+134:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">title</span>(<span class="ruby-identifier">title</span>)
+135:         <span class="ruby-identifier">escape_html</span>(<span class="ruby-identifier">title</span>)
+136:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000079" class="method-detail">
+        <a name="M000079"></a>
+
+        <div class="method-heading">
+          <a href="#M000079" class="method-signature">
+          <span class="method-name">titles</span><span class="method-args">(titles)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000079-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000079-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 138</span>
+138:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">titles</span>(<span class="ruby-identifier">titles</span>)
+139:         <span class="ruby-identifier">titles</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;(nameless)&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">titles</span>.<span class="ruby-identifier">empty?</span>
+140:         <span class="ruby-identifier">escape_html</span> <span class="ruby-identifier">titles</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">', '</span>)
+141:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000076" class="method-detail">
+        <a name="M000076"></a>
+
+        <div class="method-heading">
+          <a href="#M000076" class="method-signature">
+          <span class="method-name">tree</span><span class="method-args">(hash, io=[], &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+documents
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000076-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000076-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 117</span>
+117:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tree</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">io</span>=[], <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+118:         <span class="ruby-identifier">dup</span> = {}
+119:         <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+120:           <span class="ruby-identifier">dup</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">dup</span>
+121:         <span class="ruby-keyword kw">end</span>  
+122:         
+123:         <span class="ruby-identifier">tree!</span>(<span class="ruby-identifier">dup</span>, <span class="ruby-identifier">io</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+124:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000077" class="method-detail">
+        <a name="M000077"></a>
+
+        <div class="method-heading">
+          <a href="#M000077" class="method-signature">
+          <span class="method-name">tree!</span><span class="method-args">(hash, io=[], &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000077-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000077-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 126</span>
+126:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tree!</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">io</span>=[], <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+127:         <span class="ruby-identifier">nodes</span> = <span class="ruby-identifier">flatten</span>(<span class="ruby-identifier">hash</span>)[<span class="ruby-keyword kw">nil</span>]
+128:         <span class="ruby-identifier">nodes</span> = <span class="ruby-identifier">collapse</span>(<span class="ruby-identifier">nodes</span>)
+129:         <span class="ruby-identifier">nodes</span>.<span class="ruby-identifier">shift</span>
+130:         
+131:         <span class="ruby-identifier">render</span>(<span class="ruby-identifier">nodes</span>, <span class="ruby-identifier">io</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+132:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
+
+        <div class="method-heading">
+          <a href="#M000068" class="method-signature">
+          <span class="method-name">tree_a</span><span class="method-args">(treeish, *path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000068-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000068-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 68</span>
+68:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tree_a</span>(<span class="ruby-identifier">treeish</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">path</span>)
+69:         <span class="ruby-identifier">path_a</span>(<span class="ruby-value str">'tree'</span>, <span class="ruby-identifier">treeish</span>, <span class="ruby-identifier">path</span>)
+70:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000058" class="method-detail">
+        <a name="M000058"></a>
+
+        <div class="method-heading">
+          <a href="#M000058" class="method-signature">
+          <span class="method-name">url</span><span class="method-args">(*paths)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000058-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000058-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/helper/format.rb, line 17</span>
+17:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>)
+18:         <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">url</span>(<span class="ruby-identifier">paths</span>)
+19:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

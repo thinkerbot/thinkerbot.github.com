@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_std_class_test (IOTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/external/io_test.rb, line 367</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_std_class_test</span>
+    <span class="ruby-identifier">classes</span> = []
+    <span class="ruby-identifier">std_class_test</span>(<span class="ruby-value str">&quot;some data&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">io</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">assert</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">IO</span>)
+      <span class="ruby-identifier">assert</span> <span class="ruby-value str">&quot;r+&quot;</span>, <span class="ruby-identifier">io</span>.<span class="ruby-identifier">generic_mode</span>
+      
+      <span class="ruby-identifier">io</span>.<span class="ruby-identifier">pos</span> = <span class="ruby-value">0</span>
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-value str">&quot;some data&quot;</span>, <span class="ruby-identifier">io</span>.<span class="ruby-identifier">read</span>
+      
+      <span class="ruby-comment cmt"># the new data will throw the previous assertion</span>
+      <span class="ruby-comment cmt"># if the ios are not independent</span>
+      <span class="ruby-identifier">io</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; new data&quot;</span>  
+      <span class="ruby-identifier">io</span>.<span class="ruby-identifier">pos</span> = <span class="ruby-value">0</span>
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-value str">&quot;some data new data&quot;</span>, <span class="ruby-identifier">io</span>.<span class="ruby-identifier">read</span>
+      
+      <span class="ruby-identifier">classes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">class</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">File</span>, <span class="ruby-constant">Tempfile</span>, <span class="ruby-constant">StringIO</span>], <span class="ruby-identifier">classes</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

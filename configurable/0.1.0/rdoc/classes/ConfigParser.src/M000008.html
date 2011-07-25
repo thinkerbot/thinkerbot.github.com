@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>parse (ConfigParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/config_parser.rb, line 159</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">argv</span>=<span class="ruby-constant">ARGV</span>, <span class="ruby-identifier">config</span>={})
+    <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">config</span>
+    <span class="ruby-identifier">argv</span> = <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">String</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Shellwords</span>.<span class="ruby-identifier">shellwords</span>(<span class="ruby-identifier">argv</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">dup</span>
+    <span class="ruby-identifier">args</span> = []
+    
+    <span class="ruby-keyword kw">while</span> <span class="ruby-operator">!</span><span class="ruby-identifier">argv</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-identifier">arg</span> = <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">shift</span>
+  
+      <span class="ruby-comment cmt"># determine if the arg is an option</span>
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">arg</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">String</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">arg</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?-</span>
+        <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arg</span>
+        <span class="ruby-keyword kw">next</span>
+      <span class="ruby-keyword kw">end</span>
+      
+      <span class="ruby-comment cmt"># add the remaining args and break</span>
+      <span class="ruby-comment cmt"># for the option break</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">arg</span> <span class="ruby-operator">==</span> <span class="ruby-constant">OPTION_BREAK</span>
+        <span class="ruby-identifier">args</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">argv</span>)
+        <span class="ruby-keyword kw">break</span>
+      <span class="ruby-keyword kw">end</span>
+  
+      <span class="ruby-comment cmt"># split the arg...</span>
+      <span class="ruby-comment cmt"># switch= $1</span>
+      <span class="ruby-comment cmt"># value = $4 || $3 (if arg matches SHORT_OPTION, value is $4 or $3 otherwise)</span>
+      <span class="ruby-identifier">arg</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">LONG_OPTION</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">arg</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">SHORT_OPTION</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">arg</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">ALT_SHORT_OPTION</span> 
+  
+      <span class="ruby-comment cmt"># lookup the option</span>
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">option</span> = <span class="ruby-ivar">@switches</span>[<span class="ruby-identifier">$1</span>]
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;unknown option: #{$1}&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+  
+      <span class="ruby-identifier">option</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$4</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$3</span>, <span class="ruby-identifier">argv</span>)
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-identifier">default_config</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">default</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">config</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">default</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>)
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-identifier">args</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

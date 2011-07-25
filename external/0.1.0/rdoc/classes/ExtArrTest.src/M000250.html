@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_concat (ExtArrTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/ext_arr_test.rb, line 349</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_concat</span>
+    <span class="ruby-comment cmt"># Currently there are issues with this...</span>
+    
+    <span class="ruby-comment cmt"># assert_equal(@cls[1, 2, 3, 4],     @cls[1, 2].concat(@cls[3, 4]))</span>
+    <span class="ruby-comment cmt"># assert_equal(@cls[1, 2, 3, 4],     @cls[].concat(@cls[1, 2, 3, 4]))</span>
+    <span class="ruby-comment cmt"># assert_equal(@cls[1, 2, 3, 4],     @cls[1, 2, 3, 4].concat(@cls[]))</span>
+    <span class="ruby-comment cmt"># assert_equal(@cls[],               @cls[].concat(@cls[]))</span>
+    <span class="ruby-comment cmt"># assert_equal(@cls[@cls[1, 2], @cls[3, 4]], @cls[@cls[1, 2]].concat(@cls[@cls[3, 4]]))</span>
+    <span class="ruby-comment cmt"># </span>
+    <span class="ruby-comment cmt"># a = @cls[1, 2, 3]</span>
+    <span class="ruby-comment cmt"># a.concat(a)</span>
+    <span class="ruby-comment cmt"># assert_equal([1, 2, 3, 1, 2, 3], a)</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

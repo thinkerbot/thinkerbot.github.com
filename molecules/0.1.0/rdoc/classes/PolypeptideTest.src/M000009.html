@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_each_residue_speed (PolypeptideTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/molecules/libraries/polypeptide_test.rb, line 97</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_each_residue_speed</span>
+    <span class="ruby-identifier">benchmark_test</span>(<span class="ruby-value">20</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">p</span> = <span class="ruby-constant">Polypeptide</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;RPPGFSPFR&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-value">10</span>) 
+      
+      <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-value str">&quot;1k RPPGFSPFR * 10&quot;</span>) <span class="ruby-keyword kw">do</span> 
+        <span class="ruby-value">1000</span>.<span class="ruby-identifier">times</span> { <span class="ruby-identifier">p</span>.<span class="ruby-identifier">each_residue</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>} }
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-value str">&quot;1k each_byte:&quot;</span>) <span class="ruby-keyword kw">do</span> 
+        <span class="ruby-value">1000</span>.<span class="ruby-identifier">times</span> { <span class="ruby-identifier">p</span>.<span class="ruby-identifier">sequence</span>.<span class="ruby-identifier">each_byte</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">b</span>} }
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Lazydoc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Lazydoc</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/lazydoc_rb.html">
+                lib/lazydoc.rb
+                </a>
+        <br />
+                <a href="../files/lib/lazydoc/attributes_rb.html">
+                lib/lazydoc/attributes.rb
+                </a>
+        <br />
+                <a href="../files/lib/lazydoc/comment_rb.html">
+                lib/lazydoc/comment.rb
+                </a>
+        <br />
+                <a href="../files/lib/lazydoc/document_rb.html">
+                lib/lazydoc/document.rb
+                </a>
+        <br />
+                <a href="../files/lib/lazydoc/method_rb.html">
+                lib/lazydoc/method.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000002">[]</a>&nbsp;&nbsp;
+      <a href="#M000008">parse</a>&nbsp;&nbsp;
+      <a href="#M000003">register</a>&nbsp;&nbsp;
+      <a href="#M000004">register_caller</a>&nbsp;&nbsp;
+      <a href="#M000001">registry</a>&nbsp;&nbsp;
+      <a href="#M000005">resolve_comments</a>&nbsp;&nbsp;
+      <a href="#M000007">scan</a>&nbsp;&nbsp;
+      <a href="#M000006">scan_doc</a>&nbsp;&nbsp;
+      <a href="#M000009">usage</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="Lazydoc/Attributes.html" class="link">Lazydoc::Attributes</a><br />
+Class <a href="Lazydoc/Comment.html" class="link">Lazydoc::Comment</a><br />
+Class <a href="Lazydoc/Document.html" class="link">Lazydoc::Document</a><br />
+Class <a href="Lazydoc/Method.html" class="link">Lazydoc::Method</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ATTRIBUTE_REGEXP</td>
+          <td>=</td>
+          <td class="context-item-value">/([A-Z][A-z]*(::[A-Z][A-z]*)*)?::([a-z_]+)(-?)/</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+A regexp matching an attribute start or end. After a match:
+
+<table>
+<tr><td valign="top">$1:</td><td>const_name
+
+</td></tr>
+<tr><td valign="top">$3:</td><td>key
+
+</td></tr>
+<tr><td valign="top">$4:</td><td>end flag
+
+</td></tr>
+</table>
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CONSTANT_REGEXP</td>
+          <td>=</td>
+          <td class="context-item-value">/#.*?([A-Z][A-z]*(::[A-Z][A-z]*)*)?$/</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+A regexp matching constants from the ATTRIBUTE_REGEXP leader
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CALLER_REGEXP</td>
+          <td>=</td>
+          <td class="context-item-value">/^(([A-z]:)?[^:]+):(\d+)/</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+A regexp matching a caller line, to extract the calling file and line
+number. After a match:
+
+<table>
+<tr><td valign="top">$1:</td><td>file
+
+</td></tr>
+<tr><td valign="top">$3:</td><td>line number (as a string, obviously)
+
+</td></tr>
+</table>
+<p>
+Note that line numbers in caller start at 1, not 0.
+</p>
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="Lazydoc.src/M000002.html" target="Code" class="method-signature"
+            onclick="popupCode('Lazydoc.src/M000002.html');return false;">
+          <span class="method-name">[]</span><span class="method-args">(source_file)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the lazydoc in <a href="Lazydoc.html#M000001">registry</a> for the
+specified source file. If no such lazydoc exists, one will be created for
+it.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="Lazydoc.src/M000008.html" target="Code" class="method-signature"
+            onclick="popupCode('Lazydoc.src/M000008.html');return false;">
+          <span class="method-name">parse</span><span class="method-args">(str) {|const_name, key, comment| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Parses constant attributes from the string or StringScanner. Yields each
+(const_name, key, comment) triplet to the mandatory block and skips regions
+delimited by the stop and start keys <tt>:-</tt> and <tt>:+</tt>.
+</p>
+<pre>
+  str = %Q{
+  # Const::Name::key subject for key
+  # comment for key
+
+  # :::-
+  # Ignored::key value
+  # :::+
+
+  # Ignored text before attribute ::another subject for another
+  # comment for another
+  }
+
+  results = []
+  Lazydoc.parse(str) do |const_name, key, comment|
+    results &lt;&lt; [const_name, key, comment.subject, comment.to_s]
+  end
+
+  results
+  # =&gt; [
+  # ['Const::Name', 'key', 'subject for key', 'comment for key'],
+  # ['', 'another', 'subject for another', 'comment for another']]
+</pre>
+<p>
+Returns the StringScanner used during scanning.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="Lazydoc.src/M000003.html" target="Code" class="method-signature"
+            onclick="popupCode('Lazydoc.src/M000003.html');return false;">
+          <span class="method-name">register</span><span class="method-args">(source_file, line_number, comment_class=Comment)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Register the specified line numbers to the lazydoc for source_file. Returns
+a comment_class instance corresponding to the line.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="Lazydoc.src/M000004.html" target="Code" class="method-signature"
+            onclick="popupCode('Lazydoc.src/M000004.html');return false;">
+          <span class="method-name">register_caller</span><span class="method-args">(comment_class=Comment, caller_index=1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Registers the method at the specified index in the call stack, to the file
+where the method was called. Using the default index of 1, <a
+href="Lazydoc.html#M000004">register_caller</a> registers the caller of the
+method where <a href="Lazydoc.html#M000004">register_caller</a> is called.
+For instance:
+</p>
+<pre>
+  module Sample
+    module_function
+    def method
+      Lazydoc.register_caller
+    end
+  end
+
+  # this is the line that gets registered
+  Sample.method
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="Lazydoc.src/M000001.html" target="Code" class="method-signature"
+            onclick="popupCode('Lazydoc.src/M000001.html');return false;">
+          <span class="method-name">registry</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+A hash of (source_file, lazydoc) pairs tracking the <a
+href="Lazydoc.html">Lazydoc</a> instance for the given source file.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="Lazydoc.src/M000005.html" target="Code" class="method-signature"
+            onclick="popupCode('Lazydoc.src/M000005.html');return false;">
+          <span class="method-name">resolve_comments</span><span class="method-args">(comments)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Resolves all lazydocs which include the specified code comments.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="Lazydoc.src/M000007.html" target="Code" class="method-signature"
+            onclick="popupCode('Lazydoc.src/M000007.html');return false;">
+          <span class="method-name">scan</span><span class="method-args">(str, key) {|const_name, key, value| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Scans the string or StringScanner for attributes matching the key (keys may
+be patterns, they are incorporated into a regexp). Yields each (const_name,
+key, value) triplet to the mandatory block and skips regions delimited by
+the stop and start keys <tt>:-</tt> and <tt>:+</tt>.
+</p>
+<pre>
+  str = %Q{
+  # Const::Name::key value
+  # ::alt alt_value
+  #
+  # Ignored::Attribute::not_matched value
+  # :::-
+  # Also::Ignored::key value
+  # :::+
+  # Another::key another value
+
+  Ignored::key value
+  }
+
+  results = []
+  Lazydoc.scan(str, 'key|alt') do |const_name, key, value|
+    results &lt;&lt; [const_name, key, value]
+  end
+
+  results
+  # =&gt; [
+  # ['Const::Name', 'key', 'value'],
+  # ['', 'alt', 'alt_value'],
+  # ['Another', 'key', 'another value']]
+</pre>
+<p>
+Returns the StringScanner used during scanning.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="Lazydoc.src/M000006.html" target="Code" class="method-signature"
+            onclick="popupCode('Lazydoc.src/M000006.html');return false;">
+          <span class="method-name">scan_doc</span><span class="method-args">(source_file, key)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Scans the specified file for attributes keyed by key and stores the
+resulting comments in the source_file lazydoc. Returns the lazydoc.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="Lazydoc.src/M000009.html" target="Code" class="method-signature"
+            onclick="popupCode('Lazydoc.src/M000009.html');return false;">
+          <span class="method-name">usage</span><span class="method-args">(path, cols=80)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Parses the <a href="Lazydoc.html#M000009">usage</a> for a file, ie the
+first comment in the file following an optional bang line.
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

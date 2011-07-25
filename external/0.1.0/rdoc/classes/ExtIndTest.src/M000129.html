@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_numerics_cycle_up_to_the_unsigned_max_in_either_sign (ExtIndTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/ext_ind_test.rb, line 750</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_numerics_cycle_up_to_the_unsigned_max_in_either_sign</span>
+    <span class="ruby-comment cmt"># S,s,I,i,L,l all can cycle up to the size of an ULONG </span>
+    [<span class="ruby-value str">'S'</span>,<span class="ruby-value str">'s'</span>,<span class="ruby-value str">'I'</span>,<span class="ruby-value str">'i'</span>,<span class="ruby-value str">'L'</span>,<span class="ruby-value str">'l'</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">i</span> = <span class="ruby-ivar">@cls</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">tempfile</span>, <span class="ruby-identifier">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">format</span>
+      
+      <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">RangeError</span>) { <span class="ruby-identifier">i</span>.<span class="ruby-identifier">unframed_write</span>([<span class="ruby-operator">-</span>(<span class="ruby-constant">ULONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)]) }
+      <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">RangeError</span>) { <span class="ruby-identifier">i</span>.<span class="ruby-identifier">unframed_write</span>([(<span class="ruby-constant">ULONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)]) }
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># Q,q can cycle up to the size of an ULLONG </span>
+    [<span class="ruby-value str">'Q'</span>, <span class="ruby-value str">'q'</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">i</span> = <span class="ruby-ivar">@cls</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">tempfile</span>, <span class="ruby-identifier">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">format</span>
+      
+      <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">RangeError</span>) { <span class="ruby-identifier">i</span>.<span class="ruby-identifier">unframed_write</span>([<span class="ruby-operator">-</span>(<span class="ruby-constant">ULLONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)]) }
+      <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">RangeError</span>) { <span class="ruby-identifier">i</span>.<span class="ruby-identifier">unframed_write</span>([(<span class="ruby-constant">ULLONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)]) }
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

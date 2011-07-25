@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_numeric_ranges_for_pack_and_unpack (PackCheck)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/check/pack_check.rb, line 41</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_numeric_ranges_for_pack_and_unpack</span>
+    <span class="ruby-comment cmt"># I,L handle an unsigned long</span>
+    [<span class="ruby-value str">'I'</span>, <span class="ruby-value str">'L'</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">ULONG_MIN</span>], [<span class="ruby-constant">ULONG_MIN</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">ULONG_MAX</span>], [<span class="ruby-constant">ULONG_MAX</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      
+      <span class="ruby-comment cmt">#assert_equal [ULONG_MIN], [ULONG_MAX+1].pack(format).unpack(format)</span>
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">ULONG_MAX</span>], [<span class="ruby-constant">ULONG_MIN</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      
+      <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">RangeError</span>) { [<span class="ruby-operator">-</span>(<span class="ruby-constant">ULONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>) }
+      <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">RangeError</span>) { [(<span class="ruby-constant">ULONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>) }
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># i,l handle an signed long</span>
+    [<span class="ruby-value str">'i'</span>, <span class="ruby-value str">'l'</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">LONG_MIN</span>], [<span class="ruby-constant">LONG_MIN</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">LONG_MAX</span>], [<span class="ruby-constant">LONG_MAX</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">LONG_MIN</span>], [<span class="ruby-constant">LONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">LONG_MAX</span>], [<span class="ruby-constant">LONG_MIN</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      
+      <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">RangeError</span>) { [<span class="ruby-value">-2</span><span class="ruby-operator">*</span>(<span class="ruby-constant">LONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>) }
+      <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">RangeError</span>) { [<span class="ruby-value">2</span><span class="ruby-operator">*</span>(<span class="ruby-constant">LONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>) }
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># Q handles an unsigned long long</span>
+    [<span class="ruby-value str">'Q'</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">ULLONG_MIN</span>], [<span class="ruby-constant">ULLONG_MIN</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">ULLONG_MAX</span>], [<span class="ruby-constant">ULLONG_MAX</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      
+      <span class="ruby-comment cmt">#assert_equal [ULLONG_MIN], [ULLONG_MAX+1].pack(format).unpack(format)</span>
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">ULLONG_MAX</span>], [<span class="ruby-constant">ULLONG_MIN</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      
+      <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">RangeError</span>) { [<span class="ruby-operator">-</span>(<span class="ruby-constant">ULLONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>) }
+      <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">RangeError</span>) { [(<span class="ruby-constant">ULLONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>) }
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># q handles an signed long long</span>
+    [<span class="ruby-value str">'q'</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">LLONG_MIN</span>], [<span class="ruby-constant">LLONG_MIN</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">LLONG_MAX</span>], [<span class="ruby-constant">LLONG_MAX</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">LLONG_MIN</span>], [<span class="ruby-constant">LLONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">LLONG_MAX</span>], [<span class="ruby-constant">LLONG_MIN</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">format</span>)
+      
+      <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">RangeError</span>) { [<span class="ruby-value">-2</span><span class="ruby-operator">*</span>(<span class="ruby-constant">LLONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>) }
+      <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">RangeError</span>) { [<span class="ruby-value">2</span><span class="ruby-operator">*</span>(<span class="ruby-constant">LLONG_MAX</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)].<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">format</span>) }
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

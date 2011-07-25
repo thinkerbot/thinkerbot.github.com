@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: History</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>History</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>History
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Jul 24 20:39:40 -0600 2011</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h2>1.0.0 2011/04/26</h2>
+<p>
+First major release. Significant work on documentation and various bug
+fixes. Simplified run command to only run one script at a time.
+</p>
+<h2>0.20.0 2011/03/17</h2>
+<ul>
+<li>added callback support
+
+</li>
+<li>changed capture_block to accept capture target, and to return the target
+(not the target output)
+
+</li>
+<li>added capture_str to replace capture_block functionality
+
+</li>
+</ul>
+<h2>0.19.1 2011/03/15</h2>
+<ul>
+<li>updated the functionality of Recipe#rewrite
+
+</li>
+<li>removed Recipe#rewriteln
+
+</li>
+</ul>
+<h2>0.19.0 2011/03/15</h2>
+<ul>
+<li>optimizations for helpers
+
+</li>
+<li>removed _erbout tricks from Recipe
+
+</li>
+<li>added Recipe#rewrite
+
+</li>
+</ul>
+<h2>0.18.0 2011/03/10</h2>
+<ul>
+<li>enforce word method names for helpers
+
+</li>
+<li>linecook prints backtrace on error with $DEBUG
+
+</li>
+<li>added proxy chaining to Recipe
+
+</li>
+</ul>
+<h2>0.17.0 2011/03/10</h2>
+<ul>
+<li>added hooks for TESTCASE and NAME to test helpers
+
+</li>
+<li>changed helper sections to be identified by leading dash
+
+</li>
+</ul>
+<h2>0.16.0 2011/03/09</h2>
+<ul>
+<li>added mode support to packages
+
+</li>
+<li>removed preview command
+
+</li>
+<li>added outdent to recipes
+
+</li>
+<li>made run allocate a pseudo-tty
+
+</li>
+<li>updates to allow multitests
+
+</li>
+<li>various patches
+
+</li>
+</ul>
+<h2>0.15.1 2011/02/23</h2>
+<ul>
+<li>made linecook use Gemfile if available
+
+</li>
+<li>updated scaffold for new project
+
+</li>
+<li>added package file to package dependencies
+
+</li>
+</ul>
+<h2>0.15.0 2011/02/23</h2>
+<p>
+Continued overhaul of testing methods and structure.
+</p>
+<h2>0.14.0 2011/02/16</h2>
+<p>
+Significant overhaul of testing methods and structure. Cleanup of internal
+structure and documentation.
+</p>
+<h2>0.13.1 2011/02/03</h2>
+<ul>
+<li>added back close methods to template
+
+</li>
+<li>fixed test bug
+
+</li>
+</ul>
+<h2>0.13.0 2011/02/03</h2>
+<ul>
+<li>documentation, testing, cleanup
+
+</li>
+</ul>
+<h2>0.12.0 2011/02/01</h2>
+<ul>
+<li>added support for multiple vms
+
+</li>
+<li>simplified test methods
+
+</li>
+</ul>
+<h2>0.11.0 2011/01/28</h2>
+<ul>
+<li>reworked test methods again
+
+</li>
+</ul>
+<h2>0.10.0 2011/01/27</h2>
+<ul>
+<li>updated test methods, adding script/vbox test methods
+
+</li>
+<li>reworked helper generation to inline ERB during generation
+
+</li>
+<li>misc bug fixes
+
+</li>
+</ul>
+<h2>0.9.5 2011/01/13</h2>
+<ul>
+<li>removed double-print of preview
+
+</li>
+<li>added more configs to filter preview results
+
+</li>
+<li>moved helper template docs into the method
+
+</li>
+<li>added selection of a range of content from packages
+
+</li>
+<li>added FORCE to scaffold Rakefile to force helper/package creation
+
+</li>
+</ul>
+<h2>0.9.4 2011/01/13</h2>
+<ul>
+<li>improved preview functionality
+
+</li>
+<li>made script_test run scripts in export dir
+
+</li>
+<li>made recipe add attrs to template locals
+
+</li>
+</ul>
+<h2>0.9.3 2011/01/13</h2>
+<ul>
+<li>bug fixes in commands
+
+</li>
+<li>added configuration of default vmname
+
+</li>
+</ul>
+<h2>0.9.2 2011/01/13</h2>
+<ul>
+<li>added package reset to script tests
+
+</li>
+<li>added preview command
+
+</li>
+</ul>
+<h2>0.9.1 2011/01/12</h2>
+<ul>
+<li>added script_test test method
+
+</li>
+<li>added auto-incrementing variables to recipe
+
+</li>
+</ul>
+<h2>0.9.0 2011/01/12</h2>
+<ul>
+<li>added &#8216;share&#8217; command to setup a vbox share
+
+</li>
+<li>converted &#8216;scripts&#8217; to &#8216;packages&#8217; in scaffold/rake
+tasks
+
+</li>
+<li>removed helpers from manifest, now require directly
+
+</li>
+<li>corrected documentation
+
+</li>
+</ul>
+<h2>0.8.3 2011/01/11</h2>
+<ul>
+<li>bug fixes
+
+</li>
+</ul>
+<h2>0.8.1 2011/01/11</h2>
+<ul>
+<li>added sorted hashes to env
+
+</li>
+<li>bugfix - env did not display cookbook config
+
+</li>
+</ul>
+<h2>0.8.0 2011/01/11</h2>
+<ul>
+<li>now detect helpers using lazydoc (::helper)
+
+</li>
+<li>bugfix env command didn&#8216;t work
+
+</li>
+<li>bugfix for using nested capture path
+
+</li>
+<li>now nest resources in manifest by type
+
+</li>
+</ul>
+<h2>0.7.0 2011/01/10</h2>
+<ul>
+<li>removed shell helpers (to linebook)
+
+</li>
+<li>reworked internals for saner testing
+
+</li>
+</ul>
+<h2>0.6.2 2011/01/06</h2>
+<ul>
+<li>added helper command to build a single helper
+
+</li>
+<li>improved rake tasks in template to build as-needed
+
+</li>
+<li>bugfix in Test#assert_content
+
+</li>
+</ul>
+<h2>0.6.1 2011/01/06</h2>
+<ul>
+<li>added version flag to linecook
+
+</li>
+<li>updated/improved help
+
+</li>
+</ul>
+<h2>0.6.0 2011/01/06</h2>
+<p>
+Rework with a cleaner interface. Now package interfaces with env state,
+which gets passed around, rather than the hodge-podge of state passed
+around previously.
+</p>
+<h2>0.5.0 2010/12/28</h2>
+<ul>
+<li>rework with the ability to test more
+
+</li>
+</ul>
+<h2>0.4.0 2010/12/27</h2>
+<ul>
+<li>enhanced linecook executable with commands
+
+</li>
+<li>added sketches of default shell helpers
+
+</li>
+<li>bug fixes
+
+</li>
+</ul>
+<h2>0.3.1 2010/12/23</h2>
+<ul>
+<li>prevent capture_path from stripping content
+
+</li>
+<li>added test tasks to template
+
+</li>
+</ul>
+<h2>0.3.0 2010/12/23</h2>
+<ul>
+<li>improved configuration of cookbook manifest
+
+</li>
+<li>helpers are now created in lib directory, by default under the Linebook
+namespace
+
+</li>
+<li>added bundler support to template
+
+</li>
+<li>renamed LineCook as <a href="../classes/Linecook.html">Linecook</a>
+
+</li>
+</ul>
+<h2>0.2.1 2010/12/21</h2>
+<ul>
+<li>added missing line_cook executable
+
+</li>
+</ul>
+<h2>0.2.0 2010/12/20</h2>
+<p>
+Complete overhaul.
+</p>
+<ul>
+<li>reworked script generation using rake
+
+</li>
+<li>sketched out functionality for use of gems
+
+</li>
+<li>added line_cook executable to generate scaffold
+
+</li>
+</ul>
+<h2>0.1.1 2010/12/07</h2>
+<ul>
+<li>added nodoc to definition templates
+
+</li>
+<li>added tap.yml for generator discover
+
+</li>
+</ul>
+<h2>0.1.0 2010/12/07</h2>
+<p>
+Initial release.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

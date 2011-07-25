@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_mass_values_vs_vg_analytical (ElementTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/constants/libraries/element_test.rb, line 184</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_mass_values_vs_vg_analytical</span>
+    <span class="ruby-identifier">str</span> = <span class="ruby-value str">%Q{
+H 1.0078250 1.00794
+C 12 12.011
+N 14.0030740 14.0067
+O 15.9949146 15.9994
+S 31.9720718 32.06}</span>
+
+    <span class="ruby-identifier">atoms</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\n/</span>)
+    <span class="ruby-identifier">atoms</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">atom_str</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">atom_str</span>.<span class="ruby-identifier">empty?</span>
+      
+      <span class="ruby-identifier">symbol</span>, <span class="ruby-identifier">monoisotopic</span>, <span class="ruby-identifier">average</span> = <span class="ruby-identifier">atom_str</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\s+/</span>)
+      <span class="ruby-identifier">monoisotopic</span> = <span class="ruby-identifier">monoisotopic</span>.<span class="ruby-identifier">to_f</span>
+      <span class="ruby-identifier">average</span> = <span class="ruby-identifier">average</span>.<span class="ruby-identifier">to_f</span>
+      
+      <span class="ruby-identifier">element</span> = <span class="ruby-constant">Element</span>[<span class="ruby-identifier">symbol</span>]
+      <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-identifier">element</span>, <span class="ruby-identifier">atom_str</span>
+      <span class="ruby-identifier">assert_in_delta</span> <span class="ruby-identifier">monoisotopic</span>, <span class="ruby-identifier">element</span>.<span class="ruby-identifier">mass</span>, <span class="ruby-identifier">delta_mass</span>, <span class="ruby-identifier">atom_str</span> 
+      <span class="ruby-comment cmt"># TODO -- check average mass</span>
+    <span class="ruby-keyword kw">end</span>    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

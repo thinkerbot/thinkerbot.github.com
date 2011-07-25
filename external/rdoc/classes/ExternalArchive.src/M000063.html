@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>[]= (ExternalArchive)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/external_archive.rb, line 456</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;wrong number of arguments (1 for 2)&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">2</span>
+    
+    <span class="ruby-identifier">one</span>, <span class="ruby-identifier">two</span>, <span class="ruby-identifier">value</span> = <span class="ruby-identifier">args</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+      <span class="ruby-identifier">value</span> = <span class="ruby-identifier">two</span> 
+      <span class="ruby-identifier">two</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">one</span> = <span class="ruby-identifier">convert_to_int</span>(<span class="ruby-identifier">one</span>)
+    <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">one</span>
+    <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Fixnum</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">one</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+        <span class="ruby-identifier">one</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">length</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">IndexError</span>, <span class="ruby-node">&quot;index #{one} out of range&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">one</span>  <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+      <span class="ruby-keyword kw">end</span>
+      
+      <span class="ruby-identifier">entry_start</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">length</span>
+      <span class="ruby-identifier">io</span>.<span class="ruby-identifier">pos</span> = <span class="ruby-identifier">entry_start</span>
+      
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">two</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+        <span class="ruby-comment cmt"># simple insertion </span>
+        <span class="ruby-comment cmt"># (note it is important to write the entry to io </span>
+        <span class="ruby-comment cmt"># first as a check that io is open for writing)</span>
+
+        <span class="ruby-identifier">entry_length</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">write</span>( <span class="ruby-identifier">entry_to_str</span>(<span class="ruby-identifier">value</span>) )
+        <span class="ruby-identifier">io</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">entry_length</span>
+        <span class="ruby-identifier">io_index</span>[<span class="ruby-identifier">one</span>] = [<span class="ruby-identifier">entry_start</span>, <span class="ruby-identifier">entry_length</span>]
+        
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">values</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">value</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">value</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ExternalArchive</span>
+          <span class="ruby-comment cmt"># special case, self will be reading and</span>
+          <span class="ruby-comment cmt"># writing from the same io, producing </span>
+          <span class="ruby-comment cmt"># incorrect results</span>
+          
+          <span class="ruby-comment cmt"># potential to load a huge amount of data</span>
+          <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_a</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">value</span>
+        <span class="ruby-keyword kw">else</span> <span class="ruby-identifier">convert_to_ary</span>(<span class="ruby-identifier">value</span>)
+        <span class="ruby-keyword kw">end</span>
+        
+        <span class="ruby-comment cmt"># write each value to self, collecting the indicies</span>
+        <span class="ruby-identifier">indicies</span> = []
+        <span class="ruby-identifier">values</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">entry_length</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">write</span>( <span class="ruby-identifier">entry_to_str</span>(<span class="ruby-identifier">value</span>) )
+          <span class="ruby-identifier">indicies</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">entry_start</span>, <span class="ruby-identifier">entry_length</span>]
+          
+          <span class="ruby-identifier">io</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">entry_length</span>
+          <span class="ruby-identifier">entry_start</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">entry_length</span>
+        <span class="ruby-keyword kw">end</span>
+        
+        <span class="ruby-comment cmt"># register the indicies</span>
+        <span class="ruby-identifier">io_index</span>[<span class="ruby-identifier">one</span>, <span class="ruby-identifier">two</span>] = <span class="ruby-identifier">indicies</span>
+      <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Range</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-value str">&quot;can't convert Range into Integer&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">two</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-identifier">start</span>, <span class="ruby-identifier">length</span>, <span class="ruby-identifier">total</span> = <span class="ruby-identifier">split_range</span>(<span class="ruby-identifier">one</span>)
+      
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">RangeError</span>, <span class="ruby-node">&quot;#{one} out of range&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">start</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+      <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">start</span>, <span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">?</span> <span class="ruby-value">0</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>] = <span class="ruby-identifier">value</span>
+
+    <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-value str">&quot;no implicit conversion from nil to integer&quot;</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;can't convert #{one.class} into Integer&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

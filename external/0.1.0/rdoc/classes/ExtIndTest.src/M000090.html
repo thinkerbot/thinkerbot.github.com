@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_directive_size_returns_the_number_of_bytes_to_pack_a_directive (ExtIndTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/ext_ind_test.rb, line 108</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_directive_size_returns_the_number_of_bytes_to_pack_a_directive</span>
+    <span class="ruby-comment cmt"># @     |  Moves to absolute position</span>
+    <span class="ruby-comment cmt"># not implemented</span>
+    <span class="ruby-identifier">assert_nil</span> <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'@'</span>)
+    <span class="ruby-comment cmt"># A     |  ASCII string (space padded, count is width)</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, [<span class="ruby-value str">&quot;a&quot;</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;A&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'A'</span>)
+    <span class="ruby-comment cmt"># a     |  ASCII string (null padded, count is width)</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, [<span class="ruby-value str">&quot;a&quot;</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;a&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'a'</span>)
+    <span class="ruby-comment cmt"># B     |  Bit string (descending bit order)</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, [<span class="ruby-value str">'a'</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;B&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'B'</span>)
+    <span class="ruby-comment cmt"># b     |  Bit string (ascending bit order)</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, [<span class="ruby-value str">'a'</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;b&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'b'</span>)
+    <span class="ruby-comment cmt"># C     |  Unsigned char</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;C&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'C'</span>)
+    <span class="ruby-comment cmt"># c     |  Char</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;c&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'c'</span>)
+    <span class="ruby-comment cmt"># D, d  |  Double-precision float, native format</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">8</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;D&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">8</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'D'</span>)
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">8</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;d&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">8</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'d'</span>)
+    <span class="ruby-comment cmt"># E     |  Double-precision float, little-endian byte order</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">8</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;E&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">8</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'E'</span>)
+    <span class="ruby-comment cmt"># e     |  Single-precision float, little-endian byte order</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;e&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'e'</span>)
+    <span class="ruby-comment cmt"># F, f  |  Single-precision float, native format</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;F&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'F'</span>)
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;f&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'f'</span>)
+    <span class="ruby-comment cmt"># G     |  Double-precision float, network (big-endian) byte order</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">8</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;G&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">8</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'G'</span>)
+    <span class="ruby-comment cmt"># g     |  Single-precision float, network (big-endian) byte order</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;g&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'g'</span>)
+    <span class="ruby-comment cmt"># H     |  Hex string (high nibble first)</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, [<span class="ruby-value str">'a'</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;H&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'H'</span>)
+    <span class="ruby-comment cmt"># h     |  Hex string (low nibble first)</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, [<span class="ruby-value str">'a'</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;h&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'h'</span>)
+    <span class="ruby-comment cmt"># I     |  Unsigned integer</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;I&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'I'</span>)
+    <span class="ruby-comment cmt"># i     |  Integer</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;i&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'i'</span>)
+    <span class="ruby-comment cmt"># L     |  Unsigned long</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;L&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'L'</span>)
+    <span class="ruby-comment cmt"># l     |  Long</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;l&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'l'</span>)
+    <span class="ruby-comment cmt"># M     |  Quoted printable, MIME encoding (see RFC2045)</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">3</span>, [<span class="ruby-value str">'a'</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;M&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">3</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'M'</span>)
+    <span class="ruby-comment cmt"># m     |  Base64 encoded string</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">5</span>, [<span class="ruby-value str">'a'</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;m&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">5</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'m'</span>)
+    <span class="ruby-comment cmt"># N     |  Long, network (big-endian) byte order</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;N&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'N'</span>)
+    <span class="ruby-comment cmt"># n     |  Short, network (big-endian) byte-order</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">2</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;n&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">2</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'n'</span>)
+    <span class="ruby-comment cmt"># P     |  Pointer to a structure (fixed-length string)</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, [<span class="ruby-value str">'a'</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;P&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'P'</span>)
+    <span class="ruby-comment cmt"># p     |  Pointer to a null-terminated string</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, [<span class="ruby-value str">'a'</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;p&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'p'</span>)
+    <span class="ruby-comment cmt"># Q, q  |  64-bit number</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">8</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;Q&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">8</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'Q'</span>)
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">8</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;q&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">8</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'q'</span>)
+    <span class="ruby-comment cmt"># S     |  Unsigned short</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">2</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;S&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">2</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'S'</span>)
+    <span class="ruby-comment cmt"># s     |  Short</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">2</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;s&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">2</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'s'</span>)
+    <span class="ruby-comment cmt"># U     |  UTF-8</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;U&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'U'</span>)
+    <span class="ruby-comment cmt"># u     |  UU-encoded string</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">6</span>, [<span class="ruby-value str">'a'</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;u&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">6</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'u'</span>)
+    <span class="ruby-comment cmt"># V     |  Long, little-endian byte order</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;V&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">4</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'V'</span>)
+    <span class="ruby-comment cmt"># v     |  Short, little-endian byte order</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">2</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;v&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">2</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'v'</span>)
+    <span class="ruby-comment cmt"># w     |  BER-compressed integer\fnm</span>
+    <span class="ruby-comment cmt"># not implemented</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, [<span class="ruby-value">1</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;w&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'w'</span>)
+    <span class="ruby-comment cmt"># X     |  Back up a byte</span>
+    <span class="ruby-comment cmt"># not implemented</span>
+    <span class="ruby-identifier">assert_nil</span> <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'X'</span>)
+    <span class="ruby-comment cmt"># x     |  Null byte</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, [<span class="ruby-keyword kw">nil</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;x&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'x'</span>)
+    <span class="ruby-comment cmt"># Z     |  Same as ``a'', except that null is added with *</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, [<span class="ruby-value str">'a'</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;Z&quot;</span>).<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">1</span>, <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">directive_size</span>(<span class="ruby-value str">'Z'</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

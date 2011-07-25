@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Linecook::Commands::Snapshot</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Linecook::Commands::Snapshot</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/linecook/commands/snapshot_rb.html">
+                lib/linecook/commands/snapshot.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="VboxCommand.html">
+                VboxCommand
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Takes the specified <a href="Snapshot.html#M000119">snapshot</a> of one or
+more VirtualBox virtual machines. By default all virtual machines
+configured in config/ssh will have a <a
+href="Snapshot.html#M000119">snapshot</a> taken. If the <a
+href="Snapshot.html#M000119">snapshot</a> name is already taken, the
+previous <a href="Snapshot.html#M000119">snapshot</a> will be renamed.
+</p>
+<p>
+<a href="Snapshot.html">Snapshot</a> can also reset a hierarchy of renamed
+snapshots using the &#8212;reset flag. For example, if there exists a <a
+href="Snapshot.html#M000119">snapshot</a> &#8216;CURRENT&#8217; then these
+command will leave you with snapshots CURRENT_0 (the original), CURRENT_1,
+and CURRENT (the latest):
+</p>
+<pre>
+  linecook snapshot CURRENT
+  linecook snapshot CURRENT
+</pre>
+<p>
+To reset:
+</p>
+<pre>
+  liencook snapshot --reset CURRENT
+</pre>
+<p>
+After which there will only be a single &#8216;CURRENT&#8217; <a
+href="Snapshot.html#M000119">snapshot</a>, which corresponds to the
+original <a href="Snapshot.html#M000119">snapshot</a>.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000117">parse_snapshots</a>&nbsp;&nbsp;
+      <a href="#M000116">process</a>&nbsp;&nbsp;
+      <a href="#M000118">reset_snapshot</a>&nbsp;&nbsp;
+      <a href="#M000119">snapshot</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000117" class="method-detail">
+        <a name="M000117"></a>
+
+        <div class="method-heading">
+          <a href="#M000117" class="method-signature">
+          <span class="method-name">parse_snapshots</span><span class="method-args">(vm_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000117-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000117-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/commands/snapshot.rb, line 42</span>
+42:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_snapshots</span>(<span class="ruby-identifier">vm_name</span>)
+43:         <span class="ruby-identifier">info</span> = <span class="ruby-node">`VBoxManage -q showvminfo #{vm_name}`</span>
+44:         <span class="ruby-identifier">snapshots</span> = {}
+45:         
+46:         <span class="ruby-identifier">stack</span> = [{}]
+47:         <span class="ruby-identifier">parent</span>  = <span class="ruby-keyword kw">nil</span>
+48:         
+49:         <span class="ruby-identifier">info</span>.<span class="ruby-identifier">each_line</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+50:           <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^(\s+)Name\: (.*?) \(/</span>
+51:           <span class="ruby-identifier">depth</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">/</span> <span class="ruby-value">3</span>
+52:           <span class="ruby-identifier">name</span> = <span class="ruby-identifier">$2</span>
+53:           
+54:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">depth</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">length</span>
+55:             <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">last</span>[<span class="ruby-identifier">parent</span>]
+56:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">depth</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">length</span>
+57:             <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">pop</span>
+58:           <span class="ruby-keyword kw">end</span>
+59:           
+60:           <span class="ruby-identifier">snapshot</span> = {}
+61:           <span class="ruby-identifier">snapshots</span>[<span class="ruby-identifier">name</span>]  = <span class="ruby-identifier">snapshot</span>
+62:           <span class="ruby-identifier">stack</span>.<span class="ruby-identifier">last</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">snapshot</span>
+63:           <span class="ruby-identifier">parent</span> = <span class="ruby-identifier">name</span>
+64:         <span class="ruby-keyword kw">end</span>
+65:         
+66:         <span class="ruby-identifier">snapshots</span>
+67:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000116" class="method-detail">
+        <a name="M000116"></a>
+
+        <div class="method-heading">
+          <a href="#M000116" class="method-signature">
+          <span class="method-name">process</span><span class="method-args">(snapshot, *hosts)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000116-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000116-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/commands/snapshot.rb, line 31</span>
+31:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process</span>(<span class="ruby-identifier">snapshot</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">hosts</span>)
+32:         <span class="ruby-identifier">vm_names</span> = <span class="ruby-identifier">resolve_vm_names</span>(<span class="ruby-identifier">hosts</span>)
+33:         <span class="ruby-identifier">each_vm_name</span>(<span class="ruby-identifier">vm_names</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">vm_name</span><span class="ruby-operator">|</span>
+34:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reset</span>
+35:             <span class="ruby-identifier">reset_snapshot</span>(<span class="ruby-identifier">vm_name</span>, <span class="ruby-identifier">snapshot</span>)
+36:           <span class="ruby-keyword kw">else</span>
+37:             <span class="ruby-identifier">snapshot</span>(<span class="ruby-identifier">vm_name</span>, <span class="ruby-identifier">snapshot</span>)
+38:           <span class="ruby-keyword kw">end</span>
+39:         <span class="ruby-keyword kw">end</span>
+40:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000118" class="method-detail">
+        <a name="M000118"></a>
+
+        <div class="method-heading">
+          <a href="#M000118" class="method-signature">
+          <span class="method-name">reset_snapshot</span><span class="method-args">(vm_name, snapshot)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000118-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000118-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/commands/snapshot.rb, line 69</span>
+69:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset_snapshot</span>(<span class="ruby-identifier">vm_name</span>, <span class="ruby-identifier">snapshot</span>)
+70:         <span class="ruby-identifier">stop</span>(<span class="ruby-identifier">vm_name</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">running?</span>(<span class="ruby-identifier">vm_name</span>)
+71:         
+72:         <span class="ruby-identifier">snapshot</span> = <span class="ruby-identifier">snapshot</span>.<span class="ruby-identifier">upcase</span>
+73:         <span class="ruby-identifier">restore</span>(<span class="ruby-identifier">vm_name</span>, <span class="ruby-identifier">snapshot</span>)
+74:         
+75:         <span class="ruby-identifier">snapshots</span> = <span class="ruby-identifier">parse_snapshots</span>(<span class="ruby-identifier">vm_name</span>)
+76:         <span class="ruby-identifier">parent</span> = <span class="ruby-identifier">snapshots</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span> <span class="ruby-identifier">key</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/\A#{snapshot}(?:_\d+)\z/</span> }.<span class="ruby-identifier">first</span>
+77:         <span class="ruby-identifier">parent</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">snapshot</span>
+78:         
+79:         <span class="ruby-identifier">children</span> = <span class="ruby-identifier">snapshots</span>[<span class="ruby-identifier">parent</span>]
+80:         <span class="ruby-identifier">children</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+81:           <span class="ruby-identifier">inside_out_each</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span>
+82:             <span class="ruby-identifier">sh!</span> <span class="ruby-node">&quot;VBoxManage -q snapshot #{vm_name} delete #{child}&quot;</span>
+83:           <span class="ruby-keyword kw">end</span>
+84:         <span class="ruby-keyword kw">end</span>
+85:         
+86:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">parent</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">snapshot</span>
+87:           <span class="ruby-identifier">sh!</span> <span class="ruby-node">&quot;VBoxManage -q snapshot #{vm_name} edit #{parent} --name #{snapshot}&quot;</span>
+88:         <span class="ruby-keyword kw">end</span>
+89:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000119" class="method-detail">
+        <a name="M000119"></a>
+
+        <div class="method-heading">
+          <a href="#M000119" class="method-signature">
+          <span class="method-name">snapshot</span><span class="method-args">(vm_name, snapshot)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000119-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000119-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/commands/snapshot.rb, line 91</span>
+ 91:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">snapshot</span>(<span class="ruby-identifier">vm_name</span>, <span class="ruby-identifier">snapshot</span>)
+ 92:         <span class="ruby-identifier">snapshot</span> = <span class="ruby-identifier">snapshot</span>.<span class="ruby-identifier">upcase</span>
+ 93:         <span class="ruby-identifier">snapshots</span> = <span class="ruby-identifier">parse_snapshots</span>(<span class="ruby-identifier">vm_name</span>)
+ 94:         
+ 95:         <span class="ruby-identifier">count</span> = <span class="ruby-identifier">snapshots</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">grep</span>(<span class="ruby-node">/\A#{snapshot}(?:_|\z)/</span>).<span class="ruby-identifier">length</span>
+ 96:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+ 97:           <span class="ruby-identifier">sh!</span> <span class="ruby-node">&quot;VBoxManage -q snapshot #{vm_name} edit #{snapshot} --name #{snapshot}_#{count - 1}&quot;</span>
+ 98:         <span class="ruby-keyword kw">end</span>
+ 99:         
+100:         <span class="ruby-identifier">sh!</span> <span class="ruby-node">&quot;VBoxManage -q snapshot #{vm_name} take #{snapshot}&quot;</span>
+101:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

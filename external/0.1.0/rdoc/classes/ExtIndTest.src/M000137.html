@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_ASET (ExtIndTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/ext_ind_test.rb, line 964</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_ASET</span> <span class="ruby-comment cmt"># '[]='</span>
+    <span class="ruby-comment cmt"># Changes: values and results specified in frame </span>
+    <span class="ruby-comment cmt"># added mirror tests to ensure testing using array</span>
+    <span class="ruby-comment cmt"># and index inputs</span>
+    
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-comment cmt">#assert_equal(0, a[0] = 0)</span>
+    <span class="ruby-identifier">assert_equal</span>([<span class="ruby-value">0</span>], <span class="ruby-identifier">a</span>[<span class="ruby-value">0</span>] = [<span class="ruby-value">0</span>])  
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">0</span>] = <span class="ruby-identifier">b</span>)  
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-comment cmt">#assert_equal(0, a[10,10] = 0)</span>
+    <span class="ruby-identifier">assert_equal</span>([[<span class="ruby-value">0</span>]], <span class="ruby-identifier">a</span>[<span class="ruby-value">10</span>,<span class="ruby-value">10</span>] = [[<span class="ruby-value">0</span>]])
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">9</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">10</span>,<span class="ruby-value">10</span>] = <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">9</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-comment cmt">#assert_equal(0, a[-1] = 0) </span>
+    <span class="ruby-identifier">assert_equal</span>([<span class="ruby-value">0</span>], <span class="ruby-identifier">a</span>[<span class="ruby-value">-1</span>] = [<span class="ruby-value">0</span>])
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">98</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">-1</span>] = <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">98</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">a</span>)    
+
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-comment cmt">#assert_equal(0, a[-10, 10] = 0)</span>
+    <span class="ruby-identifier">assert_equal</span>([[<span class="ruby-value">0</span>]], <span class="ruby-identifier">a</span>[<span class="ruby-value">-10</span>, <span class="ruby-value">10</span>] = [[<span class="ruby-value">0</span>]]) 
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">89</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">-10</span>, <span class="ruby-value">10</span>] = <span class="ruby-identifier">b</span>) 
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">89</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-comment cmt">#assert_equal(0, a[0,1000] = 0)</span>
+    <span class="ruby-identifier">assert_equal</span>([[<span class="ruby-value">0</span>]], <span class="ruby-identifier">a</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1000</span>] = [[<span class="ruby-value">0</span>]])
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>] , <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1000</span>] = <span class="ruby-identifier">b</span>) 
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>] , <span class="ruby-identifier">a</span>)
+
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-comment cmt">#assert_equal(0, a[10..19] = 0)</span>
+    <span class="ruby-identifier">assert_equal</span>([[<span class="ruby-value">0</span>]], <span class="ruby-identifier">a</span>[<span class="ruby-value">10</span><span class="ruby-operator">..</span><span class="ruby-value">19</span>] = [[<span class="ruby-value">0</span>]])
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">9</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">10</span><span class="ruby-operator">..</span><span class="ruby-value">19</span>] = <span class="ruby-identifier">b</span>) 
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">9</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>], <span class="ruby-identifier">a</span>)
+
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-comment cmt"># Changes: cannot take strings, </span>
+    <span class="ruby-comment cmt"># replace a,b,c with 1001, 1002, 10003</span>
+    <span class="ruby-comment cmt">#b = @cls[*%w( a b c )]</span>
+    <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1001</span>, <span class="ruby-value">1002</span>, <span class="ruby-value">10003</span>]
+    <span class="ruby-identifier">c</span> = [[<span class="ruby-value">1001</span>],[<span class="ruby-value">1002</span>],[<span class="ruby-value">10003</span>]]
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1</span>] = <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>] 
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1</span>] = <span class="ruby-identifier">c</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">10</span>,<span class="ruby-value">10</span>] = <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">9</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">b</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>], <span class="ruby-identifier">a</span>)
+
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>] 
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">10</span>,<span class="ruby-value">10</span>] = <span class="ruby-identifier">c</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">9</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">-1</span>, <span class="ruby-value">1</span>] = <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">98</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>)
+
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">-1</span>, <span class="ruby-value">1</span>] = <span class="ruby-identifier">c</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">98</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>, <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">-10</span>, <span class="ruby-value">10</span>] = <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">89</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>)
+
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">-10</span>, <span class="ruby-value">10</span>] = <span class="ruby-identifier">c</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">89</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>, <span class="ruby-identifier">a</span>)
+  
+    <span class="ruby-comment cmt"># -- pair --     </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1000</span>] = <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span> , <span class="ruby-identifier">a</span>)
+
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1000</span>] = <span class="ruby-identifier">c</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">c</span> , <span class="ruby-identifier">a</span>.<span class="ruby-identifier">to_a</span>)
+    
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">10</span><span class="ruby-operator">..</span><span class="ruby-value">19</span>] = <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">9</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">b</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>], <span class="ruby-identifier">a</span>)
+
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">10</span><span class="ruby-operator">..</span><span class="ruby-value">19</span>] = <span class="ruby-identifier">c</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">9</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">99</span>).<span class="ruby-identifier">to_a</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-comment cmt"># Ruby 1.8 feature change:</span>
+    <span class="ruby-comment cmt"># assigning nil does not remove elements.</span>
+??
+
+    <span class="ruby-comment cmt"># Changes: should have @cls in definition</span>
+
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>]
+    <span class="ruby-identifier">a</span>[<span class="ruby-value">1</span>, <span class="ruby-value">0</span>] = <span class="ruby-identifier">a</span>
+    <span class="ruby-comment cmt">#assert_equal([1, 1, 2, 3, 2, 3], a)</span>
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>, <span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>]
+    <span class="ruby-identifier">a</span>[<span class="ruby-value">-1</span>, <span class="ruby-value">0</span>] = <span class="ruby-identifier">a</span>
+    <span class="ruby-comment cmt">#assert_equal([1, 2, 1, 2, 3, 3], a)</span>
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>, <span class="ruby-value">3</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-comment cmt"># Additional:</span>
+    
+    <span class="ruby-comment cmt"># -- test self insertions --</span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>]
+    <span class="ruby-identifier">a</span>[<span class="ruby-value">1</span>, <span class="ruby-value">3</span>] = <span class="ruby-identifier">a</span>
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>]
+    <span class="ruby-identifier">a</span>[<span class="ruby-value">3</span>, <span class="ruby-value">3</span>] = <span class="ruby-identifier">a</span>
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>,<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>]
+    <span class="ruby-identifier">a</span>[<span class="ruby-value">4</span>, <span class="ruby-value">3</span>] = <span class="ruby-identifier">a</span>
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>,<span class="ruby-value">0</span>,<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-comment cmt"># -- test insertions where padding is necessary --</span>
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>, {<span class="ruby-identifier">:nil_value</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">8</span>]}]
+    <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1001</span>, <span class="ruby-value">1002</span>, <span class="ruby-value">10003</span>, {<span class="ruby-identifier">:nil_value</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">8</span>]}]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">4</span>, <span class="ruby-value">3</span>] = <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>,<span class="ruby-value">8</span>,<span class="ruby-value">1001</span>,<span class="ruby-value">1002</span>,<span class="ruby-value">10003</span>, {<span class="ruby-identifier">:nil_value</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">8</span>]}], <span class="ruby-identifier">a</span>.<span class="ruby-identifier">to_a</span>)
+
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>, {<span class="ruby-identifier">:nil_value</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">8</span>]}]
+    <span class="ruby-identifier">c</span> = [[<span class="ruby-value">1001</span>], [<span class="ruby-value">1002</span>], [<span class="ruby-value">10003</span>]]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">4</span>, <span class="ruby-value">3</span>] = <span class="ruby-identifier">c</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>,<span class="ruby-value">8</span>,<span class="ruby-value">1001</span>,<span class="ruby-value">1002</span>,<span class="ruby-value">10003</span>, {<span class="ruby-identifier">:nil_value</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">8</span>]}], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>, {<span class="ruby-identifier">:nil_value</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">8</span>]}]
+    <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1001</span>, <span class="ruby-value">1002</span>, <span class="ruby-value">10003</span>, {<span class="ruby-identifier">:nil_value</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">8</span>]}]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">4</span>, <span class="ruby-value">1</span>] = <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>,<span class="ruby-value">8</span>,<span class="ruby-value">1001</span>,<span class="ruby-value">1002</span>,<span class="ruby-value">10003</span>, {<span class="ruby-identifier">:nil_value</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">8</span>]}], <span class="ruby-identifier">a</span>)
+
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>, {<span class="ruby-identifier">:nil_value</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">8</span>]}]
+    <span class="ruby-identifier">c</span> = [[<span class="ruby-value">1001</span>], [<span class="ruby-value">1002</span>], [<span class="ruby-value">10003</span>]]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">4</span>, <span class="ruby-value">1</span>] = <span class="ruby-identifier">c</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>,<span class="ruby-value">8</span>,<span class="ruby-value">1001</span>,<span class="ruby-value">1002</span>,<span class="ruby-value">10003</span>, {<span class="ruby-identifier">:nil_value</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">8</span>]}], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-comment cmt"># -- test insertions with nils -- </span>
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>]
+    <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1001</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-value">10003</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">1</span>, <span class="ruby-value">3</span>] = <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">1001</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">10003</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">2</span>,<span class="ruby-value">3</span>]
+    <span class="ruby-identifier">c</span> = [[<span class="ruby-value">1001</span>], <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>, [<span class="ruby-value">10003</span>]]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">1</span>, <span class="ruby-value">3</span>] = <span class="ruby-identifier">c</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>,<span class="ruby-value">1001</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">10003</span>], <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-comment cmt"># -- insert beyond end of index, with inconsistent range --</span>
+    <span class="ruby-comment cmt"># first check the array behavior, then assert the same with ExtInd</span>
+    <span class="ruby-identifier">a</span> = (<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>).<span class="ruby-identifier">to_a</span>
+    <span class="ruby-identifier">assert_equal</span>([<span class="ruby-value">11</span>,<span class="ruby-value">12</span>,<span class="ruby-value">13</span>], <span class="ruby-identifier">a</span>[<span class="ruby-value">11</span><span class="ruby-operator">..</span><span class="ruby-value">12</span>] = [<span class="ruby-value">11</span>,<span class="ruby-value">12</span>,<span class="ruby-value">13</span>])
+    <span class="ruby-identifier">assert_equal</span>((<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>).<span class="ruby-identifier">to_a</span> <span class="ruby-operator">+</span> [<span class="ruby-keyword kw">nil</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-keyword kw">nil</span>] <span class="ruby-operator">+</span> (<span class="ruby-value">11</span><span class="ruby-operator">..</span><span class="ruby-value">13</span>).<span class="ruby-identifier">to_a</span>, <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-comment cmt"># -- pair -- </span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">11</span>,<span class="ruby-value">12</span>,<span class="ruby-value">13</span>]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">11</span><span class="ruby-operator">..</span><span class="ruby-value">12</span>] = <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">b</span>, <span class="ruby-identifier">a</span>)
+    
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>).<span class="ruby-identifier">to_a</span>]
+    <span class="ruby-identifier">c</span> = [[<span class="ruby-value">11</span>],[<span class="ruby-value">12</span>],[<span class="ruby-value">13</span>]]
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">a</span>[<span class="ruby-value">11</span><span class="ruby-operator">..</span><span class="ruby-value">12</span>] = <span class="ruby-identifier">c</span>)
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>).<span class="ruby-identifier">to_a</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>, <span class="ruby-identifier">a</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>[]= (ExtArr)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ext_arr.rb, line 260</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;wrong number of arguments (1 for 2)&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">2</span>
+    <span class="ruby-identifier">index</span>, <span class="ruby-identifier">length</span>, <span class="ruby-identifier">value</span> = <span class="ruby-identifier">args</span>
+    <span class="ruby-identifier">value</span> = <span class="ruby-identifier">length</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+  
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">index</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Range</span>)
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;can't convert Range into Integer&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">3</span> 
+      <span class="ruby-comment cmt"># for conformance with setting a range with nil (truncates)</span>
+      <span class="ruby-identifier">value</span> = [] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-identifier">offset</span>, <span class="ruby-identifier">length</span> = <span class="ruby-identifier">split_range</span>(<span class="ruby-identifier">index</span>)
+      <span class="ruby-keyword kw">return</span> (<span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">offset</span>, <span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>] = <span class="ruby-identifier">value</span>)
+    <span class="ruby-keyword kw">end</span>
+  
+    <span class="ruby-identifier">index</span> <span class="ruby-operator">+=</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">index</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">IndexError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;index #{index} out of range&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">index</span>  <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+  
+    <span class="ruby-identifier">entry_pos</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">io</span>.<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">io</span>.<span class="ruby-identifier">pos</span> = <span class="ruby-identifier">entry_pos</span>
+    
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+
+      <span class="ruby-comment cmt">#value = self.to_a if value.kind_of?(ExtInd)</span>
+      
+      <span class="ruby-comment cmt"># write entry to io first as a check</span>
+      <span class="ruby-comment cmt"># that io is open for writing.</span>
+      <span class="ruby-identifier">entry_length</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">write</span>( <span class="ruby-identifier">entry_to_str</span>(<span class="ruby-identifier">value</span>) )
+      <span class="ruby-identifier">io</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">entry_length</span>
+
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">index</span>[<span class="ruby-identifier">index</span>] = [<span class="ruby-identifier">entry_pos</span>, <span class="ruby-identifier">entry_length</span>]
+  
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">indicies</span> = []
+      
+      <span class="ruby-identifier">values</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">value</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">value</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ExtArr</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">object_id</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">object_id</span>
+          <span class="ruby-comment cmt"># special case, self will be reading and</span>
+          <span class="ruby-comment cmt"># writing from the same io, producing </span>
+          <span class="ruby-comment cmt"># incorrect results</span>
+          
+          <span class="ruby-comment cmt"># potential to load a huge amount of data</span>
+          <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_a</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">value</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">else</span> 
+        [<span class="ruby-identifier">value</span>]
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-identifier">values</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">entry_length</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">write</span>( <span class="ruby-identifier">entry_to_str</span>(<span class="ruby-identifier">value</span>) )
+        <span class="ruby-identifier">indicies</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">entry_pos</span>, <span class="ruby-identifier">entry_length</span>]
+        
+        <span class="ruby-identifier">io</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">entry_length</span>
+        <span class="ruby-identifier">entry_pos</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">entry_length</span>
+      <span class="ruby-keyword kw">end</span>
+      
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">index</span>[<span class="ruby-identifier">index</span>, <span class="ruby-identifier">length</span>] = <span class="ruby-identifier">indicies</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

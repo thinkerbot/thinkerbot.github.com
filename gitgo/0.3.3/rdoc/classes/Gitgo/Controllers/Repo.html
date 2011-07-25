@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Gitgo::Controllers::Repo</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Gitgo::Controllers::Repo</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/gitgo/controllers/repo_rb.html">
+                lib/gitgo/controllers/repo.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Controller
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000038">commit</a>&nbsp;&nbsp;
+      <a href="#M000037">fsck</a>&nbsp;&nbsp;
+      <a href="#M000043">gc</a>&nbsp;&nbsp;
+      <a href="#M000031">git</a>&nbsp;&nbsp;
+      <a href="#M000032">grit</a>&nbsp;&nbsp;
+      <a href="#M000033">index</a>&nbsp;&nbsp;
+      <a href="#M000042">prune</a>&nbsp;&nbsp;
+      <a href="#M000036">repo_status</a>&nbsp;&nbsp;
+      <a href="#M000041">reset</a>&nbsp;&nbsp;
+      <a href="#M000044">setup</a>&nbsp;&nbsp;
+      <a href="#M000035">show_idx</a>&nbsp;&nbsp;
+      <a href="#M000034">template</a>&nbsp;&nbsp;
+      <a href="#M000045">textile</a>&nbsp;&nbsp;
+      <a href="#M000040">track</a>&nbsp;&nbsp;
+      <a href="#M000039">update</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
+
+        <div class="method-heading">
+          <a href="#M000038" class="method-signature">
+          <span class="method-name">commit</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000038-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 86</span>
+86:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">commit</span>
+87:         <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">commit</span> <span class="ruby-identifier">request</span>[<span class="ruby-value str">'message'</span>]
+88:         <span class="ruby-identifier">redirect</span> <span class="ruby-identifier">url</span>(<span class="ruby-value str">'/repo/status'</span>)
+89:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
+
+        <div class="method-heading">
+          <a href="#M000037" class="method-signature">
+          <span class="method-name">fsck</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000037-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000037-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 77</span>
+77:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fsck</span>
+78:         <span class="ruby-identifier">erb</span> <span class="ruby-identifier">:fsck</span>, <span class="ruby-identifier">:locals</span> =<span class="ruby-operator">&gt;</span> {
+79:           <span class="ruby-identifier">:branch</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">git</span>.<span class="ruby-identifier">branch</span>,
+80:           <span class="ruby-identifier">:head</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">session_head</span>,
+81:           <span class="ruby-identifier">:issues</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">git</span>.<span class="ruby-identifier">fsck</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;\n&quot;</span>),
+82:           <span class="ruby-identifier">:stats</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">git</span>.<span class="ruby-identifier">stats</span>
+83:         }
+84:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
+
+        <div class="method-heading">
+          <a href="#M000043" class="method-signature">
+          <span class="method-name">gc</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000043-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000043-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 137</span>
+137:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gc</span>
+138:         <span class="ruby-identifier">git</span>.<span class="ruby-identifier">gc</span>
+139:         <span class="ruby-identifier">redirect</span> <span class="ruby-identifier">url</span>(<span class="ruby-value str">'/repo/fsck'</span>)
+140:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000031" class="method-detail">
+        <a name="M000031"></a>
+
+        <div class="method-heading">
+          <a href="#M000031" class="method-signature">
+          <span class="method-name">git</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000031-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000031-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 25</span>
+25:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">git</span>
+26:         <span class="ruby-ivar">@git</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">git</span>
+27:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000032" class="method-detail">
+        <a name="M000032"></a>
+
+        <div class="method-heading">
+          <a href="#M000032" class="method-signature">
+          <span class="method-name">grit</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000032-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000032-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 29</span>
+29:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">grit</span>
+30:         <span class="ruby-ivar">@grit</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">git</span>.<span class="ruby-identifier">grit</span>
+31:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000033" class="method-detail">
+        <a name="M000033"></a>
+
+        <div class="method-heading">
+          <a href="#M000033" class="method-signature">
+          <span class="method-name">index</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+actions
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000033-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000033-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 37</span>
+37:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
+38:         <span class="ruby-identifier">erb</span> <span class="ruby-identifier">:index</span>, <span class="ruby-identifier">:locals</span> =<span class="ruby-operator">&gt;</span> {
+39:           <span class="ruby-identifier">:path</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">path</span>,
+40:           <span class="ruby-identifier">:branch</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">branch</span>,
+41:           <span class="ruby-identifier">:commit</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">head</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">grit</span>.<span class="ruby-identifier">commit</span>(<span class="ruby-identifier">repo</span>.<span class="ruby-identifier">head</span>),
+42:           <span class="ruby-identifier">:upstream_branch</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">upstream_branch</span>,
+43:           <span class="ruby-identifier">:refs</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">refs</span>,
+44:           <span class="ruby-identifier">:active_sha</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">session_head</span>,
+45:           <span class="ruby-identifier">:active_commit</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">session_head</span> <span class="ruby-value">? </span><span class="ruby-identifier">grit</span>.<span class="ruby-identifier">commit</span>(<span class="ruby-identifier">session_head</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>,
+46:         }
+47:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
+
+        <div class="method-heading">
+          <a href="#M000042" class="method-signature">
+          <span class="method-name">prune</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000042-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000042-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 132</span>
+132:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prune</span>
+133:         <span class="ruby-identifier">git</span>.<span class="ruby-identifier">prune</span>
+134:         <span class="ruby-identifier">redirect</span> <span class="ruby-identifier">url</span>(<span class="ruby-value str">'/repo/fsck'</span>)
+135:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
+
+        <div class="method-heading">
+          <a href="#M000036" class="method-signature">
+          <span class="method-name">repo_status</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+(note status is taken as a method by Sinatra)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000036-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 70</span>
+70:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">repo_status</span>
+71:         <span class="ruby-identifier">erb</span> <span class="ruby-identifier">:status</span>, <span class="ruby-identifier">:locals</span> =<span class="ruby-operator">&gt;</span> {
+72:           <span class="ruby-identifier">:branch</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">git</span>.<span class="ruby-identifier">branch</span>,
+73:           <span class="ruby-identifier">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">git</span>.<span class="ruby-identifier">status</span>(<span class="ruby-keyword kw">true</span>)
+74:         }
+75:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
+
+        <div class="method-heading">
+          <a href="#M000041" class="method-signature">
+          <span class="method-name">reset</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000041-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000041-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 121</span>
+121:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset</span>
+122:         <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">index</span>.<span class="ruby-identifier">clear</span>
+123:         
+124:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">full</span> = <span class="ruby-identifier">request</span>[<span class="ruby-value str">'full'</span>]
+125:           <span class="ruby-identifier">git</span>.<span class="ruby-identifier">reset</span>(<span class="ruby-identifier">full</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'true'</span>)
+126:         <span class="ruby-keyword kw">end</span>
+127:         
+128:         <span class="ruby-constant">Document</span>.<span class="ruby-identifier">update_index</span>
+129:         <span class="ruby-identifier">redirect</span> <span class="ruby-identifier">env</span>[<span class="ruby-value str">'HTTP_REFERER'</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">url</span>(<span class="ruby-value str">'/repo'</span>)
+130:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+          <a href="#M000044" class="method-signature">
+          <span class="method-name">setup</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000044-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000044-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 142</span>
+142:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup</span>
+143:         <span class="ruby-identifier">gitgo</span> = <span class="ruby-identifier">request</span>[<span class="ruby-value str">'gitgo'</span>] <span class="ruby-operator">||</span> {}
+144:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">branch</span> = <span class="ruby-identifier">gitgo</span>[<span class="ruby-value str">'branch'</span>]
+145:           <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">checkout</span>(<span class="ruby-identifier">branch</span>)
+146:         <span class="ruby-keyword kw">end</span>
+147:         
+148:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">upstream_branch</span> = <span class="ruby-identifier">request</span>[<span class="ruby-value str">'upstream_branch'</span>]
+149:           <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">setup</span>(<span class="ruby-identifier">upstream_branch</span>)
+150:         <span class="ruby-keyword kw">end</span>
+151:         
+152:         <span class="ruby-identifier">session</span> = <span class="ruby-identifier">request</span>[<span class="ruby-value str">'session'</span>] <span class="ruby-operator">||</span> {}
+153:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">head</span> = <span class="ruby-identifier">session</span>[<span class="ruby-value str">'head'</span>]
+154:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">session_head</span> = <span class="ruby-identifier">head</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">head</span>
+155:         <span class="ruby-keyword kw">end</span>
+156:         
+157:         <span class="ruby-identifier">redirect</span> <span class="ruby-identifier">request</span>[<span class="ruby-value str">'redirect'</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">env</span>[<span class="ruby-value str">'HTTP_REFERER'</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">url</span>(<span class="ruby-value str">'/repo'</span>)
+158:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
+
+        <div class="method-heading">
+          <a href="#M000035" class="method-signature">
+          <span class="method-name">show_idx</span><span class="method-args">(key=nil, value=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000035-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 57</span>
+57:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show_idx</span>(<span class="ruby-identifier">key</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">value</span>=<span class="ruby-keyword kw">nil</span>)
+58:         <span class="ruby-identifier">index</span> = <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">index</span>
+59:         
+60:         <span class="ruby-identifier">erb</span> <span class="ruby-identifier">:idx</span>, <span class="ruby-identifier">:locals</span> =<span class="ruby-operator">&gt;</span> {
+61:           <span class="ruby-identifier">:current_key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">key</span>,
+62:           <span class="ruby-identifier">:index_keys</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">index</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>,
+63:           <span class="ruby-identifier">:current_value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">value</span>,
+64:           <span class="ruby-identifier">:index_values</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">key</span> <span class="ruby-value">? </span><span class="ruby-identifier">index</span>.<span class="ruby-identifier">values</span>(<span class="ruby-identifier">key</span>).<span class="ruby-identifier">sort</span> <span class="ruby-operator">:</span> [],
+65:           <span class="ruby-identifier">:shas</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">key</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">value</span> <span class="ruby-value">? </span><span class="ruby-identifier">index</span>[<span class="ruby-identifier">key</span>][<span class="ruby-identifier">value</span>].<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">idx</span><span class="ruby-operator">|</span> <span class="ruby-identifier">index</span>.<span class="ruby-identifier">list</span>[<span class="ruby-identifier">idx</span>] } <span class="ruby-operator">:</span> <span class="ruby-identifier">index</span>.<span class="ruby-identifier">list</span>
+66:         }
+67:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000034" class="method-detail">
+        <a name="M000034"></a>
+
+        <div class="method-heading">
+          <a href="#M000034" class="method-signature">
+          <span class="method-name">template</span><span class="method-args">(path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000034-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 49</span>
+49:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template</span>(<span class="ruby-identifier">path</span>)
+50:         <span class="ruby-keyword kw">begin</span>
+51:           <span class="ruby-identifier">textile</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">to_sym</span>
+52:         <span class="ruby-keyword kw">rescue</span>(<span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>)
+53:           <span class="ruby-identifier">$!</span>.<span class="ruby-identifier">message</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">not_found</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">raise</span>
+54:         <span class="ruby-keyword kw">end</span>
+55:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <a href="#M000045" class="method-signature">
+          <span class="method-name">textile</span><span class="method-args">(template, options={}, locals={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders <a href="Repo.html#M000034">template</a> as erb, then formats using
+RedCloth.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000045-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000045-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 161</span>
+161:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">textile</span>(<span class="ruby-identifier">template</span>, <span class="ruby-identifier">options</span>={}, <span class="ruby-identifier">locals</span>={})
+162:         <span class="ruby-identifier">require_warn</span>(<span class="ruby-value str">'RedCloth'</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">defined?</span>(<span class="ruby-operator">::</span><span class="ruby-constant">RedCloth</span>)
+163: 
+164:         <span class="ruby-comment cmt"># extract generic options</span>
+165:         <span class="ruby-identifier">layout</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:layout</span>)
+166:         <span class="ruby-identifier">layout</span> = <span class="ruby-identifier">:layout</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">layout</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">layout</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">true</span>
+167:         <span class="ruby-identifier">views</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:views</span>) <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">views</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;./views&quot;</span>
+168:         <span class="ruby-identifier">locals</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:locals</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">locals</span> <span class="ruby-operator">||</span> {}
+169: 
+170:         <span class="ruby-comment cmt"># render template</span>
+171:         <span class="ruby-identifier">data</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:filename</span>], <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:line</span>] = <span class="ruby-identifier">lookup_template</span>(<span class="ruby-identifier">:textile</span>, <span class="ruby-identifier">template</span>, <span class="ruby-identifier">views</span>)
+172:         <span class="ruby-identifier">output</span> = <span class="ruby-identifier">format</span>.<span class="ruby-identifier">textile</span> <span class="ruby-identifier">render_erb</span>(<span class="ruby-identifier">template</span>, <span class="ruby-identifier">data</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">locals</span>)
+173:         
+174:         <span class="ruby-comment cmt"># render layout</span>
+175:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">layout</span>
+176:           <span class="ruby-identifier">data</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:filename</span>], <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:line</span>] = <span class="ruby-identifier">lookup_layout</span>(<span class="ruby-identifier">:erb</span>, <span class="ruby-identifier">layout</span>, <span class="ruby-identifier">views</span>)
+177:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">data</span>
+178:             <span class="ruby-identifier">output</span> = <span class="ruby-identifier">render_erb</span>(<span class="ruby-identifier">layout</span>, <span class="ruby-identifier">data</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">locals</span>) { <span class="ruby-identifier">output</span> }
+179:           <span class="ruby-keyword kw">end</span>
+180:         <span class="ruby-keyword kw">end</span>
+181: 
+182:         <span class="ruby-identifier">output</span>
+183:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+          <a href="#M000040" class="method-signature">
+          <span class="method-name">track</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000040-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 114</span>
+114:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">track</span>
+115:         <span class="ruby-identifier">tracking_branch</span> = <span class="ruby-identifier">request</span>[<span class="ruby-value str">'tracking_branch'</span>]
+116:         <span class="ruby-identifier">git</span>.<span class="ruby-identifier">track</span>(<span class="ruby-identifier">tracking_branch</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">tracking_branch</span>)
+117:         
+118:         <span class="ruby-identifier">redirect</span> <span class="ruby-identifier">url</span>(<span class="ruby-value str">'/repo'</span>)
+119:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
+
+        <div class="method-heading">
+          <a href="#M000039" class="method-signature">
+          <span class="method-name">update</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000039-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/gitgo/controllers/repo.rb, line 91</span>
+ 91:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>
+ 92:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">repo</span>.<span class="ruby-identifier">status</span>.<span class="ruby-identifier">empty?</span>
+ 93:           <span class="ruby-identifier">raise</span> <span class="ruby-value str">'local changes; cannot update'</span>
+ 94:         <span class="ruby-keyword kw">end</span>
+ 95:         
+ 96:         <span class="ruby-identifier">upstream_branch</span> = <span class="ruby-identifier">request</span>[<span class="ruby-value str">'upstream_branch'</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">git</span>.<span class="ruby-identifier">upstream_branch</span>
+ 97:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">upstream_branch</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">upstream_branch</span>.<span class="ruby-identifier">empty?</span>
+ 98:           
+ 99:           <span class="ruby-comment cmt"># Note that push and pull cannot be cleanly supported as separate</span>
+100:           <span class="ruby-comment cmt"># updates because pull can easily fail without a preceding pull. Since</span>
+101:           <span class="ruby-comment cmt"># there is no good way to detect that failure, see issue 7f7e85, the</span>
+102:           <span class="ruby-comment cmt"># next best option is to ensure a pull if doing a push.</span>
+103:           <span class="ruby-identifier">git</span>.<span class="ruby-identifier">pull</span>(<span class="ruby-identifier">upstream_branch</span>)
+104:           <span class="ruby-constant">Document</span>.<span class="ruby-identifier">update_index</span>
+105:           
+106:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">request</span>[<span class="ruby-value str">'sync'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'true'</span>
+107:             <span class="ruby-identifier">git</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">upstream_branch</span>)
+108:           <span class="ruby-keyword kw">end</span>
+109:         <span class="ruby-keyword kw">end</span>
+110:         
+111:         <span class="ruby-identifier">redirect</span> <span class="ruby-identifier">url</span>(<span class="ruby-value str">'/repo'</span>)
+112:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

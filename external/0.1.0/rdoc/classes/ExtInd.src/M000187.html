@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>cached= (ExtInd)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/ext_ind.rb, line 180</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cached=</span>(<span class="ruby-identifier">input</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">input</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">cache</span>
+      <span class="ruby-ivar">@cache_pos</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">pos</span>
+      <span class="ruby-ivar">@cache</span> = <span class="ruby-identifier">read</span>(<span class="ruby-keyword kw">nil</span>, <span class="ruby-value">0</span>)
+      
+      <span class="ruby-comment cmt"># ensure the cache is an array of framed items...</span>
+      <span class="ruby-comment cmt"># if io has only one item, then read returns an </span>
+      <span class="ruby-comment cmt"># array like [0] rather than [[0]]</span>
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Array</span>)
+        <span class="ruby-ivar">@cache</span> = [<span class="ruby-ivar">@cache</span>] 
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">input</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">cache</span>
+      <span class="ruby-identifier">flush</span>
+      <span class="ruby-ivar">@cache</span> = <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">pos</span> = <span class="ruby-ivar">@cache_pos</span>
+      <span class="ruby-ivar">@cache_pos</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

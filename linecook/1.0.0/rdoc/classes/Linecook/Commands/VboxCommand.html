@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Linecook::Commands::VboxCommand</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Linecook::Commands::VboxCommand</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/linecook/commands/vbox_command_rb.html">
+                lib/linecook/commands/vbox_command.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="Command.html">
+                Command
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000110">discardstate</a>&nbsp;&nbsp;
+      <a href="#M000102">each_host</a>&nbsp;&nbsp;
+      <a href="#M000103">each_vm_name</a>&nbsp;&nbsp;
+      <a href="#M000099">host_list</a>&nbsp;&nbsp;
+      <a href="#M000100">host_map</a>&nbsp;&nbsp;
+      <a href="#M000097">load_hosts</a>&nbsp;&nbsp;
+      <a href="#M000101">resolve_vm_names</a>&nbsp;&nbsp;
+      <a href="#M000109">restore</a>&nbsp;&nbsp;
+      <a href="#M000106">running?</a>&nbsp;&nbsp;
+      <a href="#M000111">share</a>&nbsp;&nbsp;
+      <a href="#M000104">ssh</a>&nbsp;&nbsp;
+      <a href="#M000105">ssh!</a>&nbsp;&nbsp;
+      <a href="#M000098">ssh_config_file=</a>&nbsp;&nbsp;
+      <a href="#M000107">start</a>&nbsp;&nbsp;
+      <a href="#M000112">start_ssh_socket</a>&nbsp;&nbsp;
+      <a href="#M000108">stop</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">HOST_REGEXP</td>
+          <td>=</td>
+          <td class="context-item-value">/^\s*Host\s+([^\s#]+)(?:\s*#\s*\[(.*?)\])?/</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Matches a host declaration in a <a href="VboxCommand.html#M000104">ssh</a>
+config file. After the match:
+
+<pre>
+  $1:: The host name
+       (ex: 'Host name' =&gt; 'name')
+  $2:: The vm name (if present)
+       (ex: 'Host name # [vm_name]' =&gt; 'vm_name')
+</pre>
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000110" class="method-detail">
+        <a name="M000110"></a>
+
+        <div class="method-heading">
+          <a href="#M000110" class="method-signature">
+          <span class="method-name">discardstate</span><span class="method-args">(vm_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000110-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000110-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 111</span>
+111:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">discardstate</span>(<span class="ruby-identifier">vm_name</span>)
+112:         <span class="ruby-identifier">sh!</span> <span class="ruby-node">&quot;VBoxManage discardstate #{vm_name}&quot;</span>
+113:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000102" class="method-detail">
+        <a name="M000102"></a>
+
+        <div class="method-heading">
+          <a href="#M000102" class="method-signature">
+          <span class="method-name">each_host</span><span class="method-args">(hosts=[]) {|host| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000102-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000102-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 63</span>
+63:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_host</span>(<span class="ruby-identifier">hosts</span>=[])
+64:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">hosts</span>.<span class="ruby-identifier">empty?</span>
+65:           <span class="ruby-identifier">hosts</span> = <span class="ruby-identifier">host_list</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">host</span>, <span class="ruby-identifier">vm_name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">host</span> }
+66:           <span class="ruby-identifier">hosts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">'*'</span>)
+67:         <span class="ruby-keyword kw">end</span>
+68:         
+69:         <span class="ruby-identifier">hosts</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">host</span><span class="ruby-operator">|</span>
+70:           <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">host</span>)
+71:         <span class="ruby-keyword kw">end</span>
+72:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000103" class="method-detail">
+        <a name="M000103"></a>
+
+        <div class="method-heading">
+          <a href="#M000103" class="method-signature">
+          <span class="method-name">each_vm_name</span><span class="method-args">(vm_names=[]) {|vm_name| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000103-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000103-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 74</span>
+74:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_vm_name</span>(<span class="ruby-identifier">vm_names</span>=[])
+75:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">vm_names</span>.<span class="ruby-identifier">empty?</span>
+76:           <span class="ruby-identifier">vm_names</span> = <span class="ruby-identifier">host_list</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">host</span>, <span class="ruby-identifier">vm_name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">vm_name</span> }
+77:           <span class="ruby-identifier">vm_names</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">'*'</span>)
+78:         <span class="ruby-keyword kw">end</span>
+79:         
+80:         <span class="ruby-identifier">vm_names</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">vm_name</span><span class="ruby-operator">|</span>
+81:           <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">vm_name</span>)
+82:         <span class="ruby-keyword kw">end</span>
+83:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000099" class="method-detail">
+        <a name="M000099"></a>
+
+        <div class="method-heading">
+          <a href="#M000099" class="method-signature">
+          <span class="method-name">host_list</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000099-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000099-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 51</span>
+51:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">host_list</span>
+52:         <span class="ruby-ivar">@host_list</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">load_hosts</span>(<span class="ruby-identifier">ssh_config_file</span>)
+53:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000100" class="method-detail">
+        <a name="M000100"></a>
+
+        <div class="method-heading">
+          <a href="#M000100" class="method-signature">
+          <span class="method-name">host_map</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000100-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000100-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 55</span>
+55:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">host_map</span>
+56:         <span class="ruby-ivar">@host_map</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Hash</span>[<span class="ruby-operator">*</span><span class="ruby-identifier">host_list</span>.<span class="ruby-identifier">flatten</span>]
+57:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000097" class="method-detail">
+        <a name="M000097"></a>
+
+        <div class="method-heading">
+          <a href="#M000097" class="method-signature">
+          <span class="method-name">load_hosts</span><span class="method-args">(ssh_config_file)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a hash of (host, vm_name) pairs as declared in a <a
+href="VboxCommand.html#M000104">ssh</a> config file. Basically this means
+parsing out the name in each config like:
+</p>
+<pre>
+  Host name
+</pre>
+<p>
+Normally the vm_name is the same as the host name, but an alternate can be
+specified as a comment in the form:
+</p>
+<pre>
+  Host name # [vm_name]
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000097-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000097-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 31</span>
+31:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_hosts</span>(<span class="ruby-identifier">ssh_config_file</span>)
+32:         <span class="ruby-identifier">hosts</span> = []
+33:         
+34:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">ssh_config_file</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">io</span><span class="ruby-operator">|</span>
+35:           <span class="ruby-identifier">io</span>.<span class="ruby-identifier">each_line</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+36:             <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">HOST_REGEXP</span>
+37:             <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$2</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">$2</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">empty?</span>
+38:             <span class="ruby-identifier">hosts</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$1</span>]
+39:           <span class="ruby-keyword kw">end</span>
+40:         <span class="ruby-keyword kw">end</span>
+41:         
+42:         <span class="ruby-identifier">hosts</span>
+43:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000101" class="method-detail">
+        <a name="M000101"></a>
+
+        <div class="method-heading">
+          <a href="#M000101" class="method-signature">
+          <span class="method-name">resolve_vm_names</span><span class="method-args">(hosts)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000101-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000101-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 59</span>
+59:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">resolve_vm_names</span>(<span class="ruby-identifier">hosts</span>)
+60:         <span class="ruby-identifier">names</span> <span class="ruby-value">? </span><span class="ruby-identifier">hosts</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">hosts</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">host</span><span class="ruby-operator">|</span> <span class="ruby-identifier">host_map</span>[<span class="ruby-identifier">host</span>] }
+61:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000109" class="method-detail">
+        <a name="M000109"></a>
+
+        <div class="method-heading">
+          <a href="#M000109" class="method-signature">
+          <span class="method-name">restore</span><span class="method-args">(vm_name, snapshot)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000109-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000109-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 107</span>
+107:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">restore</span>(<span class="ruby-identifier">vm_name</span>, <span class="ruby-identifier">snapshot</span>)
+108:         <span class="ruby-identifier">sh!</span> <span class="ruby-node">&quot;VBoxManage -q snapshot #{vm_name} restore #{snapshot.upcase}&quot;</span>
+109:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000106" class="method-detail">
+        <a name="M000106"></a>
+
+        <div class="method-heading">
+          <a href="#M000106" class="method-signature">
+          <span class="method-name">running?</span><span class="method-args">(vm_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000106-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000106-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 95</span>
+95:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">running?</span>(<span class="ruby-identifier">vm_name</span>)
+96:         <span class="ruby-value">`VBoxManage -q list runningvms`</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">vm_name</span>)
+97:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000111" class="method-detail">
+        <a name="M000111"></a>
+
+        <div class="method-heading">
+          <a href="#M000111" class="method-signature">
+          <span class="method-name">share</span><span class="method-args">(vm_name, name, local_dir, remote_dir)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000111-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000111-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 115</span>
+115:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">share</span>(<span class="ruby-identifier">vm_name</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">local_dir</span>, <span class="ruby-identifier">remote_dir</span>)
+116:         <span class="ruby-identifier">share_dir</span> = <span class="ruby-node">&quot;#{local_dir}/#{vm_name}&quot;</span>
+117:         <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">share_dir</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">share_dir</span>)
+118:         
+119:         <span class="ruby-identifier">ssh</span> <span class="ruby-identifier">vm_name</span>, <span class="ruby-node">&quot;sudo umount '#{remote_dir}' &gt; /dev/null 2&gt;&amp;1&quot;</span>
+120:         <span class="ruby-identifier">sh</span> <span class="ruby-node">&quot;VBoxManage sharedfolder remove '#{vm_name}' --name '#{name}' --transient &gt; /dev/null 2&gt;&amp;1&quot;</span>
+121:         <span class="ruby-identifier">sh!</span> <span class="ruby-node">&quot;VBoxManage sharedfolder add '#{vm_name}' --name '#{name}' --hostpath '#{share_dir}' --transient&quot;</span>
+122:         <span class="ruby-identifier">ssh!</span> <span class="ruby-identifier">vm_name</span>, <span class="ruby-node">&quot;sudo mount -t vboxsf -o uid=1000,gid=100 '#{name}' '#{remote_dir}'&quot;</span>
+123:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000104" class="method-detail">
+        <a name="M000104"></a>
+
+        <div class="method-heading">
+          <a href="#M000104" class="method-signature">
+          <span class="method-name">ssh</span><span class="method-args">(host, cmd)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000104-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000104-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 85</span>
+85:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ssh</span>(<span class="ruby-identifier">host</span>, <span class="ruby-identifier">cmd</span>)
+86:         <span class="ruby-identifier">sh</span> <span class="ruby-node">&quot;ssh -q -F '#{ssh_config_file}' '#{host}' -- #{cmd}&quot;</span>
+87:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000105" class="method-detail">
+        <a name="M000105"></a>
+
+        <div class="method-heading">
+          <a href="#M000105" class="method-signature">
+          <span class="method-name">ssh!</span><span class="method-args">(host, cmd)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000105-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000105-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 89</span>
+89:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ssh!</span>(<span class="ruby-identifier">host</span>, <span class="ruby-identifier">cmd</span>)
+90:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">ssh</span>(<span class="ruby-identifier">host</span>, <span class="ruby-identifier">cmd</span>)
+91:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">CommandError</span>, <span class="ruby-node">&quot;non-zero exit status: #{$?.exitstatus}&quot;</span>
+92:         <span class="ruby-keyword kw">end</span>
+93:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000098" class="method-detail">
+        <a name="M000098"></a>
+
+        <div class="method-heading">
+          <a href="#M000098" class="method-signature">
+          <span class="method-name">ssh_config_file=</span><span class="method-args">(ssh_config_file)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000098-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000098-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 45</span>
+45:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ssh_config_file=</span>(<span class="ruby-identifier">ssh_config_file</span>)
+46:         <span class="ruby-ivar">@ssh_config_file</span> = <span class="ruby-identifier">ssh_config_file</span>
+47:         <span class="ruby-ivar">@host_list</span> = <span class="ruby-keyword kw">nil</span>
+48:         <span class="ruby-ivar">@host_map</span>  = <span class="ruby-keyword kw">nil</span>
+49:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000107" class="method-detail">
+        <a name="M000107"></a>
+
+        <div class="method-heading">
+          <a href="#M000107" class="method-signature">
+          <span class="method-name">start</span><span class="method-args">(vm_name, type='headless')</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000107-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000107-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 99</span>
+ 99:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start</span>(<span class="ruby-identifier">vm_name</span>, <span class="ruby-identifier">type</span>=<span class="ruby-value str">'headless'</span>)
+100:         <span class="ruby-identifier">sh!</span> <span class="ruby-node">&quot;VBoxManage -q startvm #{vm_name} --type #{type}&quot;</span>
+101:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000112" class="method-detail">
+        <a name="M000112"></a>
+
+        <div class="method-heading">
+          <a href="#M000112" class="method-signature">
+          <span class="method-name">start_ssh_socket</span><span class="method-args">(vm_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000112-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000112-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 125</span>
+125:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_ssh_socket</span>(<span class="ruby-identifier">vm_name</span>)
+126:         <span class="ruby-identifier">sh</span> <span class="ruby-node">&quot;ssh -MNf -F '#{ssh_config_file}' '#{vm_name}' &gt;/dev/null 2&gt;&amp;1 &lt;/dev/null&quot;</span>
+127:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000108" class="method-detail">
+        <a name="M000108"></a>
+
+        <div class="method-heading">
+          <a href="#M000108" class="method-signature">
+          <span class="method-name">stop</span><span class="method-args">(vm_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000108-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000108-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linecook/commands/vbox_command.rb, line 103</span>
+103:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stop</span>(<span class="ruby-identifier">vm_name</span>)
+104:         <span class="ruby-identifier">sh!</span> <span class="ruby-node">&quot;VBoxManage -q controlvm #{vm_name} poweroff&quot;</span>
+105:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

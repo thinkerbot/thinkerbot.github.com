@@ -1,0 +1,1169 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: ExtInd</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">ExtInd</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/ext_ind_rb.html">
+                lib/ext_ind.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="External/Base.html">
+                External::Base
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000191">+</a>&nbsp;&nbsp;
+      <a href="#M000192">&lt;&lt;</a>&nbsp;&nbsp;
+      <a href="#M000193">&lt;=&gt;</a>&nbsp;&nbsp;
+      <a href="#M000194">==</a>&nbsp;&nbsp;
+      <a href="#M000195">[]</a>&nbsp;&nbsp;
+      <a href="#M000176">[]</a>&nbsp;&nbsp;
+      <a href="#M000196">[]=</a>&nbsp;&nbsp;
+      <a href="#M000197">at</a>&nbsp;&nbsp;
+      <a href="#M000181">buffer_size</a>&nbsp;&nbsp;
+      <a href="#M000182">buffer_size=</a>&nbsp;&nbsp;
+      <a href="#M000187">cached=</a>&nbsp;&nbsp;
+      <a href="#M000186">cached?</a>&nbsp;&nbsp;
+      <a href="#M000198">clear</a>&nbsp;&nbsp;
+      <a href="#M000189">close</a>&nbsp;&nbsp;
+      <a href="#M000199">concat</a>&nbsp;&nbsp;
+      <a href="#M000183">default_blksize=</a>&nbsp;&nbsp;
+      <a href="#M000179">default_nil_value</a>&nbsp;&nbsp;
+      <a href="#M000178">directive_size</a>&nbsp;&nbsp;
+      <a href="#M000190">dup</a>&nbsp;&nbsp;
+      <a href="#M000200">each</a>&nbsp;&nbsp;
+      <a href="#M000201">each_index</a>&nbsp;&nbsp;
+      <a href="#M000202">empty?</a>&nbsp;&nbsp;
+      <a href="#M000203">eql?</a>&nbsp;&nbsp;
+      <a href="#M000204">first</a>&nbsp;&nbsp;
+      <a href="#M000188">flush</a>&nbsp;&nbsp;
+      <a href="#M000205">last</a>&nbsp;&nbsp;
+      <a href="#M000206">length</a>&nbsp;&nbsp;
+      <a href="#M000180">new</a>&nbsp;&nbsp;
+      <a href="#M000185">nil_value</a>&nbsp;&nbsp;
+      <a href="#M000184">options</a>&nbsp;&nbsp;
+      <a href="#M000218">pad_to</a>&nbsp;&nbsp;
+      <a href="#M000211">pos</a>&nbsp;&nbsp;
+      <a href="#M000210">pos=</a>&nbsp;&nbsp;
+      <a href="#M000217">prepare_write_to_pos</a>&nbsp;&nbsp;
+      <a href="#M000177">read</a>&nbsp;&nbsp;
+      <a href="#M000214">read</a>&nbsp;&nbsp;
+      <a href="#M000212">readbytes</a>&nbsp;&nbsp;
+      <a href="#M000207">reverse_each</a>&nbsp;&nbsp;
+      <a href="#M000208">size</a>&nbsp;&nbsp;
+      <a href="#M000209">to_a</a>&nbsp;&nbsp;
+      <a href="#M000216">unframed_write</a>&nbsp;&nbsp;
+      <a href="#M000213">unpack</a>&nbsp;&nbsp;
+      <a href="#M000220">validate_framed_array</a>&nbsp;&nbsp;
+      <a href="#M000219">validate_index</a>&nbsp;&nbsp;
+      <a href="#M000221">validate_unframed_array</a>&nbsp;&nbsp;
+      <a href="#M000215">write</a>&nbsp;&nbsp;
+      <a href="#M000223">write_framed_array</a>&nbsp;&nbsp;
+      <a href="#M000222">write_index</a>&nbsp;&nbsp;
+      <a href="#M000224">write_unframed_array</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">cache</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">cache_pos</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">default_nil_value</td>
+          <td class="context-item-value">&nbsp;[W]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">format</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">frame</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">frame_size</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">process_in_bulk</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000176" class="method-detail">
+        <a name="M000176"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000176.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000176.html');return false;">
+          <span class="method-name">[]</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000179" class="method-detail">
+        <a name="M000179"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000179.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000179.html');return false;">
+          <span class="method-name">default_nil_value</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000178" class="method-detail">
+        <a name="M000178"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000178.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000178.html');return false;">
+          <span class="method-name">directive_size</span><span class="method-args">(directive)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the number of bytes required to pack an item in an array using the
+directive (see Array.pack for more details). All directives return a <a
+href="ExtInd.html#M000208">size</a> except the positioning directives
+&#8217;@&#8217; and &#8216;X&#8217;; these and all other unknown directives
+return nil.
+</p>
+<pre>
+  Directives          N bytes
+  ------------------------------
+  AaBbCcHhUwxZ     |   1
+  nSsv             |   2
+  M                |   3
+  eFfgIiLlNPpV     |   4
+  m                |   5
+  u                |   6
+  DdEGQq           |   8
+  @X               |   nil
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000180" class="method-detail">
+        <a name="M000180"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000180.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000180.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(io=nil, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000177" class="method-detail">
+        <a name="M000177"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000177.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000177.html');return false;">
+          <span class="method-name">read</span><span class="method-args">(fd, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000191" class="method-detail">
+        <a name="M000191"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000191.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000191.html');return false;">
+          <span class="method-name">+</span><span class="method-args">(another)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000192" class="method-detail">
+        <a name="M000192"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000192.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000192.html');return false;">
+          <span class="method-name">&lt;&lt;</span><span class="method-args">(array)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def -(another)
+</p>
+<pre>
+  not_implemented
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000193" class="method-detail">
+        <a name="M000193"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000193.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000193.html');return false;">
+          <span class="method-name">&lt;=&gt;</span><span class="method-args">(another)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000194" class="method-detail">
+        <a name="M000194"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000194.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000194.html');return false;">
+          <span class="method-name">==</span><span class="method-args">(another)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000195" class="method-detail">
+        <a name="M000195"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000195.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000195.html');return false;">
+          <span class="method-name">[]</span><span class="method-args">(index, length=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Element Reference — Returns the entry <a
+href="ExtInd.html#M000197">at</a> index, or returns an array starting <a
+href="ExtInd.html#M000197">at</a> start and continuing for <a
+href="ExtInd.html#M000206">length</a> entries, or returns an array
+specified by range. Negative indices count backward from the end of self
+(-1 is the <a href="ExtInd.html#M000205">last</a> element). Returns nil if
+the index (or starting index) is out of range.
+</p>
+<pre>
+  io = StringIO.new [1,2,3,4,5].pack(&quot;I*&quot;)
+  i = ExtInd.new(io, :format =&gt; 'I')
+  i[2]                   #=&gt; [3]
+  i[6]                   #=&gt; nil
+  i[1, 2]                #=&gt; [ [2], [3] ]
+  i[1..3]                #=&gt; [ [2], [3], [4] ]
+  i[4..7]                #=&gt; [ [5] ]
+  i[6..10]               #=&gt; nil
+  i[-3, 3]               #=&gt; [ [3], [4], [5] ]
+  # special cases
+  i[5]                   #=&gt; nil
+  i[5, 1]                #=&gt; []
+  i[5..10]               #=&gt; []
+</pre>
+<p>
+Note that entries are returned in frame, as arrays.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000196" class="method-detail">
+        <a name="M000196"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000196.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000196.html');return false;">
+          <span class="method-name">[]=</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Element Assignment — Sets the entry <a href="ExtInd.html#M000197">at</a>
+index, or replaces a subset starting <a href="ExtInd.html#M000197">at</a>
+start and continuing for <a href="ExtInd.html#M000206">length</a> entries,
+or replaces a subset specified by range. A negative indices will count
+backward from the end of self. Inserts elements if <a
+href="ExtInd.html#M000206">length</a> is zero. If nil is used in the second
+and third form, deletes elements from self. An IndexError is raised if a
+negative index points past the beginning of self. See also push, and
+unshift.
+</p>
+<pre>
+  io = StringIO.new &quot;&quot;
+  i = ExtInd.new(io, :format =&gt; 'I')
+  i.nil_value                  # =&gt; [0]
+  i[4] = [4]                   # =&gt; [[0], [0], [0], [0], [4]]
+  i[0, 3] = [ [1], [2], [3] ]  # =&gt; [[1], [2], [3], [0], [4]]
+  i[1..2] = [ [5], [6] ]       # =&gt; [[1], [5], [6], [0], [4]]
+  i[0, 2] = [ [7] ]            # =&gt; [[7], [6], [0], [4]]
+  i[0..2] = [ [8] ]            # =&gt; [[8], [4]]
+  i[-1]   = [9]                # =&gt; [[8], [9]]
+  i[1..-1] = nil               # =&gt; [[8]]
+</pre>
+<p>
+Note that []= must take entries in frame, or (in the case of [offset, <a
+href="ExtInd.html#M000206">length</a>] and range insertions) another <a
+href="ExtInd.html">ExtInd</a> with the same frame, format, and <a
+href="ExtInd.html#M000185">nil_value</a>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000197" class="method-detail">
+        <a name="M000197"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000197.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000197.html');return false;">
+          <span class="method-name">at</span><span class="method-args">(index)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns entry <a href="ExtInd.html#M000197">at</a> index
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000181" class="method-detail">
+        <a name="M000181"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000181.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000181.html');return false;">
+          <span class="method-name">buffer_size</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000182" class="method-detail">
+        <a name="M000182"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000182.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000182.html');return false;">
+          <span class="method-name">buffer_size=</span><span class="method-args">(buffer_size)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000187" class="method-detail">
+        <a name="M000187"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000187.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000187.html');return false;">
+          <span class="method-name">cached=</span><span class="method-args">(input)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets the index to cache data or not. When setting cached to false,
+currently cached data is flushed.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000186" class="method-detail">
+        <a name="M000186"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000186.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000186.html');return false;">
+          <span class="method-name">cached?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+True if cached
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000198" class="method-detail">
+        <a name="M000198"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000198.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000198.html');return false;">
+          <span class="method-name">clear</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Removes all elements from <em>self</em>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000189" class="method-detail">
+        <a name="M000189"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000189.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000189.html');return false;">
+          <span class="method-name">close</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Flushes cached data and closes the io.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000199" class="method-detail">
+        <a name="M000199"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000199.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000199.html');return false;">
+          <span class="method-name">concat</span><span class="method-args">(another)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def compact!
+</p>
+<pre>
+  not_implemented
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000183" class="method-detail">
+        <a name="M000183"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000183.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000183.html');return false;">
+          <span class="method-name">default_blksize=</span><span class="method-args">(value)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000190" class="method-detail">
+        <a name="M000190"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000190.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000190.html');return false;">
+          <span class="method-name">dup</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def *(arg)
+</p>
+<pre>
+  not_implemented
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000200" class="method-detail">
+        <a name="M000200"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000200.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000200.html');return false;">
+          <span class="method-name">each</span><span class="method-args">() {|item| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def delete_if # :yield: item
+</p>
+<pre>
+  not_implemented
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000201" class="method-detail">
+        <a name="M000201"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000201.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000201.html');return false;">
+          <span class="method-name">each_index</span><span class="method-args">() {|index| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Passes the index of <a href="ExtInd.html#M000200">each</a> char
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000202" class="method-detail">
+        <a name="M000202"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000202.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000202.html');return false;">
+          <span class="method-name">empty?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if <em>self</em> contains no elements
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000203" class="method-detail">
+        <a name="M000203"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000203.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000203.html');return false;">
+          <span class="method-name">eql?</span><span class="method-args">(another)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000204" class="method-detail">
+        <a name="M000204"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000204.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000204.html');return false;">
+          <span class="method-name">first</span><span class="method-args">(n=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="ExtInd.html#M000204">first</a> n entries (default 1)
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000188" class="method-detail">
+        <a name="M000188"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000188.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000188.html');return false;">
+          <span class="method-name">flush</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Flushes the io, writing cached data if necessary.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000205" class="method-detail">
+        <a name="M000205"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000205.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000205.html');return false;">
+          <span class="method-name">last</span><span class="method-args">(n=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the <a href="ExtInd.html#M000205">last</a> n entries (default 1)
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000206" class="method-detail">
+        <a name="M000206"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000206.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000206.html');return false;">
+          <span class="method-name">length</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the number of entries in self
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000185" class="method-detail">
+        <a name="M000185"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000185.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000185.html');return false;">
+          <span class="method-name">nil_value</span><span class="method-args">(unpacked=true)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the string value used for nils. Specify unpacked to show the
+unpacked array value.
+</p>
+<pre>
+  i = ExtInd.new
+  i.nil_value            # =&gt; [0]
+  i.nil_value(false)     # =&gt; &quot;\000\000\000\000&quot;
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000184" class="method-detail">
+        <a name="M000184"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000184.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000184.html');return false;">
+          <span class="method-name">options</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000211" class="method-detail">
+        <a name="M000211"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000211.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000211.html');return false;">
+          <span class="method-name">pos</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the current position of the index
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000210" class="method-detail">
+        <a name="M000210"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000210.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000210.html');return false;">
+          <span class="method-name">pos=</span><span class="method-args">(pos)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets the current position of the index. Negative positions are counted from
+the end of the index (just as they are in an array). Positions can be set
+beyond the actual <a href="ExtInd.html#M000206">length</a> of the index
+(similar to an IO).
+</p>
+<pre>
+  i = ExtInd[[1],[2],[3]]
+  i.length                      # =&gt; 3
+  i.pos = 2; i.pos              # =&gt; 2
+  i.pos = -1; i.pos             # =&gt; 2
+  i.pos = 10; i.pos             # =&gt; 40
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000214" class="method-detail">
+        <a name="M000214"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000214.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000214.html');return false;">
+          <span class="method-name">read</span><span class="method-args">(n=nil, pos=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Reads n entries from the specified position. By default reads all remaining
+entries from the current position. Single entries are returned in frame,
+multiple entries are returned in an array.
+</p>
+<pre>
+  i = ExtInd[[1],[2],[3]]
+  i.pos                       # =&gt; 0
+  i.read                      # =&gt; [[1],[2],[3]]
+  i.read(1,0)                 # =&gt; [1]
+  i.read(10,1)                # =&gt; [[2],[3]]
+</pre>
+<p>
+When n is nil and no entries can be <a href="ExtInd.html#M000177">read</a>,
+an empty array is returned. When n is specified, nil will be returned when
+no entries can be <a href="ExtInd.html#M000177">read</a>.
+</p>
+<pre>
+  i.pos = 3
+  i.read                      # =&gt; []
+  i.read(1)                   # =&gt; nil
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000212" class="method-detail">
+        <a name="M000212"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000212.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000212.html');return false;">
+          <span class="method-name">readbytes</span><span class="method-args">(n=nil, pos=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Reads the packed byte string for n entries from the specified position. By
+default reads the string for all remaining entries from the current
+position.
+</p>
+<pre>
+  i = ExtInd[[1],[2],[3]]
+  i.pos                              # =&gt; 0
+  i.readbytes.unpack(&quot;I*&quot;)           # =&gt; [1,2,3]
+  i.readbytes(1,0).unpack(&quot;I*&quot;)      # =&gt; [1]
+  i.readbytes(10,1).unpack(&quot;I*&quot;)     # =&gt; [2,3]
+</pre>
+<p>
+Like an IO, when n is nil and no entries can be <a
+href="ExtInd.html#M000177">read</a>, an empty string is returned. When n is
+specified, nil will be returned when no entries can be <a
+href="ExtInd.html#M000177">read</a>.
+</p>
+<pre>
+  i.pos = 3
+  i.readbytes                        # =&gt; &quot;&quot;
+  i.readbytes(1)                     # =&gt; nil
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000207" class="method-detail">
+        <a name="M000207"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000207.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000207.html');return false;">
+          <span class="method-name">reverse_each</span><span class="method-args">() {|read(1)| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def reverse!
+</p>
+<pre>
+  not_implemented
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000208" class="method-detail">
+        <a name="M000208"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000208.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000208.html');return false;">
+          <span class="method-name">size</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="ExtInd.html#M000206">length</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000209" class="method-detail">
+        <a name="M000209"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000209.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000209.html');return false;">
+          <span class="method-name">to_a</span><span class="method-args">(length=self.length)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def slice!(*args)
+</p>
+<pre>
+  not_implemented
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000216" class="method-detail">
+        <a name="M000216"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000216.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000216.html');return false;">
+          <span class="method-name">unframed_write</span><span class="method-args">(array, pos=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Writes the array as an entry (or set of entries) into self starting <a
+href="ExtInd.html#M000197">at</a> the specified position. By default <a
+href="ExtInd.html#M000215">write</a> begins <a
+href="ExtInd.html#M000197">at</a> the current position. The array can have
+multiple entries in sequence, but MUST be in the correct frame.
+</p>
+<pre>
+  i = ExtInd[]
+  i.unframed_write([2,3], 1)
+  i.pos = 0;
+  i.unframed_write([1])
+  i.read(3, 0)                # =&gt; [[1],[2],[3]]
+</pre>
+<p>
+Note &#8212; no range checking when cached
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000213" class="method-detail">
+        <a name="M000213"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000213.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000213.html');return false;">
+          <span class="method-name">unpack</span><span class="method-args">(str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Unpacks the given string into an array of index values. Single entries are
+returned in frame, multiple entries are returned in an array.
+</p>
+<pre>
+  i.format                          # =&gt; 'I*'
+  i.unpack( [1].pack('I*') )        # =&gt; [1]
+  i.unpack( [1,2,3].pack('I*') )    # =&gt; [[1],[2],[3]]
+  i.unpack(&quot;&quot;)                      # =&gt; []
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000215" class="method-detail">
+        <a name="M000215"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000215.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000215.html');return false;">
+          <span class="method-name">write</span><span class="method-args">(array, pos=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <h3 class="section-bar">Protected Instance methods</h3>
+
+      <div id="method-M000218" class="method-detail">
+        <a name="M000218"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000218.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000218.html');return false;">
+          <span class="method-name">pad_to</span><span class="method-args">(pos)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000217" class="method-detail">
+        <a name="M000217"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000217.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000217.html');return false;">
+          <span class="method-name">prepare_write_to_pos</span><span class="method-args">(pos)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000220" class="method-detail">
+        <a name="M000220"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000220.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000220.html');return false;">
+          <span class="method-name">validate_framed_array</span><span class="method-args">(array)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000219" class="method-detail">
+        <a name="M000219"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000219.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000219.html');return false;">
+          <span class="method-name">validate_index</span><span class="method-args">(index)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000221" class="method-detail">
+        <a name="M000221"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000221.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000221.html');return false;">
+          <span class="method-name">validate_unframed_array</span><span class="method-args">(array)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000223" class="method-detail">
+        <a name="M000223"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000223.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000223.html');return false;">
+          <span class="method-name">write_framed_array</span><span class="method-args">(array)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000222" class="method-detail">
+        <a name="M000222"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000222.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000222.html');return false;">
+          <span class="method-name">write_index</span><span class="method-args">(index)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000224" class="method-detail">
+        <a name="M000224"></a>
+
+        <div class="method-heading">
+          <a href="ExtInd.src/M000224.html" target="Code" class="method-signature"
+            onclick="popupCode('ExtInd.src/M000224.html');return false;">
+          <span class="method-name">write_unframed_array</span><span class="method-args">(array)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Linecook::Test::CommandParser</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Linecook::Test::CommandParser</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/linecook/test/command_parser_rb.html">
+                lib/linecook/test/command_parser.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000068">new</a>&nbsp;&nbsp;
+      <a href="#M000070">parse</a>&nbsp;&nbsp;
+      <a href="#M000069">parse_cmd</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">prefix</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ps1</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ps2</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">suffix</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
+
+        <div class="method-heading">
+          <a href="#M000068" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000068-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000068-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/test/command_parser.rb, line 9</span>
+ 9:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span>={})
+10:         <span class="ruby-identifier">options</span> = {
+11:           <span class="ruby-identifier">:ps1</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'% '</span>,
+12:           <span class="ruby-identifier">:ps2</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'&gt; '</span>,
+13:           <span class="ruby-identifier">:prefix</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'0&lt;&amp;- 2&gt;&amp;1 '</span>,
+14:           <span class="ruby-identifier">:suffix</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">''</span>
+15:         }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+16:         
+17:         <span class="ruby-ivar">@ps1</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:ps1</span>]
+18:         <span class="ruby-ivar">@ps2</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:ps2</span>]
+19:         <span class="ruby-ivar">@prefix</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:prefix</span>]
+20:         <span class="ruby-ivar">@suffix</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:suffix</span>]
+21:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000070" class="method-detail">
+        <a name="M000070"></a>
+
+        <div class="method-heading">
+          <a href="#M000070" class="method-signature">
+          <span class="method-name">parse</span><span class="method-args">(script)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000070-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000070-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/test/command_parser.rb, line 31</span>
+31:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">script</span>)
+32:         <span class="ruby-identifier">commands</span> = []
+33:         
+34:         <span class="ruby-identifier">command</span>, <span class="ruby-identifier">output</span>, <span class="ruby-identifier">exit_status</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value">0</span>
+35:         <span class="ruby-identifier">script</span>.<span class="ruby-identifier">each_line</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+36:           <span class="ruby-keyword kw">case</span>
+37:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">ps1</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+38:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">command</span>
+39:               <span class="ruby-identifier">commands</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-node">&quot;#{prefix}#{command}#{suffix}&quot;</span>, <span class="ruby-identifier">output</span>, <span class="ruby-identifier">exit_status</span>]
+40:             <span class="ruby-keyword kw">end</span>
+41:             
+42:             <span class="ruby-identifier">command</span>, <span class="ruby-identifier">output</span>, <span class="ruby-identifier">exit_status</span> = <span class="ruby-identifier">parse_cmd</span> <span class="ruby-identifier">lchomp</span>(<span class="ruby-identifier">ps1</span>, <span class="ruby-identifier">line</span>)
+43:             
+44:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">nil?</span>
+45:             <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">empty?</span>
+46:               <span class="ruby-identifier">command</span>, <span class="ruby-identifier">output</span>, <span class="ruby-identifier">exit_status</span> = <span class="ruby-identifier">parse_cmd</span>(<span class="ruby-identifier">line</span>)
+47:             <span class="ruby-keyword kw">end</span>
+48:             
+49:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">ps2</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+50:             <span class="ruby-identifier">command</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">lchomp</span>(<span class="ruby-identifier">ps2</span>, <span class="ruby-identifier">line</span>)
+51:           
+52:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">output</span>.<span class="ruby-identifier">nil?</span>
+53:             <span class="ruby-identifier">output</span> = <span class="ruby-identifier">line</span>
+54:           
+55:           <span class="ruby-keyword kw">else</span>
+56:             <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>
+57:           <span class="ruby-keyword kw">end</span>
+58:         <span class="ruby-keyword kw">end</span>
+59:         
+60:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">command</span>
+61:           <span class="ruby-identifier">commands</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-node">&quot;#{prefix}#{command}#{suffix}&quot;</span>, <span class="ruby-identifier">output</span>, <span class="ruby-identifier">exit_status</span>]
+62:         <span class="ruby-keyword kw">end</span>
+63:         
+64:         <span class="ruby-identifier">commands</span>
+65:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
+
+        <div class="method-heading">
+          <a href="#M000069" class="method-signature">
+          <span class="method-name">parse_cmd</span><span class="method-args">(cmd)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000069-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000069-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linecook/test/command_parser.rb, line 23</span>
+23:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_cmd</span>(<span class="ruby-identifier">cmd</span>)
+24:         <span class="ruby-identifier">cmd</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/.*?#\s*(?:\[(\d+)\])?\s*(\.{3})?/</span>
+25:         <span class="ruby-identifier">exit_status</span> = <span class="ruby-identifier">$1</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">:</span> <span class="ruby-value">0</span>
+26:         <span class="ruby-identifier">output</span> = <span class="ruby-identifier">$2</span> <span class="ruby-operator">?</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;&quot;</span>
+27:         
+28:         [<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">output</span>, <span class="ruby-identifier">exit_status</span>]
+29:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

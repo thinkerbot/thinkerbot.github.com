@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>parse_args (Lazydoc::Method)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/lazydoc/method.rb, line 44</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_args</span>(<span class="ruby-identifier">str</span>)
+        <span class="ruby-identifier">scanner</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">str</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-constant">StringScanner</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">str</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span> <span class="ruby-keyword kw">then</span> <span class="ruby-constant">StringScanner</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">str</span>)
+        <span class="ruby-keyword kw">else</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;can't convert #{str.class} into StringScanner or String&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">str</span> = <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">string</span>
+        
+        <span class="ruby-comment cmt"># skip whitespace and leading LPAREN</span>
+        <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">skip</span>(<span class="ruby-regexp re">/\s*\(?\s*/</span>) 
+        
+        <span class="ruby-identifier">args</span> = []
+        <span class="ruby-identifier">brakets</span> = <span class="ruby-identifier">braces</span> = <span class="ruby-identifier">parens</span> = <span class="ruby-value">0</span>
+        <span class="ruby-identifier">start</span> = <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">pos</span>
+        <span class="ruby-identifier">broke</span> = <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">skip</span>(<span class="ruby-regexp re">/.*?['&quot;#,\(\)\{\}\[\]]/</span>)
+          <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">pos</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+          
+          <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">str</span>[<span class="ruby-identifier">pos</span>]
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">?,</span>,<span class="ruby-keyword kw">nil</span>
+            <span class="ruby-comment cmt"># skip if in brakets, braces, or parenthesis</span>
+            <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parens</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">brakets</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">braces</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+            
+            <span class="ruby-comment cmt"># ok, found an arg</span>
+            <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">str</span>[<span class="ruby-identifier">start</span>, <span class="ruby-identifier">pos</span><span class="ruby-operator">-</span><span class="ruby-identifier">start</span>].<span class="ruby-identifier">strip</span>
+            <span class="ruby-identifier">start</span> = <span class="ruby-identifier">pos</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+          
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">?#</span> <span class="ruby-keyword kw">then</span> <span class="ruby-keyword kw">break</span>(<span class="ruby-keyword kw">true</span>)                <span class="ruby-comment cmt"># break on a comment</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">?'</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">skip_quote</span>(<span class="ruby-identifier">scanner</span>, <span class="ruby-regexp re">/'/</span>)   <span class="ruby-comment cmt"># parse over quoted strings</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">?&quot;</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">skip_quote</span>(<span class="ruby-identifier">scanner</span>, <span class="ruby-regexp re">/&quot;/</span>)   <span class="ruby-comment cmt"># parse over double-quoted string</span>
+            
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">?(</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">parens</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>                <span class="ruby-comment cmt"># for brakets, braces, and parenthesis</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">?)</span>                                 <span class="ruby-comment cmt"># simply track the nesting EXCEPT for</span>
+            <span class="ruby-keyword kw">break</span>(<span class="ruby-keyword kw">true</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parens</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>            <span class="ruby-comment cmt"># RPAREN.  If the closing parenthesis</span>
+            <span class="ruby-identifier">parens</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>                           <span class="ruby-comment cmt"># is found, break.</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">?[</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">braces</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">?]</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">braces</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">?{</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">brakets</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-value">?}</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">brakets</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+        
+        <span class="ruby-comment cmt"># parse out the final arg.  if the loop broke (ie </span>
+        <span class="ruby-comment cmt"># a comment or the closing parenthesis was found) </span>
+        <span class="ruby-comment cmt"># then the end position is determined by the </span>
+        <span class="ruby-comment cmt"># scanner, otherwise take all that remains</span>
+        <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">broke</span> <span class="ruby-value">? </span><span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">pos</span><span class="ruby-operator">-</span><span class="ruby-value">1</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">length</span>
+        <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">str</span>[<span class="ruby-identifier">start</span>, <span class="ruby-identifier">pos</span><span class="ruby-operator">-</span><span class="ruby-identifier">start</span>].<span class="ruby-identifier">strip</span>
+
+        <span class="ruby-identifier">args</span>
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

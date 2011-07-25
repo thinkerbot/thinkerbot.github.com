@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Linebook::Os::Linux</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Linebook::Os::Linux</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/linebook/os/linux_rb.html">
+                lib/linebook/os/linux.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h2><a href="Linux.html#M000008">login</a> vs <a href="Linux.html#M000009">su</a></h2>
+<p>
+The <a href="Linux.html#M000008">login</a> and <a
+href="Linux.html#M000009">su</a> methods both provide a way to switch
+users. Login simulates a <a href="Linux.html#M000008">login</a> and
+therefore you end up in the user home directory with the ENV as setup
+during <a href="Linux.html#M000008">login</a>. By contrast <a
+href="Linux.html#M000009">su</a> switches users such that it preserves
+exported ENV variables, including the pwd.
+</p>
+<p>
+Say you were the linecook user:
+</p>
+<pre>
+  cd
+  export 'A', 'a'
+  variable 'B', 'b'
+  echo &quot;$(whoami):$(pwd):$A:$B&quot;             # =&gt; linecook:/home/linecook:a:b
+  login { echo &quot;$(whoami):$(pwd):$A:$B&quot; }   # =&gt; root:/root::
+  su    { echo &quot;$(whoami):$(pwd):$A:$B&quot; }   # =&gt; root:/home/linecook:a:
+</pre>
+<p>
+User-management methods in this module assume root privileges (<a
+href="Linux.html#M000011">useradd</a>, <a
+href="Linux.html#M000004">groupadd</a>, etc) so unless you are already
+root, you need to wrap them in <a href="Linux.html#M000008">login</a> or <a
+href="Linux.html#M000009">su</a>. In this case <a
+href="Linux.html#M000008">login</a> is more reliable than <a
+href="Linux.html#M000009">su</a> because some systems leave the user
+management commands off the non-root PATH; using <a
+href="Linux.html#M000008">login</a> ensures PATH will be set for root
+during the block.
+</p>
+<p>
+For example use:
+</p>
+<pre>
+  login { useradd 'username' }
+</pre>
+<p>
+Rather than:
+</p>
+<pre>
+  su { useradd 'username' }   # =&gt; may give 'useradd: command not found'
+</pre>
+<h2>Permissions</h2>
+<p>
+The user running the package needs the ability to <a
+href="Linux.html#M000009">su</a> without a password, otherwise login/su
+will choke and fail when run by &#8216;linecook run&#8217;. How this is
+accomplished is a matter of policy; something each user needs to decide for
+themselves.
+</p>
+<p>
+First you could run the package as root.
+</p>
+<p>
+Second you can grant the running user (ex &#8216;linecook&#8217;) <a
+href="Linux.html#M000009">su</a> privileges. This can be accomplished by
+adding the user to the &#8216;wheel&#8217; group and modifiying the PAM
+config files. Afterwards all wheel users can <a
+href="Linux.html#M000009">su</a> without a password. To do so (repeat for
+&#8217;/etc/pam.d/su-l&#8217; if it exists):
+</p>
+<pre>
+  vi /etc/pam.d/su
+  # insert:
+  #   auth       sufficient pam_wheel.so trust
+</pre>
+<p>
+This is the default strategy and it works in a portable way because the <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/cmdbehav.html">linux
+spec</a> requires <a href="Linux.html#M000009">su</a> exists and has the
+necessary options.
+</p>
+<p>
+Third you can chuck the default login/su, reimplement them with sudo, and
+give the user (ex &#8216;linecook&#8217;) sudo privileges. This can be
+accomplished by adding the user to a group (ex &#8216;linecook&#8217;) and
+modifying the sudo config via visudo. Afterwards all the linecook users can
+sudo without a password.
+</p>
+<pre>
+  visudo
+  # insert:
+  #   # Members of the linecook group may sudo without a password
+  #   %linecook ALL=NOPASSWD: ALL
+</pre>
+<p>
+See an old version of the <a
+href="https://github.com/pinnacol/linebook/tree/b786e1e63c68f5ddf3be15851d9b423bc05e5345/helpers/linebook/os/linux">linebook
+source</a> for hints on how login/su could be reimplemented with sudo. This
+strategy was abandonded as the default because sudo is not required by the
+linux spec and is does not come installed in many cases (ex Debian).
+Moreover the options needed to make this strategy work don&#8216;t exist in
+sudo &lt; 1.7, so even systems that come with sudo could need an upgrade.
+</p>
+<p>
+Lastly you can chuck all of these strategies and figure out your own way.
+Surely they exist, for example by running the packages manually and
+entering in passwords as prompted.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000002">capture_script</a>&nbsp;&nbsp;
+      <a href="#M000003">group?</a>&nbsp;&nbsp;
+      <a href="#M000004">groupadd</a>&nbsp;&nbsp;
+      <a href="#M000005">groupdel</a>&nbsp;&nbsp;
+      <a href="#M000006">groups</a>&nbsp;&nbsp;
+      <a href="#M000007">install</a>&nbsp;&nbsp;
+      <a href="#M000008">login</a>&nbsp;&nbsp;
+      <a href="#M000009">su</a>&nbsp;&nbsp;
+      <a href="#M000010">user?</a>&nbsp;&nbsp;
+      <a href="#M000011">useradd</a>&nbsp;&nbsp;
+      <a href="#M000012">userdel</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="Unix.html">Unix</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="#M000002" class="method-signature">
+          <span class="method-name">capture_script</span><span class="method-args">(options={}) {|| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000002-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/linux.rb, line 82</span>
+82:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">capture_script</span>(<span class="ruby-identifier">options</span>={})
+83:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
+84:           <span class="ruby-identifier">options</span> = {<span class="ruby-identifier">:target_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">guess_target_name</span>(<span class="ruby-identifier">options</span>)}
+85:         <span class="ruby-keyword kw">end</span>
+86:       
+87:         <span class="ruby-identifier">target_name</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:target_name</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">guess_target_name</span>(<span class="ruby-value str">'script'</span>)
+88:         <span class="ruby-identifier">path</span> = <span class="ruby-identifier">capture_path</span>(<span class="ruby-identifier">target_name</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:mode</span>] <span class="ruby-operator">||</span> <span class="ruby-value">0770</span>) { <span class="ruby-keyword kw">yield</span> }
+89:       
+90:         <span class="ruby-identifier">owner</span>, <span class="ruby-identifier">group</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:owner</span>], <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:group</span>]
+91:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">owner</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">group</span>
+92:           <span class="ruby-identifier">callback</span> <span class="ruby-value str">'before'</span> <span class="ruby-keyword kw">do</span>
+93:             <span class="ruby-identifier">chown</span> <span class="ruby-identifier">owner</span>, <span class="ruby-identifier">group</span>, <span class="ruby-identifier">path</span>
+94:           <span class="ruby-keyword kw">end</span>
+95:         <span class="ruby-keyword kw">end</span>
+96:       
+97:         <span class="ruby-identifier">path</span>
+98:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="#M000003" class="method-signature">
+          <span class="method-name">group?</span><span class="method-args">(name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if the group exists as determined by checking /etc/group.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux.rb, line 101</span>
+101:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">group?</span>(<span class="ruby-identifier">name</span>)
+102:         <span class="ruby-comment cmt">#  grep &quot;^&lt;%= name %&gt;:&quot; /etc/group &gt;/dev/null 2&gt;&amp;1</span>
+103:         <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot;grep \&quot;^&quot;</span>; <span class="ruby-identifier">write</span>(( <span class="ruby-identifier">name</span> ).<span class="ruby-identifier">to_s</span>); <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot;:\&quot; /etc/group &gt;/dev/null 2&gt;&amp;1&quot;</span>
+104:         <span class="ruby-identifier">chain_proxy</span>
+105:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="#M000004" class="method-signature">
+          <span class="method-name">groupadd</span><span class="method-args">(name, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Adds the group.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000004-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux.rb, line 114</span>
+114:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">groupadd</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span>={})
+115:         <span class="ruby-identifier">execute</span> <span class="ruby-value str">'groupadd'</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span>
+116:         <span class="ruby-identifier">chain_proxy</span>
+117:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="#M000005" class="method-signature">
+          <span class="method-name">groupdel</span><span class="method-args">(name, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Removes the group.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux.rb, line 126</span>
+126:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">groupdel</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span>={})
+127:         <span class="ruby-identifier">execute</span> <span class="ruby-value str">'groupdel'</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span>
+128:         <span class="ruby-identifier">chain_proxy</span>
+129:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="#M000006" class="method-signature">
+          <span class="method-name">groups</span><span class="method-args">(user, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux.rb, line 137</span>
+137:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">groups</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">options</span>={})
+138:         <span class="ruby-comment cmt">#  id -Gn &lt;%= quote(user) %&gt;</span>
+139:         <span class="ruby-comment cmt">#  </span>
+140:         <span class="ruby-comment cmt">#  </span>
+141:         <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot;id -Gn &quot;</span>; <span class="ruby-identifier">write</span>(( <span class="ruby-identifier">quote</span>(<span class="ruby-identifier">user</span>) ).<span class="ruby-identifier">to_s</span>); <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot;\n&quot;</span>
+142:         <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot;\n&quot;</span>
+143:       
+144:         <span class="ruby-identifier">chain_proxy</span>
+145:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="#M000007" class="method-signature">
+          <span class="method-name">install</span><span class="method-args">(source, target, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux.rb, line 153</span>
+153:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">install</span>(<span class="ruby-identifier">source</span>, <span class="ruby-identifier">target</span>, <span class="ruby-identifier">options</span>={})
+154:         <span class="ruby-identifier">execute</span> <span class="ruby-value str">'install'</span>, <span class="ruby-identifier">source</span>, <span class="ruby-identifier">target</span>, <span class="ruby-identifier">options</span>
+155:         <span class="ruby-identifier">chain_proxy</span>
+156:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="#M000008" class="method-signature">
+          <span class="method-name">login</span><span class="method-args">(user='root', options={}) {|| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Logs in as the specified user for the duration of a block (the current ENV
+and pwd are reset as during a normal <a
+href="Linux.html#M000008">login</a>).
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux.rb, line 166</span>
+166:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">login</span>(<span class="ruby-identifier">user</span>=<span class="ruby-value str">'root'</span>, <span class="ruby-identifier">options</span>={})
+167:         <span class="ruby-identifier">current</span> = <span class="ruby-identifier">functions</span>
+168:         <span class="ruby-keyword kw">begin</span>
+169:           <span class="ruby-ivar">@functions</span> = []
+170:           
+171:           <span class="ruby-identifier">path</span> = <span class="ruby-identifier">capture_script</span>(<span class="ruby-identifier">options</span>) { <span class="ruby-keyword kw">yield</span> }
+172:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'su'</span>, <span class="ruby-identifier">user</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">:l</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>
+173:         <span class="ruby-keyword kw">ensure</span>
+174:           <span class="ruby-ivar">@functions</span> = <span class="ruby-identifier">current</span>
+175:         <span class="ruby-keyword kw">end</span>
+176:         <span class="ruby-identifier">chain_proxy</span>
+177:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="#M000009" class="method-signature">
+          <span class="method-name">su</span><span class="method-args">(user='root', options={}) {|| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Switches to the specified user for the duration of a block. The current ENV
+and pwd are preserved.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux.rb, line 187</span>
+187:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">su</span>(<span class="ruby-identifier">user</span>=<span class="ruby-value str">'root'</span>, <span class="ruby-identifier">options</span>={})
+188:         <span class="ruby-identifier">path</span> = <span class="ruby-identifier">capture_script</span>(<span class="ruby-identifier">options</span>) <span class="ruby-keyword kw">do</span>
+189:           <span class="ruby-identifier">functions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">function</span><span class="ruby-operator">|</span>
+190:             <span class="ruby-identifier">writeln</span> <span class="ruby-identifier">function</span>
+191:           <span class="ruby-keyword kw">end</span>
+192:           <span class="ruby-keyword kw">yield</span>
+193:         <span class="ruby-keyword kw">end</span>
+194:         <span class="ruby-identifier">execute</span> <span class="ruby-value str">'su'</span>, <span class="ruby-identifier">user</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">:m</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>
+195:         <span class="ruby-identifier">chain_proxy</span>
+196:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="#M000010" class="method-signature">
+          <span class="method-name">user?</span><span class="method-args">(name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if the user exists as determined by id.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux.rb, line 205</span>
+205:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">user?</span>(<span class="ruby-identifier">name</span>)
+206:         <span class="ruby-comment cmt">#  id &lt;%= quote(name) %&gt; &gt;/dev/null 2&gt;&amp;1</span>
+207:         <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot;id &quot;</span>; <span class="ruby-identifier">write</span>(( <span class="ruby-identifier">quote</span>(<span class="ruby-identifier">name</span>) ).<span class="ruby-identifier">to_s</span>); <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot; &gt;/dev/null 2&gt;&amp;1&quot;</span>
+208:         <span class="ruby-identifier">chain_proxy</span>
+209:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="#M000011" class="method-signature">
+          <span class="method-name">useradd</span><span class="method-args">(name, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Adds the user.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000011-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux.rb, line 218</span>
+218:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">useradd</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span>={}) 
+219:         <span class="ruby-identifier">execute</span> <span class="ruby-value str">'useradd'</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span>
+220:         <span class="ruby-identifier">chain_proxy</span>
+221:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="#M000012" class="method-signature">
+          <span class="method-name">userdel</span><span class="method-args">(name, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Removes the user.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000012-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux.rb, line 230</span>
+230:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">userdel</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span>={}) 
+231:         <span class="ruby-comment cmt"># TODO - look into other things that might need to happen before:</span>
+232:         <span class="ruby-comment cmt"># * kill processes belonging to user</span>
+233:         <span class="ruby-comment cmt"># * remove at/cron/print jobs etc. </span>
+234:         <span class="ruby-identifier">execute</span> <span class="ruby-value str">'userdel'</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span>
+235:         <span class="ruby-identifier">chain_proxy</span>
+236:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

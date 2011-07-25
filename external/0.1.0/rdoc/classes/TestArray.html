@@ -1,0 +1,1166 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: TestArray</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">TestArray</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/test/test_array_rb.html">
+                test/test_array.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+class <a href="TestArray.html">TestArray</a> &lt; <a
+href="Test/Unit/TestCase.html">Test::Unit::TestCase</a>
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000306">test_00_new</a>&nbsp;&nbsp;
+      <a href="#M000307">test_01_square_brackets</a>&nbsp;&nbsp;
+      <a href="#M000312">test_AREF</a>&nbsp;&nbsp;
+      <a href="#M000313">test_ASET</a>&nbsp;&nbsp;
+      <a href="#M000310">test_CMP</a>&nbsp;&nbsp;
+      <a href="#M000311">test_EQUAL</a>&nbsp;&nbsp;
+      <a href="#M000309">test_LSHIFT</a>&nbsp;&nbsp;
+      <a href="#M000308">test_PLUS</a>&nbsp;&nbsp;
+      <a href="#M000314">test_at</a>&nbsp;&nbsp;
+      <a href="#M000315">test_clear</a>&nbsp;&nbsp;
+      <a href="#M000316">test_concat</a>&nbsp;&nbsp;
+      <a href="#M000317">test_each</a>&nbsp;&nbsp;
+      <a href="#M000318">test_each_index</a>&nbsp;&nbsp;
+      <a href="#M000319">test_empty?</a>&nbsp;&nbsp;
+      <a href="#M000320">test_eql?</a>&nbsp;&nbsp;
+      <a href="#M000321">test_first</a>&nbsp;&nbsp;
+      <a href="#M000322">test_last</a>&nbsp;&nbsp;
+      <a href="#M000323">test_length</a>&nbsp;&nbsp;
+      <a href="#M000324">test_size</a>&nbsp;&nbsp;
+      <a href="#M000325">test_to_a</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000306" class="method-detail">
+        <a name="M000306"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000306.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000306.html');return false;">
+          <span class="method-name">test_00_new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def setup
+</p>
+<pre>
+  @cls = Array
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000307" class="method-detail">
+        <a name="M000307"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000307.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000307.html');return false;">
+          <span class="method-name">test_01_square_brackets</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000312" class="method-detail">
+        <a name="M000312"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000312.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000312.html');return false;">
+          <span class="method-name">test_AREF</span><span class="method-args">(</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def test_VERY_EQUAL # &#8217;===&#8217;
+</p>
+<pre>
+  assert(@cls[] === @cls[])
+  assert(@cls[1] === @cls[1])
+  assert(@cls[1, 1, 2, 2] === @cls[1, 1, 2, 2])
+  assert(@cls[1.0, 1.0, 2.0, 2.0] === @cls[1, 1, 2, 2])
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000313" class="method-detail">
+        <a name="M000313"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000313.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000313.html');return false;">
+          <span class="method-name">test_ASET</span><span class="method-args">(</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000310" class="method-detail">
+        <a name="M000310"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000310.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000310.html');return false;">
+          <span class="method-name">test_CMP</span><span class="method-args">(</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000311" class="method-detail">
+        <a name="M000311"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000311.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000311.html');return false;">
+          <span class="method-name">test_EQUAL</span><span class="method-args">(</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000309" class="method-detail">
+        <a name="M000309"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000309.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000309.html');return false;">
+          <span class="method-name">test_LSHIFT</span><span class="method-args">(</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def test_MINUS # &#8217;-&#8217;
+</p>
+<pre>
+  assert_equal(@cls[],  @cls[1] - @cls[1])
+  assert_equal(@cls[1], @cls[1, 2, 3, 4, 5] - @cls[2, 3, 4, 5])
+  # Ruby 1.8 feature change
+  #assert_equal(@cls[1], @cls[1, 2, 1, 3, 1, 4, 1, 5] - @cls[2, 3, 4, 5])
+  assert_equal(@cls[1, 1, 1, 1], @cls[1, 2, 1, 3, 1, 4, 1, 5] - @cls[2, 3, 4, 5])
+  a = @cls[]
+  1000.times { a &lt;&lt; 1 }
+  assert_equal(1000, a.length)
+  #assert_equal(@cls[1], a - @cls[2])
+  assert_equal(@cls[1] * 1000, a - @cls[2])
+  #assert_equal(@cls[1],  @cls[1, 2, 1] - @cls[2])
+  assert_equal(@cls[1, 1],  @cls[1, 2, 1] - @cls[2])
+  assert_equal(@cls[1, 2, 3], @cls[1, 2, 3] - @cls[4, 5, 6])
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000308" class="method-detail">
+        <a name="M000308"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000308.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000308.html');return false;">
+          <span class="method-name">test_PLUS</span><span class="method-args">(</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def test_AND # &#8217;&amp;&#8217;
+</p>
+<pre>
+  assert_equal(@cls[1, 3], @cls[ 1, 1, 3, 5 ] &amp; @cls[ 1, 2, 3 ])
+  assert_equal(@cls[],     @cls[ 1, 1, 3, 5 ] &amp; @cls[ ])
+  assert_equal(@cls[],     @cls[  ]           &amp; @cls[ 1, 2, 3 ])
+  assert_equal(@cls[],     @cls[ 1, 2, 3 ]    &amp; @cls[ 4, 5, 6 ])
+</pre>
+<p>
+end
+</p>
+<p>
+def test_MUL # &#8217;*&#8217;
+</p>
+<pre>
+  assert_equal(@cls[], @cls[]*3)
+  assert_equal(@cls[1, 1, 1], @cls[1]*3)
+  assert_equal(@cls[1, 2, 1, 2, 1, 2], @cls[1, 2]*3)
+  assert_equal(@cls[], @cls[1, 2, 3] * 0)
+  assert_raise(ArgumentError) { @cls[1, 2]*(-3) }
+
+  assert_equal('1-2-3-4-5', @cls[1, 2, 3, 4, 5] * '-')
+  assert_equal('12345',     @cls[1, 2, 3, 4, 5] * '')
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000314" class="method-detail">
+        <a name="M000314"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000314.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000314.html');return false;">
+          <span class="method-name">test_at</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def test_assoc
+</p>
+<pre>
+  a1 = @cls[*%w( cat feline )]
+  a2 = @cls[*%w( dog canine )]
+  a3 = @cls[*%w( mule asinine )]
+
+  a = @cls[ a1, a2, a3 ]
+
+  assert_equal(a1, a.assoc('cat'))
+  assert_equal(a3, a.assoc('mule'))
+  assert_equal(nil, a.assoc('asinine'))
+  assert_equal(nil, a.assoc('wombat'))
+  assert_equal(nil, a.assoc(1..2))
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000315" class="method-detail">
+        <a name="M000315"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000315.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000315.html');return false;">
+          <span class="method-name">test_clear</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000316" class="method-detail">
+        <a name="M000316"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000316.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000316.html');return false;">
+          <span class="method-name">test_concat</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def test_clone
+</p>
+<pre>
+  for taint in [ false, true ]
+    for frozen in [ false, true ]
+      a = @cls[*(0..99).to_a]
+      a.taint  if taint
+      a.freeze if frozen
+      b = a.clone
+
+      assert_equal(a, b)
+      assert(a.__id__ != b.__id__)
+      assert_equal(a.frozen?, b.frozen?)
+      assert_equal(a.tainted?, b.tainted?)
+    end
+  end
+</pre>
+<p>
+end
+</p>
+<p>
+def test_collect
+</p>
+<pre>
+  a = @cls[ 1, 'cat', 1..1 ]
+  assert_equal([ Fixnum, String, Range], a.collect {|e| e.class} )
+  assert_equal([ 99, 99, 99], a.collect { 99 } )
+
+  assert_equal([], @cls[].collect { 99 })
+
+  # Ruby 1.9 feature change:
+  # Enumerable#collect without block returns an Enumerator.
+  #assert_equal([1, 2, 3], @cls[1, 2, 3].collect)
+  assert_kind_of Enumerable::Enumerator, @cls[1, 2, 3].collect
+</pre>
+<p>
+end
+</p>
+<p>
+# also update map! def test_collect!
+</p>
+<pre>
+  a = @cls[ 1, 'cat', 1..1 ]
+  assert_equal([ Fixnum, String, Range], a.collect! {|e| e.class} )
+  assert_equal([ Fixnum, String, Range], a)
+
+  a = @cls[ 1, 'cat', 1..1 ]
+  assert_equal([ 99, 99, 99], a.collect! { 99 } )
+  assert_equal([ 99, 99, 99], a)
+
+  a = @cls[ ]
+  assert_equal([], a.collect! { 99 })
+  assert_equal([], a)
+</pre>
+<p>
+end
+</p>
+<p>
+def test_compact
+</p>
+<pre>
+  a = @cls[ 1, nil, nil, 2, 3, nil, 4 ]
+  assert_equal(@cls[1, 2, 3, 4], a.compact)
+
+  a = @cls[ nil, 1, nil, 2, 3, nil, 4 ]
+  assert_equal(@cls[1, 2, 3, 4], a.compact)
+
+  a = @cls[ 1, nil, nil, 2, 3, nil, 4, nil ]
+  assert_equal(@cls[1, 2, 3, 4], a.compact)
+
+  a = @cls[ 1, 2, 3, 4 ]
+  assert_equal(@cls[1, 2, 3, 4], a.compact)
+</pre>
+<p>
+end
+</p>
+<p>
+def test_compact!
+</p>
+<pre>
+  a = @cls[ 1, nil, nil, 2, 3, nil, 4 ]
+  assert_equal(@cls[1, 2, 3, 4], a.compact!)
+  assert_equal(@cls[1, 2, 3, 4], a)
+
+  a = @cls[ nil, 1, nil, 2, 3, nil, 4 ]
+  assert_equal(@cls[1, 2, 3, 4], a.compact!)
+  assert_equal(@cls[1, 2, 3, 4], a)
+
+  a = @cls[ 1, nil, nil, 2, 3, nil, 4, nil ]
+  assert_equal(@cls[1, 2, 3, 4], a.compact!)
+  assert_equal(@cls[1, 2, 3, 4], a)
+
+  a = @cls[ 1, 2, 3, 4 ]
+  assert_equal(nil, a.compact!)
+  assert_equal(@cls[1, 2, 3, 4], a)
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000317" class="method-detail">
+        <a name="M000317"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000317.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000317.html');return false;">
+          <span class="method-name">test_each</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def test_delete
+</p>
+<pre>
+  a = @cls[*('cab'..'cat').to_a]
+  assert_equal('cap', a.delete('cap'))
+  assert_equal(@cls[*('cab'..'cao').to_a] + @cls[*('caq'..'cat').to_a], a)
+
+  a = @cls[*('cab'..'cat').to_a]
+  assert_equal('cab', a.delete('cab'))
+  assert_equal(@cls[*('cac'..'cat').to_a], a)
+
+  a = @cls[*('cab'..'cat').to_a]
+  assert_equal('cat', a.delete('cat'))
+  assert_equal(@cls[*('cab'..'cas').to_a], a)
+
+  a = @cls[*('cab'..'cat').to_a]
+  assert_equal(nil, a.delete('cup'))
+  assert_equal(@cls[*('cab'..'cat').to_a], a)
+
+  a = @cls[*('cab'..'cat').to_a]
+  assert_equal(99, a.delete('cup') { 99 } )
+  assert_equal(@cls[*('cab'..'cat').to_a], a)
+</pre>
+<p>
+end
+</p>
+<p>
+def test_delete_at
+</p>
+<pre>
+  a = @cls[*(1..5).to_a]
+  assert_equal(3, a.delete_at(2))
+  assert_equal(@cls[1, 2, 4, 5], a)
+
+  a = @cls[*(1..5).to_a]
+  assert_equal(4, a.delete_at(-2))
+  assert_equal(@cls[1, 2, 3, 5], a)
+
+  a = @cls[*(1..5).to_a]
+  assert_equal(nil, a.delete_at(5))
+  assert_equal(@cls[1, 2, 3, 4, 5], a)
+
+  a = @cls[*(1..5).to_a]
+  assert_equal(nil, a.delete_at(-6))
+  assert_equal(@cls[1, 2, 3, 4, 5], a)
+</pre>
+<p>
+end
+</p>
+<p>
+# also reject! def test_delete_if
+</p>
+<pre>
+  a = @cls[ 1, 2, 3, 4, 5 ]
+  assert_equal(a, a.delete_if { false })
+  assert_equal(@cls[1, 2, 3, 4, 5], a)
+
+  a = @cls[ 1, 2, 3, 4, 5 ]
+  assert_equal(a, a.delete_if { true })
+  assert_equal(@cls[], a)
+
+  a = @cls[ 1, 2, 3, 4, 5 ]
+  assert_equal(a, a.delete_if { |i| i &gt; 3 })
+  assert_equal(@cls[1, 2, 3], a)
+</pre>
+<p>
+end
+</p>
+<p>
+def test_dup
+</p>
+<pre>
+  for taint in [ false, true ]
+    for frozen in [ false, true ]
+      a = @cls[*(0..99).to_a]
+      a.taint  if taint
+      a.freeze if frozen
+      b = a.dup
+
+      assert_equal(a, b)
+      assert(a.__id__ != b.__id__)
+      assert_equal(false, b.frozen?)
+      assert_equal(a.tainted?, b.tainted?)
+    end
+  end
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000318" class="method-detail">
+        <a name="M000318"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000318.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000318.html');return false;">
+          <span class="method-name">test_each_index</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000319" class="method-detail">
+        <a name="M000319"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000319.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000319.html');return false;">
+          <span class="method-name">test_empty?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000320" class="method-detail">
+        <a name="M000320"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000320.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000320.html');return false;">
+          <span class="method-name">test_eql?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000321" class="method-detail">
+        <a name="M000321"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000321.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000321.html');return false;">
+          <span class="method-name">test_first</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def test_fill
+</p>
+<pre>
+  assert_equal(@cls[],   @cls[].fill(99))
+  assert_equal(@cls[],   @cls[].fill(99, 0))
+  assert_equal(@cls[99], @cls[].fill(99, 0, 1))
+  assert_equal(@cls[99], @cls[].fill(99, 0..0))
+
+  assert_equal(@cls[99],   @cls[1].fill(99))
+  assert_equal(@cls[99],   @cls[1].fill(99, 0))
+  assert_equal(@cls[99],   @cls[1].fill(99, 0, 1))
+  assert_equal(@cls[99],   @cls[1].fill(99, 0..0))
+
+  assert_equal(@cls[99, 99], @cls[1, 2].fill(99))
+  assert_equal(@cls[99, 99], @cls[1, 2].fill(99, 0))
+  assert_equal(@cls[99, 99], @cls[1, 2].fill(99, nil))
+  assert_equal(@cls[1,  99], @cls[1, 2].fill(99, 1, nil))
+  assert_equal(@cls[99,  2], @cls[1, 2].fill(99, 0, 1))
+  assert_equal(@cls[99,  2], @cls[1, 2].fill(99, 0..0))
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000322" class="method-detail">
+        <a name="M000322"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000322.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000322.html');return false;">
+          <span class="method-name">test_last</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def test_flatten
+</p>
+<pre>
+  a1 = @cls[ 1, 2, 3]
+  a2 = @cls[ 5, 6 ]
+  a3 = @cls[ 4, a2 ]
+  a4 = @cls[ a1, a3 ]
+  assert_equal(@cls[1, 2, 3, 4, 5, 6], a4.flatten)
+  assert_equal(@cls[ a1, a3], a4)
+
+  a5 = @cls[ a1, @cls[], a3 ]
+  assert_equal(@cls[1, 2, 3, 4, 5, 6], a5.flatten)
+  assert_equal(@cls[], @cls[].flatten)
+  assert_equal(@cls[],
+               @cls[@cls[@cls[@cls[],@cls[]],@cls[@cls[]],@cls[]],@cls[@cls[@cls[]]]].flatten)
+
+  assert_raise(TypeError, &quot;[ruby-dev:31197]&quot;) { [[]].flatten(&quot;&quot;) }
+</pre>
+<p>
+end
+</p>
+<p>
+def test_flatten!
+</p>
+<pre>
+  a1 = @cls[ 1, 2, 3]
+  a2 = @cls[ 5, 6 ]
+  a3 = @cls[ 4, a2 ]
+  a4 = @cls[ a1, a3 ]
+  assert_equal(@cls[1, 2, 3, 4, 5, 6], a4.flatten!)
+  assert_equal(@cls[1, 2, 3, 4, 5, 6], a4)
+
+  a5 = @cls[ a1, @cls[], a3 ]
+  assert_equal(@cls[1, 2, 3, 4, 5, 6], a5.flatten!)
+  assert_equal(@cls[1, 2, 3, 4, 5, 6], a5)
+
+  assert_equal(@cls[], @cls[].flatten)
+  assert_equal(@cls[],
+               @cls[@cls[@cls[@cls[],@cls[]],@cls[@cls[]],@cls[]],@cls[@cls[@cls[]]]].flatten)
+</pre>
+<p>
+end
+</p>
+<pre>
+  def test_hash
+    a1 = @cls[ 'cat', 'dog' ]
+    a2 = @cls[ 'cat', 'dog' ]
+    a3 = @cls[ 'dog', 'cat' ]
+    assert(a1.hash == a2.hash)
+    assert(a1.hash != a3.hash)
+  end
+
+  def test_include?
+    a = @cls[ 'cat', 99, /a/, @cls[ 1, 2, 3] ]
+    assert(a.include?('cat'))
+    assert(a.include?(99))
+    assert(a.include?(/a/))
+    assert(a.include?([1,2,3]))
+    assert(!a.include?('ca'))
+    assert(!a.include?([1,2]))
+  end
+
+  def test_index
+    a = @cls[ 'cat', 99, /a/, 99, @cls[ 1, 2, 3] ]
+    assert_equal(0, a.index('cat'))
+    assert_equal(1, a.index(99))
+    assert_equal(4, a.index([1,2,3]))
+    assert_nil(a.index('ca'))
+    assert_nil(a.index([1,2]))
+  end
+
+  def test_values_at
+    a = @cls[*('a'..'j').to_a]
+    assert_equal(@cls['a', 'c', 'e'], a.values_at(0, 2, 4))
+    assert_equal(@cls['j', 'h', 'f'], a.values_at(-1, -3, -5))
+    assert_equal(@cls['h', nil, 'a'], a.values_at(-3, 99, 0))
+  end
+
+  def test_join
+    $, = &quot;&quot;
+    a = @cls[]
+    assert_equal(&quot;&quot;, a.join)
+    assert_equal(&quot;&quot;, a.join(','))
+
+    $, = &quot;&quot;
+    a = @cls[1, 2]
+    assert_equal(&quot;12&quot;, a.join)
+    assert_equal(&quot;1,2&quot;, a.join(','))
+
+    $, = &quot;&quot;
+    a = @cls[1, 2, 3]
+    assert_equal(&quot;123&quot;, a.join)
+    assert_equal(&quot;1,2,3&quot;, a.join(','))
+
+    $, = &quot;:&quot;
+    a = @cls[1, 2, 3]
+    assert_equal(&quot;1:2:3&quot;, a.join)
+    assert_equal(&quot;1,2,3&quot;, a.join(','))
+
+    $, = &quot;&quot;
+  end
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000323" class="method-detail">
+        <a name="M000323"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000323.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000323.html');return false;">
+          <span class="method-name">test_length</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000324" class="method-detail">
+        <a name="M000324"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000324.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000324.html');return false;">
+          <span class="method-name">test_size</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <pre>
+  # also update collect!
+  def test_map!
+    a = @cls[ 1, 'cat', 1..1 ]
+    assert_equal(@cls[ Fixnum, String, Range], a.map! {|e| e.class} )
+    assert_equal(@cls[ Fixnum, String, Range], a)
+
+    a = @cls[ 1, 'cat', 1..1 ]
+    assert_equal(@cls[ 99, 99, 99], a.map! { 99 } )
+    assert_equal(@cls[ 99, 99, 99], a)
+
+    a = @cls[ ]
+    assert_equal(@cls[], a.map! { 99 })
+    assert_equal(@cls[], a)
+  end
+
+  def test_nitems
+    assert_equal(0, @cls[].nitems)
+    assert_equal(1, @cls[1].nitems)
+    assert_equal(1, @cls[1, nil].nitems)
+    assert_equal(1, @cls[nil, 1].nitems)
+    assert_equal(3, @cls[1, nil, nil, 2, nil, 3, nil].nitems)
+  end
+
+  def test_pack
+    a = @cls[*%w( cat wombat x yy)]
+    assert_equal(&quot;catwomx  yy &quot;, a.pack(&quot;A3A3A3A3&quot;))
+    assert_equal(&quot;cat&quot;, a.pack(&quot;A*&quot;))
+    assert_equal(&quot;cwx  yy &quot;, a.pack(&quot;A3@1A3@2A3A3&quot;))
+    assert_equal(&quot;catwomx\000\000yy\000&quot;, a.pack(&quot;a3a3a3a3&quot;))
+    assert_equal(&quot;cat&quot;, a.pack(&quot;a*&quot;))
+    assert_equal(&quot;ca&quot;, a.pack(&quot;a2&quot;))
+    assert_equal(&quot;cat\000\000&quot;, a.pack(&quot;a5&quot;))
+
+    assert_equal(&quot;\x61&quot;,     @cls[&quot;01100001&quot;].pack(&quot;B8&quot;))
+    assert_equal(&quot;\x61&quot;,     @cls[&quot;01100001&quot;].pack(&quot;B*&quot;))
+    assert_equal(&quot;\x61&quot;,     @cls[&quot;0110000100110111&quot;].pack(&quot;B8&quot;))
+    assert_equal(&quot;\x61\x37&quot;, @cls[&quot;0110000100110111&quot;].pack(&quot;B16&quot;))
+    assert_equal(&quot;\x61\x37&quot;, @cls[&quot;01100001&quot;, &quot;00110111&quot;].pack(&quot;B8B8&quot;))
+    assert_equal(&quot;\x60&quot;,     @cls[&quot;01100001&quot;].pack(&quot;B4&quot;))
+    assert_equal(&quot;\x40&quot;,     @cls[&quot;01100001&quot;].pack(&quot;B2&quot;))
+
+    assert_equal(&quot;\x86&quot;,     @cls[&quot;01100001&quot;].pack(&quot;b8&quot;))
+    assert_equal(&quot;\x86&quot;,     @cls[&quot;01100001&quot;].pack(&quot;b*&quot;))
+    assert_equal(&quot;\x86&quot;,     @cls[&quot;0110000100110111&quot;].pack(&quot;b8&quot;))
+    assert_equal(&quot;\x86\xec&quot;, @cls[&quot;0110000100110111&quot;].pack(&quot;b16&quot;))
+    assert_equal(&quot;\x86\xec&quot;, @cls[&quot;01100001&quot;, &quot;00110111&quot;].pack(&quot;b8b8&quot;))
+    assert_equal(&quot;\x06&quot;,     @cls[&quot;01100001&quot;].pack(&quot;b4&quot;))
+    assert_equal(&quot;\x02&quot;,     @cls[&quot;01100001&quot;].pack(&quot;b2&quot;))
+
+    assert_equal(&quot;ABC&quot;,      @cls[ 65, 66, 67 ].pack(&quot;C3&quot;))
+    assert_equal(&quot;\377BC&quot;,   @cls[ -1, 66, 67 ].pack(&quot;C*&quot;))
+    assert_equal(&quot;ABC&quot;,      @cls[ 65, 66, 67 ].pack(&quot;c3&quot;))
+    assert_equal(&quot;\377BC&quot;,   @cls[ -1, 66, 67 ].pack(&quot;c*&quot;))
+
+    assert_equal(&quot;AB\n\x10&quot;,  @cls[&quot;4142&quot;, &quot;0a&quot;, &quot;12&quot;].pack(&quot;H4H2H1&quot;))
+    assert_equal(&quot;AB\n\x02&quot;,  @cls[&quot;1424&quot;, &quot;a0&quot;, &quot;21&quot;].pack(&quot;h4h2h1&quot;))
+
+    assert_equal(&quot;abc=02def=\ncat=\n=01=\n&quot;,
+                 @cls[&quot;abc\002def&quot;, &quot;cat&quot;, &quot;\001&quot;].pack(&quot;M9M3M4&quot;))
+
+    assert_equal(&quot;aGVsbG8K\n&quot;,  @cls[&quot;hello\n&quot;].pack(&quot;m&quot;))
+    assert_equal(&quot;,:&amp;5L;&amp;\\*:&amp;5L;&amp;\\*\n&quot;,  @cls[&quot;hello\nhello\n&quot;].pack(&quot;u&quot;))
+
+    assert_equal(&quot;\xc2\xa9B\xe2\x89\xa0&quot;, @cls[0xa9, 0x42, 0x2260].pack(&quot;U*&quot;))
+
+    format = &quot;c2x5CCxsdils_l_a6&quot;;
+    # Need the expression in here to force ary[5] to be numeric.  This avoids
+    # test2 failing because ary2 goes str-&gt;numeric-&gt;str and ary does not.
+    ary = [1, -100, 127, 128, 32767, 987.654321098/100.0,
+      12345, 123456, -32767, -123456, &quot;abcdef&quot;]
+    x    = ary.pack(format)
+    ary2 = x.unpack(format)
+
+    assert_equal(ary.length, ary2.length)
+    assert_equal(ary.join(':'), ary2.join(':'))
+    assert_not_nil(x =~ /def/)
+</pre>
+<h1>begin</h1>
+<pre>
+    skipping &quot;Not tested:
+        D,d &amp; double-precision float, native format\\
+        E &amp; double-precision float, little-endian byte order\\
+        e &amp; single-precision float, little-endian byte order\\
+        F,f &amp; single-precision float, native format\\
+        G &amp; double-precision float, network (big-endian) byte order\\
+        g &amp; single-precision float, network (big-endian) byte order\\
+        I &amp; unsigned integer\\
+        i &amp; integer\\
+        L &amp; unsigned long\\
+        l &amp; long\\
+
+        N &amp; long, network (big-endian) byte order\\
+        n &amp; short, network (big-endian) byte-order\\
+        P &amp; pointer to a structure (fixed-length string)\\
+        p &amp; pointer to a null-terminated string\\
+        S &amp; unsigned short\\
+        s &amp; short\\
+        V &amp; long, little-endian byte order\\
+        v &amp; short, little-endian byte order\\
+        X &amp; back up a byte\\
+        x &amp; null byte\\
+        Z &amp; ASCII string (null padded, count is width)\\
+</pre>
+<p>
+&quot;
+</p>
+<h1>end</h1>
+<pre>
+  end
+
+  def test_pop
+    a = @cls[ 'cat', 'dog' ]
+    assert_equal('dog', a.pop)
+    assert_equal(@cls['cat'], a)
+    assert_equal('cat', a.pop)
+    assert_equal(@cls[], a)
+    assert_nil(a.pop)
+    assert_equal(@cls[], a)
+  end
+
+  def test_push
+    a = @cls[1, 2, 3]
+    assert_equal(@cls[1, 2, 3, 4, 5], a.push(4, 5))
+    assert_equal(@cls[1, 2, 3, 4, 5, nil], a.push(nil))
+    # Ruby 1.8 feature:
+    # Array#push accepts any number of arguments.
+    #assert_raise(ArgumentError, &quot;a.push()&quot;) { a.push() }
+    a.push
+    assert_equal @cls[1, 2, 3, 4, 5, nil], a
+    a.push 6, 7
+    assert_equal @cls[1, 2, 3, 4, 5, nil, 6, 7], a
+  end
+
+  def test_rassoc
+    a1 = @cls[*%w( cat  feline )]
+    a2 = @cls[*%w( dog  canine )]
+    a3 = @cls[*%w( mule asinine )]
+    a  = @cls[ a1, a2, a3 ]
+
+    assert_equal(a1,  a.rassoc('feline'))
+    assert_equal(a3,  a.rassoc('asinine'))
+    assert_equal(nil, a.rassoc('dog'))
+    assert_equal(nil, a.rassoc('mule'))
+    assert_equal(nil, a.rassoc(1..2))
+  end
+
+  # also delete_if
+  def test_reject!
+    a = @cls[ 1, 2, 3, 4, 5 ]
+    assert_equal(nil, a.reject! { false })
+    assert_equal(@cls[1, 2, 3, 4, 5], a)
+
+    a = @cls[ 1, 2, 3, 4, 5 ]
+    assert_equal(a, a.reject! { true })
+    assert_equal(@cls[], a)
+
+    a = @cls[ 1, 2, 3, 4, 5 ]
+    assert_equal(a, a.reject! { |i| i &gt; 3 })
+    assert_equal(@cls[1, 2, 3], a)
+  end
+
+  def test_replace
+    a = @cls[ 1, 2, 3]
+    a_id = a.__id__
+    assert_equal(@cls[4, 5, 6], a.replace(@cls[4, 5, 6]))
+    assert_equal(@cls[4, 5, 6], a)
+    assert_equal(a_id, a.__id__)
+    assert_equal(@cls[], a.replace(@cls[]))
+  end
+
+  def test_reverse
+    a = @cls[*%w( dog cat bee ant )]
+    assert_equal(@cls[*%w(ant bee cat dog)], a.reverse)
+    assert_equal(@cls[*%w(dog cat bee ant)], a)
+    assert_equal(@cls[], @cls[].reverse)
+  end
+
+  def test_reverse!
+    a = @cls[*%w( dog cat bee ant )]
+    assert_equal(@cls[*%w(ant bee cat dog)], a.reverse!)
+    assert_equal(@cls[*%w(ant bee cat dog)], a)
+    # Ruby 1.8 feature change:
+    # Array#reverse always returns self.
+    #assert_nil(@cls[].reverse!)
+    assert_equal @cls[], @cls[].reverse!
+  end
+
+  def test_reverse_each
+    a = @cls[*%w( dog cat bee ant )]
+    i = a.length
+    a.reverse_each { |e|
+      i -= 1
+      assert_equal(a[i], e)
+    }
+    assert_equal(0, i)
+
+    a = @cls[]
+    i = 0
+    a.reverse_each { |e|
+      assert(false, &quot;Never get here&quot;)
+    }
+    assert_equal(0, i)
+  end
+
+  def test_rindex
+    a = @cls[ 'cat', 99, /a/, 99, [ 1, 2, 3] ]
+    assert_equal(0, a.rindex('cat'))
+    assert_equal(3, a.rindex(99))
+    assert_equal(4, a.rindex([1,2,3]))
+    assert_nil(a.rindex('ca'))
+    assert_nil(a.rindex([1,2]))
+  end
+
+  def test_shift
+    a = @cls[ 'cat', 'dog' ]
+    assert_equal('cat', a.shift)
+    assert_equal(@cls['dog'], a)
+    assert_equal('dog', a.shift)
+    assert_equal(@cls[], a)
+    assert_nil(a.shift)
+    assert_equal(@cls[], a)
+  end
+</pre>
+        </div>
+      </div>
+
+      <div id="method-M000325" class="method-detail">
+        <a name="M000325"></a>
+
+        <div class="method-heading">
+          <a href="TestArray.src/M000325.html" target="Code" class="method-signature"
+            onclick="popupCode('TestArray.src/M000325.html');return false;">
+          <span class="method-name">test_to_a</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def test_slice
+</p>
+<pre>
+  a = @cls[*(1..100).to_a]
+
+  assert_equal(1, a.slice(0))
+  assert_equal(100, a.slice(99))
+  assert_nil(a.slice(100))
+  assert_equal(100, a.slice(-1))
+  assert_equal(99,  a.slice(-2))
+  assert_equal(1,   a.slice(-100))
+  assert_nil(a.slice(-101))
+
+  assert_equal(@cls[1],   a.slice(0,1))
+  assert_equal(@cls[100], a.slice(99,1))
+  assert_equal(@cls[],    a.slice(100,1))
+  assert_equal(@cls[100], a.slice(99,100))
+  assert_equal(@cls[100], a.slice(-1,1))
+  assert_equal(@cls[99],  a.slice(-2,1))
+
+  assert_equal(@cls[10, 11, 12], a.slice(9, 3))
+  assert_equal(@cls[10, 11, 12], a.slice(-91, 3))
+
+  assert_equal(@cls[1],   a.slice(0..0))
+  assert_equal(@cls[100], a.slice(99..99))
+  assert_equal(@cls[],    a.slice(100..100))
+  assert_equal(@cls[100], a.slice(99..200))
+  assert_equal(@cls[100], a.slice(-1..-1))
+  assert_equal(@cls[99],  a.slice(-2..-2))
+
+  assert_equal(@cls[10, 11, 12], a.slice(9..11))
+  assert_equal(@cls[10, 11, 12], a.slice(-91..-89))
+
+  assert_nil(a.slice(10, -3))
+  # Ruby 1.8 feature change:
+  # Array#slice[size..x] always returns [].
+  #assert_nil(a.slice(10..7))
+  assert_equal @cls[], a.slice(10..7)
+</pre>
+<p>
+end
+</p>
+<p>
+def test_slice!
+</p>
+<pre>
+  a = @cls[1, 2, 3, 4, 5]
+  assert_equal(3, a.slice!(2))
+  assert_equal(@cls[1, 2, 4, 5], a)
+
+  a = @cls[1, 2, 3, 4, 5]
+  assert_equal(4, a.slice!(-2))
+  assert_equal(@cls[1, 2, 3, 5], a)
+
+  a = @cls[1, 2, 3, 4, 5]
+  assert_equal(@cls[3,4], a.slice!(2,2))
+  assert_equal(@cls[1, 2, 5], a)
+
+  a = @cls[1, 2, 3, 4, 5]
+  assert_equal(@cls[4,5], a.slice!(-2,2))
+  assert_equal(@cls[1, 2, 3], a)
+
+  a = @cls[1, 2, 3, 4, 5]
+  assert_equal(@cls[3,4], a.slice!(2..3))
+  assert_equal(@cls[1, 2, 5], a)
+
+  a = @cls[1, 2, 3, 4, 5]
+  assert_equal(nil, a.slice!(20))
+  assert_equal(@cls[1, 2, 3, 4, 5], a)
+</pre>
+<p>
+end
+</p>
+<p>
+def test_sort
+</p>
+<pre>
+  a = @cls[ 4, 1, 2, 3 ]
+  assert_equal(@cls[1, 2, 3, 4], a.sort)
+  assert_equal(@cls[4, 1, 2, 3], a)
+
+  assert_equal(@cls[4, 3, 2, 1], a.sort { |x, y| y &lt;=&gt; x} )
+  assert_equal(@cls[4, 1, 2, 3], a)
+
+  a.fill(1)
+  assert_equal(@cls[1, 1, 1, 1], a.sort)
+
+  assert_equal(@cls[], @cls[].sort)
+</pre>
+<p>
+end
+</p>
+<p>
+def test_sort!
+</p>
+<pre>
+  a = @cls[ 4, 1, 2, 3 ]
+  assert_equal(@cls[1, 2, 3, 4], a.sort!)
+  assert_equal(@cls[1, 2, 3, 4], a)
+
+  assert_equal(@cls[4, 3, 2, 1], a.sort! { |x, y| y &lt;=&gt; x} )
+  assert_equal(@cls[4, 3, 2, 1], a)
+
+  a.fill(1)
+  assert_equal(@cls[1, 1, 1, 1], a.sort!)
+
+  assert_equal(@cls[1], @cls[1].sort!)
+  assert_equal(@cls[], @cls[].sort!)
+</pre>
+<p>
+end
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

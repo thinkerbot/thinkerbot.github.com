@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Jul 24 13:54:02 -0600 2011</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="http://tap.rubyforge.org/configurable">Configurable</a></h1>
+<p>
+Class configurations that map to the command line. <a
+href="../classes/Configurable.html">Configurable</a> is used by the <a
+href="http://tap.rubyforge.org">Tap</a> framework.
+</p>
+<h2>Description</h2>
+<p>
+<a href="../classes/Configurable.html">Configurable</a> allows the
+declaration of inheritable, class-based configurations that map to methods
+but may be accessed like a hash; a setup that is both fast and convenient.
+<a href="../classes/Configurable.html">Configurable</a> facilitates the use
+of configuration files, and parsing of configurations from the command
+line.
+</p>
+<p>
+Check out these links for development, and bug tracking.
+</p>
+<ul>
+<li><a href="http://tap.rubyforge.org/configurable">Website</a>
+
+</li>
+<li><a href="http://github.com/bahuvrihi/configurable/tree/master">Github</a>
+
+</li>
+<li>Lighthouse[]
+
+</li>
+<li><a href="http://groups.google.com/group/ruby-on-tap">Google Group</a>
+
+</li>
+</ul>
+<h2>Usage</h2>
+<h3>Quickstart</h3>
+<pre>
+  class ConfigClass
+    include Configurable
+
+    config :key, 'default', :short =&gt; 'k'   # a simple config with short
+    config :flag, false, &amp;c.flag            # a flag config
+    config :switch, false, &amp;c.switch        # a --[no-]switch config
+    config :num, 10, &amp;c.integer             # integer only
+    config :range, 1..10, &amp;c.range          # range only
+    config :upcase, 'default' do |value|    # custom transformation
+      value.upcase
+    end
+
+    def initialize(overrides={})
+      initialize_config(overrides)
+    end
+  end
+</pre>
+<p>
+Configurations are present and documented in the class <a
+href="../classes/ConfigParser.html">ConfigParser</a>, the <a
+href="../classes/Configurable.html">Configurable</a> equivalent of
+OptionParser:
+</p>
+<pre>
+  parser = ConfigClass.parser
+  parser.class                        # =&gt; ConfigParser
+  &quot;\n&quot; + parser.to_s
+  # =&gt; %Q{
+  #    -k, --key KEY                    a simple config with short
+  #        --flag                       a flag config
+  #        --[no-]switch                a --[no-]switch config
+  #        --num NUM                    integer only
+  #        --range RANGE                range only
+  #        --upcase UPCASE              custom transformation
+  # }
+</pre>
+<p>
+Command line arguments parse as expected:
+</p>
+<pre>
+  parser.parse &quot;one two --key=value --flag --no-switch --num 8 --range a..z three&quot;
+  # =&gt; ['one', 'two', 'three']
+
+  parser.config
+  # =&gt; {
+  # :key =&gt; 'value',
+  # :flag =&gt; true,
+  # :switch =&gt; false,
+  # :num =&gt; '8',
+  # :range =&gt; 'a..z',
+  # :upcase =&gt; 'default'
+  # }
+</pre>
+<p>
+Validations/transformations occur upon initialization:
+</p>
+<pre>
+  c = ConfigClass.new(parser.config)
+  c.config.to_hash
+  # =&gt; {
+  # :key =&gt; 'value',
+  # :flag =&gt; true,
+  # :switch =&gt; false,
+  # :num =&gt; 8,
+  # :range =&gt; 'a'..'z',
+  # :upcase =&gt; 'DEFAULT'
+  # }
+</pre>
+<p>
+Configurations have accessors, and are accessible through config.
+</p>
+<pre>
+  c.upcase                    # =&gt; 'DEFAULT'
+
+  c.config[:upcase] = 'neW valuE'
+  c.upcase                    # =&gt; 'NEW VALUE'
+
+  c.upcase = 'fiNal Value'
+  c.config[:upcase]           # =&gt; 'FINAL VALUE'
+</pre>
+<p>
+Note that configurations are validated every time they are set:
+</p>
+<pre>
+  c.num = 'blue'              # !&gt; ValidationError
+</pre>
+<p>
+By default config treats strings and symbols as the same, so YAML config
+files are easily created and used.
+</p>
+<pre>
+  yaml_str = %Q{
+  key: a new value
+  flag: false
+  range: 1..100
+  }
+
+  c.reconfigure(YAML.load(yaml_str))
+  c.config.to_hash
+  # =&gt; {
+  # :key =&gt; 'a new value',
+  # :flag =&gt; false,
+  # :switch =&gt; false,
+  # :num =&gt; 8,
+  # :range =&gt; 1..100,
+  # :upcase =&gt; 'FINAL VALUE'
+  # }
+</pre>
+<h3>Declarations</h3>
+<p>
+Configurations are added to classes via declarations. Declarations are a
+lot like specifying an attribute reader, writer, and the initialization
+code.
+</p>
+<pre>
+  class ConfigClass
+    include Configurable
+
+    config :key, 'value' do |input|
+      input.upcase
+    end
+
+    def initialize
+      initialize_config
+    end
+  end
+</pre>
+<p>
+Is basically the same as:
+</p>
+<pre>
+  class RegularClass
+    attr_reader :key
+
+    def key=(input)
+      @key = input.upcase
+    end
+
+    def initialize
+      self.key = 'value'
+    end
+  end
+</pre>
+<p>
+As far as the reader/writer goes, the analogy is quite good. The writer
+method is defined so it sets the instance variable using the return of the
+block. To literally define the writer with the block, use config_attr.
+</p>
+<pre>
+  class ConfigAttrClass
+    include Configurable
+
+    config_attr :key, 'value' do |input|
+      @key = input.upcase
+    end
+  end
+</pre>
+<p>
+Literally defines methods:
+</p>
+<pre>
+  class RegularClass
+    attr_reader :key
+
+    def key=(input)
+      @key = input.upcase
+    end
+  end
+</pre>
+<h3>Validation</h3>
+<p>
+When configurations are parsed from the command line, the config writers
+will inevitably receive a string (even though the code may want a different
+object). The <a
+href="../classes/Configurable/Validation.html">Validation</a> module
+provides standard blocks for validating and transforming string inputs and
+is accessible in classes via the <tt>c</tt> method (ex: <tt>c.integer</tt>
+or <tt>c.regexp</tt>). These blocks (generally) load string inputs as YAML
+and validate that the result is the correct class; non-string inputs are
+simply validated.
+</p>
+<pre>
+  class ValidatingClass
+    include Configurable
+
+    config :int, 1, &amp;c.integer                 # assures the input is an integer
+    config :int_or_nil, 1, &amp;c.integer_or_nil   # integer or nil only
+    config :array, [], &amp;c.array                # you get the idea
+  end
+
+  vc = ValidatingClass.new
+
+  vc.array = [:a, :b, :c]
+  vc.array                                     # =&gt; [:a, :b, :c]
+
+  vc.array = &quot;[1, 2, 3]&quot;
+  vc.array                                     # =&gt; [1, 2, 3]
+
+  vc.array = &quot;string&quot;                          # !&gt; ValidationError
+</pre>
+<p>
+Validation blocks sometimes imply metadata. For instance <tt>c.flag</tt>
+causes the config to appear as a flag on the command line. Metadata can be
+manually specified in the options:
+</p>
+<pre>
+  class ManualMetadata
+    include Configurable
+
+    config :key, 'default', :type =&gt; :flag do
+      # this block is only called if --key
+      # is specified, and will not take a
+      # value
+    end
+  end
+</pre>
+<h3>Documentation</h3>
+<p>
+Documentation on the command line is pulled from the code directly using <a
+href="http://tap.rubyforge.org/lazydoc/">Lazydoc</a>. Documentation is a
+kind of metadata for configurations, and may be specified manually as an
+option:
+</p>
+<pre>
+  class ManualDocumentation
+    include Configurable
+    config :key, 'default', :desc =&gt; 'this is the command line description'
+  end
+</pre>
+<h2>Installation</h2>
+<p>
+<a href="../classes/Configurable.html">Configurable</a> is available as a
+gem on <a href="http://rubyforge.org/projects/tap">RubyForge</a>. Use:
+</p>
+<pre>
+  % gem install configurable
+</pre>
+<h2>Info</h2>
+<p>
+Copyright (c) 2008, Regents of the University of Colorado.
+</p>
+<table>
+<tr><td valign="top">Developer:</td><td><a href="http://bahuvrihi.wordpress.com">Simon Chiang</a>, <a
+href="http://biomol.uchsc.edu/">Biomolecular Structure Program</a>, <a
+href="http://hsc-proteomics.uchsc.edu/hansenlab/">Hansen Lab</a>
+
+</td></tr>
+<tr><td valign="top">Support:</td><td>CU Denver School of Medicine Deans Academic Enrichment Fund
+
+</td></tr>
+<tr><td valign="top">Licence:</td><td><a href="MIT-LICENSE.html">MIT-Style</a>
+
+</td></tr>
+</table>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

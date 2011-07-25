@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>BROKEN_test_reindex_by_scan_with_chunk_size_less_than_full_length (ExtArcTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/ext_arc_test.rb, line 140</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">BROKEN_test_reindex_by_scan_with_chunk_size_less_than_full_length</span>
+    <span class="ruby-identifier">reindex_by_scan_test</span>({
+      <span class="ruby-identifier">:end_midline</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;012\n&quot;</span>, <span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;56\n&quot;</span>, <span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;9&quot;</span>],
+      <span class="ruby-identifier">:end_on_line</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;012\n&quot;</span>, <span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;56\n&quot;</span>, <span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;9\n&quot;</span>],
+      <span class="ruby-identifier">:end_on_break</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;012\n&quot;</span>, <span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;56\n&quot;</span>, <span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;9\n&quot;</span>, <span class="ruby-value str">&quot;\n&quot;</span>],
+      <span class="ruby-identifier">:no_break</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;0123456789&quot;</span>],
+      <span class="ruby-identifier">:backing_breaks</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;012\n&quot;</span>, <span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot;9&quot;</span>],
+      <span class="ruby-identifier">:cr_lf</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;012\r\n&quot;</span>, <span class="ruby-value str">&quot;\r\n&quot;</span>, <span class="ruby-value str">&quot;56\r\n&quot;</span>, <span class="ruby-value str">&quot;\r\n&quot;</span>, <span class="ruby-value str">&quot;9&quot;</span>]},
+      <span class="ruby-keyword kw">nil</span>,
+      <span class="ruby-identifier">:buffer_size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">3</span>)  
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

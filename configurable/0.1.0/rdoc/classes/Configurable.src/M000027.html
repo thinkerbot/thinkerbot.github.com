@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>initialize_config (Configurable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/configurable.rb, line 139</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_config</span>(<span class="ruby-identifier">overrides</span>={})
+    <span class="ruby-identifier">delegates</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">configurations</span>
+
+    <span class="ruby-comment cmt"># note the defaults could be stored first and overridden</span>
+    <span class="ruby-comment cmt"># by the overrides, but this is likely more efficient</span>
+    <span class="ruby-comment cmt"># on average since delegates duplicate default values.</span>
+    <span class="ruby-identifier">store</span> = {}
+    <span class="ruby-identifier">overrides</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> 
+      <span class="ruby-identifier">store</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">delegates</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">delegate</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">store</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">delegate</span>.<span class="ruby-identifier">default</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">store</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>)
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-ivar">@config</span> = <span class="ruby-constant">DelegateHash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">delegates</span>, <span class="ruby-identifier">store</span>).<span class="ruby-identifier">bind</span>(<span class="ruby-keyword kw">self</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

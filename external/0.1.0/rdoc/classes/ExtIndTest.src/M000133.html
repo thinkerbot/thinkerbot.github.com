@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_PLUS (ExtIndTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/ext_ind_test.rb, line 829</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_PLUS</span> <span class="ruby-comment cmt"># '+'</span>
+    <span class="ruby-comment cmt"># Changes: strings not allowed in ExtInd</span>
+    <span class="ruby-comment cmt"># replace 'cat' with 4, 'dog' with 5</span>
+    
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[],     <span class="ruby-ivar">@cls</span>[]  <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[])
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>],    <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[])
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>],    <span class="ruby-ivar">@cls</span>[]  <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>])
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>, <span class="ruby-value">1</span>], <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>])
+    <span class="ruby-comment cmt">#assert_equal(@cls['cat', 'dog', 1, 2, 3], %w(cat dog) + (1..3).to_a)</span>
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">4</span>, <span class="ruby-value">5</span>, <span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>], <span class="ruby-ivar">@cls</span>[<span class="ruby-value">4</span>,<span class="ruby-value">5</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">3</span>).<span class="ruby-identifier">to_a</span>])
+
+    <span class="ruby-comment cmt"># Additional:</span>
+    <span class="ruby-comment cmt"># check addition of Array to ExtInd (can't add ExtInd to Array)</span>
+    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">4</span>, <span class="ruby-value">5</span>, <span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>], <span class="ruby-ivar">@cls</span>[<span class="ruby-value">4</span>,<span class="ruby-value">5</span>] <span class="ruby-operator">+</span> [[<span class="ruby-value">1</span>],[<span class="ruby-value">2</span>],[<span class="ruby-value">3</span>]])
+    <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">TypeError</span>) { [<span class="ruby-value">4</span>,<span class="ruby-value">5</span>] <span class="ruby-operator">+</span> <span class="ruby-ivar">@cls</span>[<span class="ruby-operator">*</span>(<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">3</span>).<span class="ruby-identifier">to_a</span>] }
+    
+    <span class="ruby-comment cmt"># check result is distinct from factors</span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>]
+    <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@cls</span>[<span class="ruby-value">2</span>]
+    <span class="ruby-identifier">c</span> = <span class="ruby-identifier">a</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">b</span>
+    <span class="ruby-identifier">assert_equal</span> [[<span class="ruby-value">1</span>],[<span class="ruby-value">2</span>]], <span class="ruby-identifier">c</span>.<span class="ruby-identifier">to_a</span>
+    
+    <span class="ruby-identifier">a</span>.<span class="ruby-identifier">concat</span> [[<span class="ruby-value">1</span>]]
+    <span class="ruby-identifier">b</span>.<span class="ruby-identifier">concat</span> [[<span class="ruby-value">2</span>]]
+    <span class="ruby-identifier">c</span>.<span class="ruby-identifier">concat</span> [[<span class="ruby-value">3</span>]]
+    <span class="ruby-identifier">assert_equal</span> [[<span class="ruby-value">1</span>],[<span class="ruby-value">1</span>]], <span class="ruby-identifier">a</span>.<span class="ruby-identifier">to_a</span>
+    <span class="ruby-identifier">assert_equal</span> [[<span class="ruby-value">2</span>],[<span class="ruby-value">2</span>]], <span class="ruby-identifier">b</span>.<span class="ruby-identifier">to_a</span>
+    <span class="ruby-identifier">assert_equal</span> [[<span class="ruby-value">1</span>],[<span class="ruby-value">2</span>],[<span class="ruby-value">3</span>]], <span class="ruby-identifier">c</span>.<span class="ruby-identifier">to_a</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

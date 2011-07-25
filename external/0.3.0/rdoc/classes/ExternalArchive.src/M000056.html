@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>reindex_by_regexp (ExternalArchive)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/external_archive.rb, line 186</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reindex_by_regexp</span>(<span class="ruby-identifier">pattern</span>=<span class="ruby-regexp re">/\r?\n/</span>, <span class="ruby-identifier">options</span>={})
+    <span class="ruby-identifier">options</span> = {
+      <span class="ruby-identifier">:range_or_span</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,
+      <span class="ruby-identifier">:blksize</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">8388608</span>,
+      <span class="ruby-identifier">:carryover_limit</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">8388608</span>
+    }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+    
+    <span class="ruby-identifier">reset_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">io</span>, <span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">span</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:range_or_span</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">default_span</span>
+      <span class="ruby-identifier">blksize</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:blksize</span>]
+      <span class="ruby-identifier">carryover_limit</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:carryover_limit</span>]
+
+      <span class="ruby-identifier">io</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-identifier">span</span>, <span class="ruby-identifier">blksize</span>, <span class="ruby-identifier">carryover_limit</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">scan_pos</span>, <span class="ruby-identifier">string</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">scanner</span> = <span class="ruby-constant">StringScanner</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">string</span>)
+        <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">advanced</span> = <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">search_full</span>(<span class="ruby-identifier">pattern</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>)
+          <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">advanced</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+            
+          <span class="ruby-identifier">index</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">scan_pos</span>, <span class="ruby-identifier">advanced</span>]
+          <span class="ruby-identifier">scan_pos</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">advanced</span> 
+        <span class="ruby-keyword kw">end</span>
+        
+        <span class="ruby-comment cmt"># allow a blockfor monitoring</span>
+        <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+        <span class="ruby-identifier">scanner</span>.<span class="ruby-identifier">rest_size</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

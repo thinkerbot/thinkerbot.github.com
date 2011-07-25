@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Linebook::Os::Linux::Utilities</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Linebook::Os::Linux::Utilities</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../../files/lib/linebook/os/linux/utilities_rb.html">
+                lib/linebook/os/linux/utilities.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000005">group?</a>&nbsp;&nbsp;
+      <a href="#M000006">groupadd</a>&nbsp;&nbsp;
+      <a href="#M000007">groupdel</a>&nbsp;&nbsp;
+      <a href="#M000008">groupmod</a>&nbsp;&nbsp;
+      <a href="#M000009">groups</a>&nbsp;&nbsp;
+      <a href="#M000010">gzip</a>&nbsp;&nbsp;
+      <a href="#M000011">hostname</a>&nbsp;&nbsp;
+      <a href="#M000012">install</a>&nbsp;&nbsp;
+      <a href="#M000013">md5sum</a>&nbsp;&nbsp;
+      <a href="#M000014">mktemp</a>&nbsp;&nbsp;
+      <a href="#M000015">su</a>&nbsp;&nbsp;
+      <a href="#M000016">tar</a>&nbsp;&nbsp;
+      <a href="#M000017">user?</a>&nbsp;&nbsp;
+      <a href="#M000018">useradd</a>&nbsp;&nbsp;
+      <a href="#M000019">userdel</a>&nbsp;&nbsp;
+      <a href="#M000020">usermod</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="#M000005" class="method-signature">
+          <span class="method-name">group?</span><span class="method-args">(name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if the group exists as determined by checking /etc/group.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 8</span>
+ 8:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">group?</span>(<span class="ruby-identifier">name</span>)
+ 9:           <span class="ruby-comment cmt">#  grep &quot;^&lt;%= name %&gt;:&quot; /etc/group &gt;/dev/null 2&gt;&amp;1</span>
+10:           <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot;grep \&quot;^&quot;</span>; <span class="ruby-identifier">write</span>(( <span class="ruby-identifier">name</span> ).<span class="ruby-identifier">to_s</span>); <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot;:\&quot; /etc/group &gt;/dev/null 2&gt;&amp;1&quot;</span>
+11:           <span class="ruby-identifier">chain_proxy</span>
+12:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="#M000006" class="method-signature">
+          <span class="method-name">groupadd</span><span class="method-args">(group, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create a new group. <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/groupadd.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 22</span>
+22:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">groupadd</span>(<span class="ruby-identifier">group</span>, <span class="ruby-identifier">options</span>={})
+23:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'groupadd'</span>, <span class="ruby-identifier">group</span>, <span class="ruby-identifier">options</span>
+24:           <span class="ruby-identifier">chain_proxy</span>
+25:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="#M000007" class="method-signature">
+          <span class="method-name">groupdel</span><span class="method-args">(group)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Delete a group. <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/groupdel.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 35</span>
+35:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">groupdel</span>(<span class="ruby-identifier">group</span>)
+36:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'groupdel'</span>, <span class="ruby-identifier">group</span>
+37:           <span class="ruby-identifier">chain_proxy</span>
+38:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="#M000008" class="method-signature">
+          <span class="method-name">groupmod</span><span class="method-args">(group, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Modify a group. <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/groupmod.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 48</span>
+48:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">groupmod</span>(<span class="ruby-identifier">group</span>, <span class="ruby-identifier">options</span>={})
+49:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'groupmod'</span>, <span class="ruby-identifier">group</span>, <span class="ruby-identifier">options</span>
+50:           <span class="ruby-identifier">chain_proxy</span>
+51:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="#M000009" class="method-signature">
+          <span class="method-name">groups</span><span class="method-args">(user)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Display a group. <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/groups.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 61</span>
+61:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">groups</span>(<span class="ruby-identifier">user</span>)
+62:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'groups'</span>, <span class="ruby-identifier">user</span>
+63:           <span class="ruby-identifier">chain_proxy</span>
+64:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="#M000010" class="method-signature">
+          <span class="method-name">gzip</span><span class="method-args">(*files)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Compress or expand files. <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/gzip.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 74</span>
+74:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gzip</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">files</span>)
+75:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'gzip'</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">files</span>
+76:           <span class="ruby-identifier">chain_proxy</span>
+77:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="#M000011" class="method-signature">
+          <span class="method-name">hostname</span><span class="method-args">(name=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Show or set the system&#8216;s host name. <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/hostname.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000011-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 87</span>
+87:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">hostname</span>(<span class="ruby-identifier">name</span>=<span class="ruby-keyword kw">nil</span>) 
+88:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'hostname'</span>, <span class="ruby-identifier">name</span>
+89:           <span class="ruby-identifier">chain_proxy</span>
+90:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="#M000012" class="method-signature">
+          <span class="method-name">install</span><span class="method-args">(source, dest, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Copy files and set attributes. <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/install.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000012-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 100</span>
+100:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">install</span>(<span class="ruby-identifier">source</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">options</span>={})
+101:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'install'</span>, <span class="ruby-identifier">source</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">options</span>
+102:           <span class="ruby-identifier">chain_proxy</span>
+103:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="#M000013" class="method-signature">
+          <span class="method-name">md5sum</span><span class="method-args">(*files)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Generate or check MD5 message digests. <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/md5sum.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000013-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 113</span>
+113:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">md5sum</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">files</span>) 
+114:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'md5sum'</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">files</span>
+115:           <span class="ruby-identifier">chain_proxy</span>
+116:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="#M000014" class="method-signature">
+          <span class="method-name">mktemp</span><span class="method-args">(template, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Make temporary file name (unique) <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/mktemp.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 126</span>
+126:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mktemp</span>(<span class="ruby-identifier">template</span>, <span class="ruby-identifier">options</span>={})
+127:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'mktemp'</span>, <span class="ruby-identifier">template</span>, <span class="ruby-identifier">options</span>
+128:           <span class="ruby-identifier">chain_proxy</span>
+129:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="#M000015" class="method-signature">
+          <span class="method-name">su</span><span class="method-args">(user='root', options={}) {|| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Switches to the specified user for the duration of a block. The current ENV
+and pwd are preserved. <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/su.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000015-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 140</span>
+140:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">su</span>(<span class="ruby-identifier">user</span>=<span class="ruby-value str">'root'</span>, <span class="ruby-identifier">options</span>={})
+141:           <span class="ruby-identifier">path</span> = <span class="ruby-identifier">capture_script</span>(<span class="ruby-identifier">options</span>) <span class="ruby-keyword kw">do</span>
+142:             <span class="ruby-identifier">functions</span>.<span class="ruby-identifier">each_value</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">function</span><span class="ruby-operator">|</span>
+143:               <span class="ruby-identifier">writeln</span> <span class="ruby-identifier">function</span>
+144:             <span class="ruby-keyword kw">end</span>
+145:             <span class="ruby-keyword kw">yield</span>
+146:           <span class="ruby-keyword kw">end</span>
+147:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'su'</span>, <span class="ruby-identifier">user</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">:m</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>
+148:           <span class="ruby-identifier">chain_proxy</span>
+149:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+          <a href="#M000016" class="method-signature">
+          <span class="method-name">tar</span><span class="method-args">(key, *files)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+File archiver. <a
+href="http://pubs.opengroup.org/onlinepubs/007908799/xcu/tar.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000016-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000016-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 158</span>
+158:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tar</span>(<span class="ruby-identifier">key</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">files</span>)
+159:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'tar'</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">files</span>
+160:           <span class="ruby-identifier">chain_proxy</span>
+161:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
+
+        <div class="method-heading">
+          <a href="#M000017" class="method-signature">
+          <span class="method-name">user?</span><span class="method-args">(name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if the user exists as determined by id.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000017-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 170</span>
+170:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">user?</span>(<span class="ruby-identifier">name</span>)
+171:           <span class="ruby-comment cmt">#  id &lt;%= quote(name) %&gt; &gt;/dev/null 2&gt;&amp;1</span>
+172:           <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot;id &quot;</span>; <span class="ruby-identifier">write</span>(( <span class="ruby-identifier">quote</span>(<span class="ruby-identifier">name</span>) ).<span class="ruby-identifier">to_s</span>); <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot; &gt;/dev/null 2&gt;&amp;1&quot;</span>
+173:           <span class="ruby-identifier">chain_proxy</span>
+174:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+          <a href="#M000018" class="method-signature">
+          <span class="method-name">useradd</span><span class="method-args">(login, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create a new user or update default new user information. <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/useradd.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000018-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 184</span>
+184:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">useradd</span>(<span class="ruby-identifier">login</span>, <span class="ruby-identifier">options</span>={}) 
+185:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'useradd'</span>, <span class="ruby-identifier">login</span>, <span class="ruby-identifier">options</span>
+186:           <span class="ruby-identifier">chain_proxy</span>
+187:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000019" class="method-detail">
+        <a name="M000019"></a>
+
+        <div class="method-heading">
+          <a href="#M000019" class="method-signature">
+          <span class="method-name">userdel</span><span class="method-args">(login, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Delete a user account and related files. <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/userdel.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000019-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000019-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 197</span>
+197:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">userdel</span>(<span class="ruby-identifier">login</span>, <span class="ruby-identifier">options</span>={}) 
+198:           <span class="ruby-comment cmt"># TODO - look into other things that might need to happen before:</span>
+199:           <span class="ruby-comment cmt"># * kill processes belonging to user</span>
+200:           <span class="ruby-comment cmt"># * remove at/cron/print jobs etc. </span>
+201:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'userdel'</span>, <span class="ruby-identifier">login</span>, <span class="ruby-identifier">options</span>
+202:           <span class="ruby-identifier">chain_proxy</span>
+203:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000020" class="method-detail">
+        <a name="M000020"></a>
+
+        <div class="method-heading">
+          <a href="#M000020" class="method-signature">
+          <span class="method-name">usermod</span><span class="method-args">(login, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Modify a user account. <a
+href="http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/usermod.html">[Spec]</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000020-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/linebook/os/linux/utilities.rb, line 213</span>
+213:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">usermod</span>(<span class="ruby-identifier">login</span>, <span class="ruby-identifier">options</span>={})
+214:           <span class="ruby-identifier">execute</span> <span class="ruby-value str">'usermod'</span>, <span class="ruby-identifier">login</span>, <span class="ruby-identifier">options</span>
+215:           <span class="ruby-identifier">chain_proxy</span>
+216:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

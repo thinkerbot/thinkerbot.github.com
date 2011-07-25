@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_stash_raises_error_for_nil_value_and_StashArray_values (StashTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/constants/stash_test.rb, line 90</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_stash_raises_error_for_nil_value_and_StashArray_values</span>
+    <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ArgumentError</span>) { <span class="ruby-identifier">s</span>.<span class="ruby-identifier">stash</span>(<span class="ruby-value str">'key'</span>, <span class="ruby-identifier">s</span>.<span class="ruby-identifier">nil_value</span>) }
+    <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ArgumentError</span>) { <span class="ruby-identifier">s</span>.<span class="ruby-identifier">stash</span>(<span class="ruby-value str">'key'</span>, <span class="ruby-constant">Stash</span><span class="ruby-operator">::</span><span class="ruby-constant">StashArray</span>.<span class="ruby-identifier">new</span>) }
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_initialize_calculates_frame_and_frame_size_from_format (ExtIndTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/ext_ind_test.rb, line 241</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_initialize_calculates_frame_and_frame_size_from_format</span>
+    {
+      <span class="ruby-value str">'I'</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">1</span>, <span class="ruby-value">4</span>],
+      <span class="ruby-value str">'II'</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">2</span>, <span class="ruby-value">8</span>],
+      <span class="ruby-value str">'IQS'</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">3</span>, <span class="ruby-value">14</span>]
+    }.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span>, <span class="ruby-identifier">expected</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">index</span> = <span class="ruby-ivar">@cls</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">format</span>)
+  
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">expected</span>, [<span class="ruby-identifier">index</span>.<span class="ruby-identifier">frame</span>, <span class="ruby-identifier">index</span>.<span class="ruby-identifier">frame_size</span>]
+      <span class="ruby-identifier">assert_equal</span> <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">expected</span>.<span class="ruby-identifier">first</span>, <span class="ruby-value">0</span>), <span class="ruby-identifier">index</span>.<span class="ruby-identifier">nil_value</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
