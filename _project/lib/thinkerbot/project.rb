@@ -41,11 +41,13 @@ module Thinkerbot
     end
 
     def versions
-      config['versions'] ||= begin
-        list = log_sh "gem list -a --remote #{name}"
-        list =~ /^#{name} \((.*)\)$/
-        $1.to_s.split(', ')
-      end
+      config['versions'] ||= remote_gem_versions
+    end
+
+    def remote_gem_versions
+      list = log_sh "gem list -a --remote #{name}"
+      list =~ /^#{name} \((.*)\)$/
+      $1.to_s.split(', ')
     end
 
     def releases
