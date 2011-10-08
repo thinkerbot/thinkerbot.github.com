@@ -29,12 +29,16 @@ module Thinkerbot
       @logger   = logger
     end
 
+    def default_project_config
+      {'rubies' => config['rubies']}
+    end
+
     def projects
       @projects ||= begin
         projects = config['projects'] || []
-        projects.map do |project_config|
-          project_config = Project.normalize(project_config, config)
-          Project.new(project_config, logger)
+        projects.map do |config|
+          config = Project.normalize(config, default_project_config)
+          Project.new(config, logger)
         end
       end
     end

@@ -8,20 +8,7 @@ module Thinkerbot
           config = {'url' => config}
         end
 
-        unless url = config['url']
-          raise "no url specified: #{config.inspect}"
-        end
-
-        {
-          'name'   => default_name(url),
-          'rdoc'   => default['rdoc'],
-          'rcov'   => default['rcov'],
-          'rubies' => default['rubies']
-        }.merge(config)
-      end
-
-      def default_name(url)
-        File.basename(url).chomp(File.extname(url))
+        default.merge(config)
       end
     end
 
@@ -36,11 +23,21 @@ module Thinkerbot
     end
 
     def url
-      config['url']
+      config['url'] or raise "no url specified: #{config.inspect}"
     end
 
     def name
-      File.basename(url)
+      config['name'] ||= File.basename(url).chomp(File.extname(url))
+    end
+
+    def default_version_config
+      { 
+        'name'   => name,
+        'rdoc'   => config['rdoc'],
+        'rcov'   => config['rcov'],
+        'ruby'   => config['ruby'],
+        'rubies' => config['rubies']
+      }
     end
 
     def versions
@@ -53,9 +50,9 @@ module Thinkerbot
 
     def releases
       @releases ||= begin
-        versions.map do |version_config|
-          version_config = Version.normalize(version_config, config)
-          Version.new(version_config, logger)
+        versions.map do |config|
+          config = Version.normalize(config, default_version_config)
+          Version.new(config, logger)
         end
       end
     end

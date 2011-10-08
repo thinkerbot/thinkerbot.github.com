@@ -9,16 +9,11 @@ module Thinkerbot
           config = {'version' => config}
         end
 
-        {
-          'name'   => default['name'],
-          'rdoc'   => default['rdoc'],
-          'rcov'   => default['rcov'],
-          'rubies' => default['rubies'] || [current_ruby]
-        }.merge(config)
+        default.merge(config)
       end
 
-      def current_ruby
-        `ruby -v`.split[0,2].join('-')
+      def default_rubies
+        @default_rubies ||= [`ruby -v`.split[0,2].join('-')]
       end
     end
 
@@ -39,12 +34,20 @@ module Thinkerbot
       config['version']
     end
 
-    def rubies
-      config['rubies']
+    def default_ruby
+      config['ruby'] ||= rubies.first
     end
 
-    def default_ruby
-      rubies.first
+    def rdoc_cmd
+      config['rdoc'] ||= ""
+    end
+
+    def rcov_cmd
+      config['rcov'] ||= ""
+    end
+
+    def rubies
+      config['rubies'] ||= self.class.default_rubies
     end
 
     def gemfile
