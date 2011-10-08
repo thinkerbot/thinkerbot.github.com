@@ -36,5 +36,13 @@ module Thinkerbot
 
       Dir.chdir(dir, &block)
     end
+
+    def each_version
+      projects.each do |project|
+        project.versions.each do |version|
+          yield(project, version)
+        end
+      end
+    end
   end
 end

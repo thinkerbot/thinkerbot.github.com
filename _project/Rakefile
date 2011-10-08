@@ -14,10 +14,8 @@ registry = Thinkerbot::Registry.setup(root_dir, logger)
 desc 'fetch gems for each project'
 task :fetch do
   registry.chdir '_project/gems' do
-    registry.projects.each do |project|
-      project.versions.each do |version|
-        project.fetch(version)
-      end
+    registry.each_version do |project, version|
+      project.fetch(version)
     end
   end
 end
@@ -25,10 +23,8 @@ end
 desc 'unpack gems for each project'
 task :unpack do
   registry.chdir '_project/gems' do
-    registry.projects.each do |project|
-      project.versions.each do |version|
-        project.unpack(version)
-      end
+    registry.each_version do |project, version|
+      project.unpack(version)
     end
   end
 end
