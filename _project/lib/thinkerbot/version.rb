@@ -2,7 +2,7 @@ require 'thinkerbot/utils'
 require 'fileutils'
 
 module Thinkerbot
-  class Release
+  class Version
     class << self
       def normalize(config, default={})
         if config.kind_of?(String)

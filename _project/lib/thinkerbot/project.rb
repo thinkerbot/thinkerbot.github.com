@@ -1,4 +1,4 @@
-require 'thinkerbot/release'
+require 'thinkerbot/version'
 
 module Thinkerbot
   class Project
@@ -53,9 +53,9 @@ module Thinkerbot
 
     def releases
       @releases ||= begin
-        versions.map do |release_config|
-          release_config = Release.normalize(release_config, config)
-          Release.new(release_config, logger)
+        versions.map do |version_config|
+          version_config = Version.normalize(version_config, config)
+          Version.new(version_config, logger)
         end
       end
     end
