@@ -2,7 +2,7 @@ require 'thinkerbot/project'
 require 'yaml'
 
 module Thinkerbot
-  class Registry
+  class Site
     class << self
       def config_file(root_dir)
         File.expand_path('_project/config/projects.yml', root_dir)

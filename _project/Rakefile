@@ -1,11 +1,11 @@
 $:.unshift File.expand_path('../lib', __FILE__)
-require 'thinkerbot/registry'
+require 'thinkerbot/site'
 
 logger   = Logger.new($stdout)
 logger.datetime_format = "%Y/%m/%d %H:%M:%S"
 
 root_dir = File.expand_path('../..', __FILE__)
-registry = Thinkerbot::Registry.setup(root_dir, logger)
+site  = Thinkerbot::Site.setup(root_dir, logger)
 force = ENV['FORCE'] == 'true'
 
 #
@@ -14,8 +14,8 @@ force = ENV['FORCE'] == 'true'
 
 desc 'fetch gems for each project'
 task :fetch do
-  registry.chdir '_project/gems' do
-    registry.each_release do |release|
+  site.chdir '_project/gems' do
+    site.each_release do |release|
       release.fetch(force)
     end
   end
@@ -23,8 +23,8 @@ end
 
 desc 'unpack gems for each project'
 task :unpack => :fetch do
-  registry.chdir '_project/gems' do
-    registry.each_release do |release|
+  site.chdir '_project/gems' do
+    site.each_release do |release|
       release.unpack(force)
     end
   end
@@ -32,8 +32,8 @@ end
 
 desc 'build rdoc for each project'
 task :rdoc => :unpack do
-  registry.chdir '_project/gems' do
-    registry.each_release do |release|
+  site.chdir '_project/gems' do
+    site.each_release do |release|
       release.build_rdoc(force)
     end
   end
