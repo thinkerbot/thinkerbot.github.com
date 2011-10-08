@@ -1,4 +1,4 @@
-require 'thinkerbot/version'
+require 'thinkerbot/release'
 
 module Thinkerbot
   class Project
@@ -30,16 +30,6 @@ module Thinkerbot
       config['name'] ||= File.basename(url).chomp(File.extname(url))
     end
 
-    def default_version_config
-      { 
-        'name'   => name,
-        'rdoc'   => config['rdoc'],
-        'rcov'   => config['rcov'],
-        'ruby'   => config['ruby'],
-        'rubies' => config['rubies']
-      }
-    end
-
     def versions
       config['versions'] ||= remote_gem_versions
     end
@@ -50,11 +40,21 @@ module Thinkerbot
       $1.to_s.split(', ')
     end
 
+    def default_release_config
+      { 
+        'name'   => name,
+        'rdoc'   => config['rdoc'],
+        'rcov'   => config['rcov'],
+        'ruby'   => config['ruby'],
+        'rubies' => config['rubies']
+      }
+    end
+
     def releases
       @releases ||= begin
         versions.map do |config|
-          config = Version.normalize(config, default_version_config)
-          Version.new(config, logger)
+          config = Release.normalize(config, default_release_config)
+          Release.new(config, logger)
         end
       end
     end
