@@ -6,6 +6,7 @@ logger.datetime_format = "%Y/%m/%d %H:%M:%S"
 
 root_dir = File.expand_path('../..', __FILE__)
 registry = Thinkerbot::Registry.setup(root_dir, logger)
+force = ENV['FORCE'] == 'true'
 
 #
 # Project tasks
@@ -15,7 +16,7 @@ desc 'fetch gems for each project'
 task :fetch do
   registry.chdir '_project/gems' do
     registry.each_version do |project, version|
-      project.fetch(version)
+      project.fetch(version, force)
     end
   end
 end
@@ -24,7 +25,7 @@ desc 'unpack gems for each project'
 task :unpack => :fetch do
   registry.chdir '_project/gems' do
     registry.each_version do |project, version|
-      project.unpack(version)
+      project.unpack(version, force)
     end
   end
 end
@@ -33,7 +34,7 @@ desc 'build rdoc for each project'
 task :rdoc => :unpack do
   registry.chdir '_project/gems' do
     registry.each_version do |project, version|
-      project.build_rdoc(version)
+      project.build_rdoc(version, force)
     end
   end
 end

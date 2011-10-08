@@ -53,8 +53,12 @@ module Thinkerbot
       gemfile
     end
 
-    def unpack(version)
-      log_sh %Q{gem unpack '#{gem_file(version)}' --backtrace}
+    def unpack(version, force=false)
+      codedir = code_dir(version)
+      if !File.exists?(codedir) || force
+        FileUtils.rm_rf codedir
+        log_sh %Q{gem unpack '#{gem_file(version)}' --backtrace}
+      end
     end
 
     def build_rdoc(version, force=false)
