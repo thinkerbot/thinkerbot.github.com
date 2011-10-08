@@ -71,8 +71,12 @@ module Thinkerbot
       @code_dir ||= File.expand_path(gemspec.full_name)
     end
 
+    def output_dir
+      @output_dir ||= File.join(gemspec.name, gemspec.version.to_s)
+    end
+
     def rdoc_dir
-      @rdoc_dir ||= File.expand_path(File.join(gemspec.name, gemspec.version.to_s, 'rdoc'))
+      @rdoc_dir ||= File.expand_path('rdoc', output_dir)
     end
 
     def fetch(force=false)
