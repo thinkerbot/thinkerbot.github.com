@@ -1,5 +1,22 @@
-- thinkerbot/lazydoc
-- thinkerbot/constants
+rubyies:
+- 1.8.6
+- 1.8.7
+- 1.9.2
+- rbx
+- jruby
+
+projects:
+- url:  git@github.com:thinkerbot/lazydoc
+  ruby: 1.8.7       # main ruby, also default ruby for linking
+  rdoc: rake rdoc   # rvm $ruby $cmd
+  rcov: rcov ...    # each in rubies: rvm $ruby $cmd
+  versions:         # default: all gem versions on rubygems.org
+  - 1.0
+
+- url:  git@github.com:thinkerbot/constants
+  ruby: 1.8.7
+  rdoc: rake rdoc
+  rcov: rcov ...
 
 # For later...
 # - thinkerbot/molecules

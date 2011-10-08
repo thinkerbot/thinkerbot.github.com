@@ -1,4 +1,4 @@
-require 'thinkerbot/release'
+require 'thinkerbot/project'
 require 'yaml'
 
 module Thinkerbot
@@ -9,38 +9,27 @@ module Thinkerbot
       end
 
       def setup(root_dir, logger)
-        repos = YAML.load_file(config_file(root_dir))
-        new root_dir, repos, logger
+        config = YAML.load_file(config_file(root_dir))
+        new root_dir, config, logger
       end
     end
     include Utils
 
     attr_reader :root_dir
     attr_reader :logger
-    attr_reader :repos
+    attr_reader :config
 
-    def initialize(root_dir, repos, logger)
+    def initialize(root_dir, config, logger)
       @root_dir = root_dir
+      @config   = config
       @logger   = logger
-      @repos    = repos
-      @releases = {}
     end
 
-    def project_name(repo)
-      File.basename(repo)
-    end
-
-    def versions(name)
-      list = log_sh "gem list -a --remote #{name}"
-      list =~ /^#{name} \((.*)\)$/
-      $1.to_s.split(', ')
-    end
-
-    def releases(repo)
-      @releases[repo] ||= begin
-        name = project_name(repo)
-        versions(name).map do |version|
-          Release.new(name, version, logger)
+    def projects
+      @projects ||= begin
+        projects = config['projects'] || []
+        projects.map do |project|
+          Project.new(project, logger)
         end
       end
     end
@@ -60,8 +49,8 @@ module Thinkerbot
     end
 
     def each_release
-      repos.each do |repo|
-        releases(repo).each do |release|
+      projects.each do |project|
+        project.releases.each do |release|
           yield release
         end
       end
