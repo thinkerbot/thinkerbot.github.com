@@ -3,15 +3,48 @@ require 'fileutils'
 
 module Thinkerbot
   class Release
+    class << self
+      def normalize(config, default={})
+        if config.kind_of?(String)
+          config = {'version' => config}
+        end
+
+        {
+          'name'   => default['name'],
+          'rdoc'   => default['rdoc'],
+          'rcov'   => default['rcov'],
+          'rubies' => default['rubies'] || [current_ruby]
+        }.merge(config)
+      end
+
+      def current_ruby
+        `ruby -v`.split[0,2].join('-')
+      end
+    end
+
     include Utils
 
-    attr_reader :name
-    attr_reader :version
+    attr_reader :config
 
-    def initialize(name, version, logger=nil)
-      @name = name
-      @version = version
+    def initialize(config, logger=nil)
+      @config = config
       @logger = logger
+    end
+
+    def name
+      config['name']
+    end
+
+    def version
+      config['version']
+    end
+
+    def rubies
+      config['rubies']
+    end
+
+    def default_ruby
+      rubies.first
     end
 
     def gemfile

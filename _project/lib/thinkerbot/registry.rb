@@ -12,6 +12,10 @@ module Thinkerbot
         config = YAML.load_file(config_file(root_dir))
         new root_dir, config, logger
       end
+
+      def normalize(config, default={})
+        default.merge(config)
+      end
     end
     include Utils
 
@@ -28,8 +32,9 @@ module Thinkerbot
     def projects
       @projects ||= begin
         projects = config['projects'] || []
-        projects.map do |project|
-          Project.new(project, logger)
+        projects.map do |project_config|
+          project_config = Project.normalize(project_config, config)
+          Project.new(project_config, logger)
         end
       end
     end
