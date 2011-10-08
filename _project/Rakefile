@@ -9,7 +9,7 @@ site  = Thinkerbot::Site.setup(root_dir, logger)
 force = ENV['FORCE'] == 'true'
 
 #
-# Project tasks
+# Site tasks
 #
 
 desc 'fetch gems for each project'
@@ -38,3 +38,11 @@ task :rdoc => :unpack do
     end
   end
 end
+
+desc 'Build site'
+task :site => :rdoc do
+  site.chdir '.' do
+    site.log_sh "jekyll --pygments --safe"
+  end
+end
+task :default => :site
