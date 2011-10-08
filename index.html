@@ -1,5 +1,10 @@
-<html>
-<body>
-<h1>Projects</h1>
-</body>
-</html>
+---
+layout: default
+projects: [a, b, c]
+---
+      <h1>Projects</h1>
+      <ul>{% for project in page.projects %}
+        <li>
+          <h2>{{ project }}</h2>
+        </li>{% endfor %}
+      </ul>
