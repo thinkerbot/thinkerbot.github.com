@@ -13,11 +13,11 @@ registry = Thinkerbot::Registry.setup(root_dir, logger)
 
 desc 'fetch gems for each project'
 task :fetch do
-  gems_dir = registry.project_path('gems')
-
-  registry.projects.each do |project|
-    project.versions.each do |version|
-      project.fetch(version, :dir => gems_dir)
+  registry.chdir '_project/gems' do
+    registry.projects.each do |project|
+      project.versions.each do |version|
+        project.fetch(version)
+      end
     end
   end
 end

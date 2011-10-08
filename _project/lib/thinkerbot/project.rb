@@ -1,4 +1,5 @@
 require 'thinkerbot/utils'
+require 'fileutils'
 
 module Thinkerbot
   class Project
@@ -21,16 +22,12 @@ module Thinkerbot
       end
     end
 
-    def fetch(version, opts={})
-      dir = opts[:dir] || '.'
-      gemfile = File.expand_path("#{name}-#{version}.gem", dir)
+    def fetch(version, force=false)
+      gemfile = "#{name}-#{version}.gem"
 
-      if !File.exists?(gemfile) || opts[:force]
+      if !File.exists?(gemfile) || force
         FileUtils.rm_f gemfile
-
-        chdir('gems') do
-          log_sh "gem fetch #{name} -v #{version}"
-        end
+        log_sh "gem fetch #{name} -v #{version}"
       end
 
       gemfile

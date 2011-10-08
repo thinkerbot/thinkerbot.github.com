@@ -10,12 +10,5 @@ module Thinkerbot
       logger.info "$ #{str}"
       `#{str}`
     end
-
-    def chdir(dir, &block)
-      unless File.exists?(dir)
-        FileUtils.mkdir_p(dir)
-      end
-      Dir.chdir(dir, &block)
-    end
   end
 end

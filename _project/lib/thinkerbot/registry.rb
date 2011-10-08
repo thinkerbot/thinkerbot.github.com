@@ -23,8 +23,18 @@ module Thinkerbot
       @projects = projects.map {|path| Project.new(path, logger) }
     end
 
-    def project_path(relative_path)
-      File.join(root_dir, '_project', relative_path)
+    def path(*relative_path)
+      File.join(root_dir, *relative_path)
+    end
+
+    def chdir(*relative_path, &block)
+      dir = path(*relative_path)
+
+      unless File.exists?(dir)
+        FileUtils.mkdir_p(dir)
+      end
+
+      Dir.chdir(dir, &block)
     end
   end
 end
