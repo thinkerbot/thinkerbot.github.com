@@ -1,0 +1,23 @@
+$:.unshift File.expand_path('../lib', __FILE__)
+require 'thinkerbot/registry'
+
+logger   = Logger.new($stdout)
+logger.datetime_format = "%Y/%m/%d %H:%M:%S"
+
+root_dir = File.expand_path('../..', __FILE__)
+registry = Thinkerbot::Registry.setup(root_dir, logger)
+
+#
+# Project tasks
+#
+
+desc 'fetch gems for each project'
+task :fetch do
+  gems_dir = registry.project_path('gems')
+
+  registry.projects.each do |project|
+    project.versions.each do |version|
+      project.fetch(version, :dir => gems_dir)
+    end
+  end
+end
