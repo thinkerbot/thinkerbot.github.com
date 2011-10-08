@@ -21,3 +21,14 @@ task :fetch do
     end
   end
 end
+
+desc 'unpack gems for each project'
+task :unpack do
+  registry.chdir '_project/gems' do
+    registry.projects.each do |project|
+      project.versions.each do |version|
+        project.unpack(version)
+      end
+    end
+  end
+end

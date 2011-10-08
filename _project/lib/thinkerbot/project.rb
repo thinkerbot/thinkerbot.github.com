@@ -22,8 +22,12 @@ module Thinkerbot
       end
     end
 
+    def gem_file(version)
+      "#{name}-#{version}.gem"
+    end
+
     def fetch(version, force=false)
-      gemfile = "#{name}-#{version}.gem"
+      gemfile = gem_file(version)
 
       if !File.exists?(gemfile) || force
         FileUtils.rm_f gemfile
@@ -31,6 +35,10 @@ module Thinkerbot
       end
 
       gemfile
+    end
+
+    def unpack(version)
+      log_sh %Q{gem unpack '#{gem_file(version)}' --backtrace}
     end
   end
 end
