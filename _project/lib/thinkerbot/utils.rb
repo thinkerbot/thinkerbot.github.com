@@ -10,5 +10,9 @@ module Thinkerbot
       logger.info "$ #{str}"
       `#{str}`
     end
+
+    def arg_str(args)
+      args.empty? ? "" : "'#{args.join("' '")}'"
+    end
   end
 end

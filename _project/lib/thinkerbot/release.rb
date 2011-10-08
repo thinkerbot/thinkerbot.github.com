@@ -38,8 +38,14 @@ module Thinkerbot
       config['ruby'] ||= rubies.first
     end
 
+    # The command used to generate rdoc for the release.  The command is
+    # formatted using % with the rdoc_options and documentable files as in the
+    # gemspec, and should produce an 'rdoc' dir.
+    #
+    # In this context "documentable" means all .rb files in the gemspec (hence
+    # it assumes there are NOT any tests in the gem), plus any extra_rdoc_files.
     def rdoc_cmd
-      config['rdoc'] ||= ""
+      config['rdoc'] ||= "rdoc -o rdoc %s %s"
     end
 
     def rcov_cmd
@@ -91,10 +97,12 @@ module Thinkerbot
         FileUtils.mkdir_p File.dirname(rdoc_dir)
 
         Dir.chdir(code_dir) do
-          files =  gemspec.files.select {|file| File.extname(file) == '.rb' }
+          opts   = gemspec.rdoc_options
+          files  = gemspec.files.select {|file| File.extname(file) == '.rb' }
           files += gemspec.extra_rdoc_files
-          opts  =  gemspec.rdoc_options
-          log_sh "rdoc -o '#{rdoc_dir}' '#{opts.join("' '")}' '#{files.join("' '")}'".gsub("''", "")
+
+          log_sh rdoc_cmd % [arg_str(opts), arg_str(files)]
+          FileUtils.mv 'rdoc', rdoc_dir
         end
       end
 

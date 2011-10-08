@@ -1,15 +1,15 @@
 projects:
 - url:  git@github.com:thinkerbot/lazydoc  # required
-  name: lazydoc     # default basename of url
-  ruby: 1.8.7       # default ruby for version (default rubies.first)
-  rdoc: rake rdoc   # default rdoc for version (default rdoc with .rb files in spec)
-  rcov: rcov ...    # default rcov for version (default rcov with test/*_test.rb files)
-  versions:         # default: all gem versions on rubygems.org
+  name: lazydoc # default basename of url
+  ruby: 1.8.7   # default ruby for version (default rubies.first)
+  rdoc: ~       # default rdoc for version
+  rcov: ~       # default rcov for version (default rcov with test/*_test.rb files)
+  versions:                 # default: all gem versions on rubygems.org
   - version: 1.0
-    ruby: 1.8.7       # main development ruby
-    rdoc: rake rdoc   # command to generate rdoc
-    rcov: rcov ...    # command to run rcov (nil to not run)
-  - 0.9.0             # use defaults as specified for project
+    ruby: 1.8.7              # main development ruby
+    rdoc: rdoc -o rdoc %s %s # command to generate rdoc
+    rcov: rcov ...           # command to run rcov (nil to not run)
+  - 0.9.0                    # use defaults as specified for project
 
 - git@github.com:thinkerbot/constants  # short form - only url
 
