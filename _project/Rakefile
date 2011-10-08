@@ -21,10 +21,19 @@ task :fetch do
 end
 
 desc 'unpack gems for each project'
-task :unpack do
+task :unpack => :fetch do
   registry.chdir '_project/gems' do
     registry.each_version do |project, version|
       project.unpack(version)
+    end
+  end
+end
+
+desc 'build rdoc for each project'
+task :rdoc => :unpack do
+  registry.chdir '_project/gems' do
+    registry.each_version do |project, version|
+      project.build_rdoc(version)
     end
   end
 end
