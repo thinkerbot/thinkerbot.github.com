@@ -1,22 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html>
-<head>
-  <title>entry_to_str (ExtArr)</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
-</head>
-<body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/ext_arr.rb, line 119</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">entry_to_str</span>(<span class="ruby-identifier">entry</span>)
-    <span class="ruby-comment cmt"># could chop the beginning and end to save space</span>
-    <span class="ruby-comment cmt"># (ie &quot;--- blah\n&quot; =&gt; &quot;blah&quot;) but there would be </span>
-    <span class="ruby-comment cmt"># a tradeoff for time.  especially true for Numerics</span>
-    <span class="ruby-comment cmt"># which don't need anything to be retranslated properly</span>
-    <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">to_yaml</span>
-  <span class="ruby-keyword kw">end</span></pre>
-</body>
-</html>

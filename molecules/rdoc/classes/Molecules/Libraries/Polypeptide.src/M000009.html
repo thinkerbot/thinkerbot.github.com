@@ -1,55 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html>
-<head>
-  <title>new (Molecules::Libraries::Polypeptide)</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
-</head>
-<body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/molecules/libraries/polypeptide.rb, line 36</span>
-      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">sequence</span>)
-        <span class="ruby-ivar">@sequence</span> = <span class="ruby-identifier">sequence</span>
-
-        <span class="ruby-ivar">@length</span> = <span class="ruby-value">0</span>
-        <span class="ruby-ivar">@residue_composition</span> = {}
-        <span class="ruby-ivar">@formula</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">5</span>, <span class="ruby-value">0</span>)
-        
-        <span class="ruby-comment cmt"># count up the number of whitespaces and residues in self</span>
-        <span class="ruby-identifier">tokens</span> = <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">count</span>(<span class="ruby-identifier">sequence</span>, <span class="ruby-constant">SEQUENCE_TOKENS</span>)
-        <span class="ruby-identifier">whitespace</span> = <span class="ruby-identifier">tokens</span>.<span class="ruby-identifier">shift</span>
-
-        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">whitespace</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">sequence</span>.<span class="ruby-identifier">length</span>
-          <span class="ruby-comment cmt"># as per the Base specification, factors</span>
-          <span class="ruby-comment cmt"># should have no trailing zeros</span>
-          <span class="ruby-ivar">@formula</span>.<span class="ruby-identifier">clear</span>
-          <span class="ruby-keyword kw">return</span>
-        <span class="ruby-keyword kw">end</span>
-
-        <span class="ruby-comment cmt"># add the residue masses and factors</span>
-        <span class="ruby-constant">Residue</span>.<span class="ruby-identifier">common</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">residue</span><span class="ruby-operator">|</span>
-          <span class="ruby-comment cmt"># benchmarks indicated that counting for each residue</span>
-          <span class="ruby-comment cmt"># is quicker than trying anything like:</span>
-          <span class="ruby-comment cmt">#</span>
-          <span class="ruby-comment cmt">#   sequence.each_byte {|b| bytes[b] += 1}</span>
-          <span class="ruby-comment cmt">#</span>
-          <span class="ruby-comment cmt"># This is particularly an issue for long sequences.  The</span>
-          <span class="ruby-comment cmt"># count operation could be optimized for isobaric residues</span>
-          <span class="ruby-identifier">n</span> = <span class="ruby-identifier">tokens</span>.<span class="ruby-identifier">shift</span>
-          <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">n</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
-
-          <span class="ruby-ivar">@length</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">n</span>
-          <span class="ruby-ivar">@residue_composition</span>[<span class="ruby-identifier">residue</span>] = <span class="ruby-identifier">n</span>
-          <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">add</span>(<span class="ruby-ivar">@formula</span>, <span class="ruby-identifier">residue</span>.<span class="ruby-identifier">formula</span>, <span class="ruby-identifier">n</span>)
-        <span class="ruby-keyword kw">end</span>
-
-        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@length</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">whitespace</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">sequence</span>.<span class="ruby-identifier">length</span>
-          <span class="ruby-comment cmt"># raise an error if there are unaccounted characters</span>
-          <span class="ruby-identifier">raise</span> <span class="ruby-constant">UnknownResidueError</span>, <span class="ruby-node">&quot;unknown characters in sequence: #{sequence}&quot;</span>
-        <span class="ruby-keyword kw">end</span>
-      <span class="ruby-keyword kw">end</span></pre>
-</body>
-</html>

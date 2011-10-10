@@ -1,30 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html>
-<head>
-  <title>test_parse_simple_fails_for_malformed_formulae (EmpiricalFormulaClassTest)</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
-</head>
-<body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/molecules/empirical_formula_class_test.rb, line 22</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_parse_simple_fails_for_malformed_formulae</span>
-    [
-      <span class="ruby-comment cmt"># numbers outside parenthesis</span>
-      <span class="ruby-value str">&quot;H2&quot;</span>, 
-      <span class="ruby-comment cmt"># empty parenthesis</span>
-      <span class="ruby-value str">&quot;H()&quot;</span>,
-      <span class="ruby-comment cmt"># mismatched parenthesis</span>
-      <span class="ruby-value str">&quot;H(&quot;</span>,
-      <span class="ruby-value str">&quot;)H&quot;</span>,
-      <span class="ruby-comment cmt"># anything complex</span>
-      <span class="ruby-value str">&quot;H + O&quot;</span>
-    ].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">formula</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">EmpiricalFormula</span><span class="ruby-operator">::</span><span class="ruby-constant">ParseError</span>) { <span class="ruby-constant">EmpiricalFormula</span>.<span class="ruby-identifier">parse_simple</span>(<span class="ruby-identifier">formula</span>) }
-    <span class="ruby-keyword kw">end</span>
-  <span class="ruby-keyword kw">end</span></pre>
-</body>
-</html>

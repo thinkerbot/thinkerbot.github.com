@@ -1,34 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html>
-<head>
-  <title>test_split_range_for_negative_indicies_counts_back_from_length (ChunkableTest)</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
-</head>
-<body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/external/chunkable_test.rb, line 54</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_split_range_for_negative_indicies_counts_back_from_length</span>
-    <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">10</span>, <span class="ruby-identifier">length</span>
-    {
-      <span class="ruby-comment cmt"># for begin index</span>
-      <span class="ruby-value">-1</span><span class="ruby-operator">..</span><span class="ruby-value">100</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">9</span>,<span class="ruby-value">91</span>],  <span class="ruby-comment cmt"># equivalent to 9..100</span>
-      <span class="ruby-value">-1</span><span class="ruby-operator">...</span><span class="ruby-value">100</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">9</span>,<span class="ruby-value">90</span>],
-      <span class="ruby-value">-2</span><span class="ruby-operator">..</span><span class="ruby-value">100</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">8</span>,<span class="ruby-value">92</span>],
-      <span class="ruby-value">-2</span><span class="ruby-operator">...</span><span class="ruby-value">100</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">8</span>,<span class="ruby-value">91</span>],
-      <span class="ruby-value">-11</span><span class="ruby-operator">..</span><span class="ruby-value">100</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">-1</span>,<span class="ruby-value">101</span>],
-      <span class="ruby-value">-11</span><span class="ruby-operator">...</span><span class="ruby-value">100</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">-1</span>,<span class="ruby-value">100</span>],
-      
-      <span class="ruby-comment cmt"># for end index</span>
-      <span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">0</span>,<span class="ruby-value">9</span>],  <span class="ruby-comment cmt"># equivalent to 0..9</span>
-      <span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-value">-1</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">0</span>,<span class="ruby-value">8</span>],
-      <span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-10</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">0</span>,<span class="ruby-value">0</span>]
-    }.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">range</span>, <span class="ruby-identifier">expected</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">expected</span>, <span class="ruby-identifier">split_range</span>(<span class="ruby-identifier">range</span>), <span class="ruby-identifier">range</span>
-    <span class="ruby-keyword kw">end</span>
-  <span class="ruby-keyword kw">end</span></pre>
-</body>
-</html>

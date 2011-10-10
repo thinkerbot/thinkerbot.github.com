@@ -1,34 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html>
-<head>
-  <title>test_LSHIFT (ExtArrTest)</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
-</head>
-<body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/ext_arr_test.rb, line 238</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_LSHIFT</span> <span class="ruby-comment cmt"># '&lt;&lt;'</span>
-    <span class="ruby-identifier">a</span> = <span class="ruby-ivar">@cls</span>[]
-    <span class="ruby-identifier">a</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">1</span>
-    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>], <span class="ruby-identifier">a</span>)
-    <span class="ruby-identifier">a</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">2</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">3</span>
-    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>], <span class="ruby-identifier">a</span>)
-    <span class="ruby-identifier">a</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'cat'</span>
-    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-value str">'cat'</span>], <span class="ruby-identifier">a</span>)
-    
-    <span class="ruby-comment cmt"># Changes: when you add a to itself, the version at </span>
-    <span class="ruby-comment cmt"># the &lt;&lt; line is added, not the one that appears in the</span>
-    <span class="ruby-comment cmt"># comparison</span>
-    <span class="ruby-comment cmt">#a &lt;&lt; a</span>
-    <span class="ruby-comment cmt">#assert_equal(@cls[1, 2, 3, nil, 'cat', a], a)</span>
-    
-    <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@cls</span>.<span class="ruby-identifier">new</span>
-    <span class="ruby-identifier">a</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">b</span>
-    <span class="ruby-identifier">assert_equal</span>(<span class="ruby-ivar">@cls</span>[<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-value str">'cat'</span>, <span class="ruby-identifier">b</span>], <span class="ruby-identifier">a</span>)
-  <span class="ruby-keyword kw">end</span></pre>
-</body>
-</html>

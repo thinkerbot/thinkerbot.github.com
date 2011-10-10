@@ -1,45 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html>
-<head>
-  <title>new (ExtArr)</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
-</head>
-<body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/ext_arr.rb, line 48</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">io</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span>={})
-    <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">io</span>)
-    
-    <span class="ruby-ivar">@max_gap</span> = <span class="ruby-value">10000</span>
-    <span class="ruby-ivar">@max_chunk_size</span> = <span class="ruby-value">1000000</span>
-    
-    <span class="ruby-ivar">@pos_index</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:pos_index</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">?</span> <span class="ruby-value">0</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:pos_index</span>]
-    <span class="ruby-ivar">@length_index</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:length_index</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">?</span> <span class="ruby-value">1</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:length_index</span>]
-    
-    <span class="ruby-comment cmt"># TODO -- merge in specified index options</span>
-    <span class="ruby-identifier">index_options</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">default_index_options</span>
-    
-    <span class="ruby-comment cmt"># determine the index file.  if a file is specified,</span>
-    <span class="ruby-comment cmt"># use it, otherwise infer the index filepath from</span>
-    <span class="ruby-comment cmt"># the io.  Note a nil index_file is ok -- this simply</span>
-    <span class="ruby-comment cmt"># means the index file will be a Tempfile</span>
-    <span class="ruby-identifier">index_file</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:index_file</span>)
-      <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:index_file</span>]
-    <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">File</span>)
-      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">default_index_filepath</span>(<span class="ruby-identifier">io</span>.<span class="ruby-identifier">path</span>)
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-keyword kw">nil</span>
-    <span class="ruby-keyword kw">end</span>
-    
-    <span class="ruby-comment cmt"># ensure the file exists before trying to open it</span>
-    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">File</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">index_file</span>)
-      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">touch</span>(<span class="ruby-identifier">index_file</span>) 
-    <span class="ruby-keyword kw">end</span>
-    <span class="ruby-ivar">@index</span> = <span class="ruby-constant">ExtInd</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">index_file</span>, <span class="ruby-value str">&quot;r+&quot;</span>, <span class="ruby-identifier">index_options</span>)
-  <span class="ruby-keyword kw">end</span></pre>
-</body>
-</html>

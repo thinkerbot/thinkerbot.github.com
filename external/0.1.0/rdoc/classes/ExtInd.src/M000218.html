@@ -1,30 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html>
-<head>
-  <title>pad_to (ExtInd)</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
-</head>
-<body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/ext_ind.rb, line 946</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pad_to</span>(<span class="ruby-identifier">pos</span>)
-    <span class="ruby-identifier">n</span> = (<span class="ruby-identifier">pos</span><span class="ruby-operator">-</span><span class="ruby-identifier">length</span>)<span class="ruby-operator">/</span><span class="ruby-identifier">frame</span>
-      
-    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cached?</span>
-      <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">nil_value</span>))
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">io</span>.<span class="ruby-identifier">pos</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">length</span>
-      <span class="ruby-identifier">io</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">nil_value</span>(<span class="ruby-keyword kw">false</span>) <span class="ruby-operator">*</span> <span class="ruby-identifier">n</span>) 
-        
-      <span class="ruby-comment cmt"># in this case position doesn't </span>
-      <span class="ruby-comment cmt"># need to be set.  set pos to nil</span>
-      <span class="ruby-comment cmt"># to skip the set statement below</span>
-      <span class="ruby-identifier">pos</span> = <span class="ruby-keyword kw">nil</span>
-    <span class="ruby-keyword kw">end</span>
-  <span class="ruby-keyword kw">end</span></pre>
-</body>
-</html>

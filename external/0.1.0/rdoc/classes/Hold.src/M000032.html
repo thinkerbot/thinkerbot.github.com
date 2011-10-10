@@ -1,50 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html>
-<head>
-  <title>btest_sort_speed (Hold)</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
-</head>
-<body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/ext_ind_test.rb, line 1437</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">btest_sort_speed</span>
-    <span class="ruby-identifier">benchmark_test</span>(<span class="ruby-value">20</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">n</span> = <span class="ruby-value">1</span>
-      <span class="ruby-identifier">unsorted</span>, <span class="ruby-identifier">sorted</span> = <span class="ruby-identifier">sort_arrays</span>(<span class="ruby-identifier">n</span><span class="ruby-operator">*</span><span class="ruby-value">10</span><span class="ruby-operator">**</span><span class="ruby-value">6</span>)
-      
-      <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-node">&quot;#{n}M array sort&quot;</span>) <span class="ruby-keyword kw">do</span> 
-        <span class="ruby-identifier">unsorted</span>.<span class="ruby-identifier">sort</span>
-      <span class="ruby-keyword kw">end</span>
-      
-      <span class="ruby-identifier">index</span> = <span class="ruby-identifier">setup_index</span>({<span class="ruby-identifier">:default_blksize</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">100000</span>}, <span class="ruby-identifier">unsorted</span>)
-      <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-node">&quot;#{n}M index sort&quot;</span>) <span class="ruby-keyword kw">do</span> 
-        <span class="ruby-identifier">index</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">close</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">index</span>.<span class="ruby-identifier">close</span>
-      
-      <span class="ruby-identifier">index</span> = <span class="ruby-identifier">setup_index</span>({<span class="ruby-identifier">:frame</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">2</span>, <span class="ruby-identifier">:default_blksize</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">100000</span>}, <span class="ruby-identifier">unsorted</span>)
-      <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-node">&quot;#{n}M frame with block&quot;</span>) <span class="ruby-keyword kw">do</span> 
-        <span class="ruby-identifier">index</span>.<span class="ruby-identifier">sort</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">b</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">a</span> }.<span class="ruby-identifier">close</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">index</span>.<span class="ruby-identifier">close</span>
-      
-      <span class="ruby-identifier">sindex</span> = <span class="ruby-identifier">setup_sindex</span>({<span class="ruby-identifier">:default_blksize</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">100000</span>}, <span class="ruby-identifier">unsorted</span>)
-      <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-node">&quot;#{n}M sindex sort&quot;</span>) <span class="ruby-keyword kw">do</span> 
-        <span class="ruby-identifier">sindex</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">close</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">sindex</span>.<span class="ruby-identifier">close</span>
-      
-      <span class="ruby-comment cmt"># cannot finish... not sure why</span>
-    <span class="ruby-comment cmt">#  sindex = setup_sindex({:frame =&gt; 2, :default_blksize =&gt; 100000}, unsorted)</span>
-    <span class="ruby-comment cmt">#  x.report(&quot;#{n}M frame with block&quot;) do </span>
-    <span class="ruby-comment cmt">#    sindex.sort {|a, b| b &lt;=&gt; a }.close</span>
-    <span class="ruby-comment cmt">#  end</span>
-    <span class="ruby-comment cmt">#  sindex.close</span>
-    <span class="ruby-keyword kw">end</span>
-  <span class="ruby-keyword kw">end</span></pre>
-</body>
-</html>

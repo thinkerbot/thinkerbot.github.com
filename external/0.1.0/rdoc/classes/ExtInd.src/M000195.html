@@ -1,57 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html>
-<head>
-  <title>[] (ExtInd)</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
-</head>
-<body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/ext_ind.rb, line 313</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">index</span>, <span class="ruby-identifier">length</span>=<span class="ruby-keyword kw">nil</span>)
-    <span class="ruby-comment cmt"># return the cached value if cached</span>
-    <span class="ruby-keyword kw">return</span> (<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">cache</span>[<span class="ruby-identifier">index</span>] <span class="ruby-operator">:</span> <span class="ruby-identifier">cache</span>[<span class="ruby-identifier">index</span>,<span class="ruby-identifier">length</span>]) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cached?</span>
-    
-    <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">index</span>
-    <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Fixnum</span>
-      <span class="ruby-identifier">index</span> <span class="ruby-operator">+=</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">index</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
-      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">index</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
-
-      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
-        <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;no implicit conversion from nil to integer&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">length</span>.<span class="ruby-identifier">nil?</span>
-        <span class="ruby-keyword kw">return</span> [] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">index</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">length</span>
-        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
-        
-        <span class="ruby-comment cmt"># ensure you don't try to read more entries than are available</span>
-        <span class="ruby-identifier">max_length</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">index</span>
-        <span class="ruby-identifier">length</span> = <span class="ruby-identifier">max_length</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">max_length</span>
-      <span class="ruby-keyword kw">end</span>
-      
-      <span class="ruby-keyword kw">case</span> 
-      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">read</span>(<span class="ruby-value">1</span>, <span class="ruby-identifier">index</span>)    <span class="ruby-comment cmt"># read one, as index[0]</span>
-      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">then</span> [<span class="ruby-identifier">read</span>(<span class="ruby-value">1</span>, <span class="ruby-identifier">index</span>)]    <span class="ruby-comment cmt"># read one framed, as index[0,1]</span>
-      <span class="ruby-keyword kw">else</span>
-        <span class="ruby-identifier">read</span>(<span class="ruby-identifier">length</span>, <span class="ruby-identifier">index</span>)                     <span class="ruby-comment cmt"># read length, automatic framing</span>
-      <span class="ruby-keyword kw">end</span> 
-      
-    <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Range</span>
-      <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;can't convert Range into Integer&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
-  
-      <span class="ruby-identifier">offset</span>, <span class="ruby-identifier">length</span> = <span class="ruby-identifier">split_range</span>(<span class="ruby-identifier">index</span>)
-  
-      <span class="ruby-comment cmt"># for conformance with array range retrieval</span>
-      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">offset</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">offset</span> <span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">length</span>
-      <span class="ruby-keyword kw">return</span> [] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
-      
-      <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">offset</span>, <span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>]
-    <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span>
-      <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;no implicit conversion from nil to integer&quot;</span>)
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;can't convert #{index.class} into Integer&quot;</span>) 
-    <span class="ruby-keyword kw">end</span>
-  <span class="ruby-keyword kw">end</span></pre>
-</body>
-</html>

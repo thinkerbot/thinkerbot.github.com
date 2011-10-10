@@ -1,124 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html>
-<head>
-  <title>[]= (ExtInd)</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
-</head>
-<body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/ext_ind.rb, line 380</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;wrong number of arguments (1 for 2)&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">2</span>
-    <span class="ruby-identifier">index</span>, <span class="ruby-identifier">length</span>, <span class="ruby-identifier">value</span> = <span class="ruby-identifier">args</span>
-    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
-      <span class="ruby-identifier">value</span> = <span class="ruby-identifier">length</span> 
-      <span class="ruby-identifier">length</span> = <span class="ruby-keyword kw">nil</span>
-    <span class="ruby-keyword kw">end</span>
-
-    <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">index</span>
-    <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Fixnum</span>
-      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">index</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
-        <span class="ruby-identifier">index</span> <span class="ruby-operator">+=</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">length</span>
-        <span class="ruby-identifier">raise</span> <span class="ruby-constant">IndexError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;index #{index} out of range&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">index</span>  <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
-      <span class="ruby-keyword kw">end</span>
-      
-      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
-        <span class="ruby-comment cmt"># simple insertion </span>
-        <span class="ruby-identifier">value</span> = <span class="ruby-identifier">nil_value</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">object_id</span> <span class="ruby-operator">==</span> <span class="ruby-value">4</span> <span class="ruby-comment cmt"># nil</span>
-        <span class="ruby-identifier">unframed_write</span>(<span class="ruby-identifier">value</span>, <span class="ruby-identifier">index</span>)
-      <span class="ruby-keyword kw">else</span>
-        <span class="ruby-identifier">raise</span> <span class="ruby-constant">IndexError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;negative length (#{length})&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
-        
-        <span class="ruby-comment cmt"># arrayify value if needed</span>
-        <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">ExtInd</span>)
-          <span class="ruby-identifier">value</span> = [<span class="ruby-identifier">value</span>] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Array</span>)
-        <span class="ruby-keyword kw">end</span>
-        
-        <span class="ruby-keyword kw">case</span>
-        <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">cached?</span>
-          <span class="ruby-comment cmt"># validation must occur here, because this cached insertion</span>
-          <span class="ruby-comment cmt"># bypasses the validations that normally occur in write</span>
-          <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">value</span>
-          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">validate_framed_array</span>(<span class="ruby-identifier">value</span>)
-          <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ExtInd</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">validate_index</span>(<span class="ruby-identifier">value</span>)
-          <span class="ruby-keyword kw">end</span>
-          
-          <span class="ruby-comment cmt"># must be done before padding in case value == self</span>
-          <span class="ruby-comment cmt"># WARN - could be expensive </span>
-          <span class="ruby-comment cmt"># TODO - check the effect of cache.dup on speed if cached?</span>
-          <span class="ruby-identifier">value</span> = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span> <span class="ruby-identifier">item</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">nil_value</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">item</span> }
-          
-          <span class="ruby-comment cmt"># pad as needed</span>
-          <span class="ruby-identifier">pad_to</span>(<span class="ruby-identifier">index</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">index</span> <span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">length</span>
-          
-          <span class="ruby-comment cmt"># write the value to the cache</span>
-          <span class="ruby-identifier">cache</span>[<span class="ruby-identifier">index</span>, <span class="ruby-identifier">length</span>] = <span class="ruby-identifier">value</span>
-        <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">self</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">value</span>
-          <span class="ruby-comment cmt"># special case when insertion is self (no validation needed)</span>
-          <span class="ruby-comment cmt"># A whole copy of self is required because the insertion </span>
-          <span class="ruby-comment cmt"># can overwrite the tail of self.  As such this can be a</span>
-          <span class="ruby-comment cmt"># worst-case scenario-slow and expensive procedure.</span>
-          <span class="ruby-identifier">copy_beg</span> = (<span class="ruby-identifier">index</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">length</span>) <span class="ruby-operator">*</span> <span class="ruby-identifier">frame_size</span>
-          <span class="ruby-identifier">copy_end</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">length</span>
-          
-          <span class="ruby-identifier">io</span>.<span class="ruby-identifier">copy</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">copy</span><span class="ruby-operator">|</span>
-            <span class="ruby-comment cmt"># truncate io</span>
-            <span class="ruby-identifier">io</span>.<span class="ruby-identifier">truncate</span>(<span class="ruby-identifier">index</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">frame_size</span>)
-            <span class="ruby-identifier">io</span>.<span class="ruby-identifier">pos</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">length</span>
-            
-            <span class="ruby-comment cmt"># pad as needed</span>
-            <span class="ruby-identifier">pad_to</span>(<span class="ruby-identifier">index</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">index</span> <span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">length</span>
-            
-            <span class="ruby-comment cmt"># write the copy of self</span>
-            <span class="ruby-identifier">io</span>.<span class="ruby-identifier">insert</span>(<span class="ruby-identifier">copy</span>)
-            
-            <span class="ruby-comment cmt"># copy the tail of the insertion</span>
-            <span class="ruby-identifier">io</span>.<span class="ruby-identifier">insert</span>(<span class="ruby-identifier">copy</span>, <span class="ruby-identifier">copy_beg</span><span class="ruby-operator">..</span><span class="ruby-identifier">copy_end</span>)
-          <span class="ruby-keyword kw">end</span>
-        <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">length</span>
-          <span class="ruby-comment cmt"># optimized insertion, when insertion is the correct length</span>
-          <span class="ruby-identifier">write</span>(<span class="ruby-identifier">value</span>, <span class="ruby-identifier">index</span>)
-        <span class="ruby-keyword kw">else</span>
-          <span class="ruby-comment cmt"># range insertion: requires copy and rewrite of the tail </span>
-          <span class="ruby-comment cmt"># of the ExtInd, after the insertion.</span>
-          <span class="ruby-comment cmt"># WARN - can be slow when the tail is large</span>
-          <span class="ruby-identifier">copy_beg</span> = (<span class="ruby-identifier">index</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">length</span>) <span class="ruby-operator">*</span> <span class="ruby-identifier">frame_size</span>
-          <span class="ruby-identifier">copy_end</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">length</span>
-          
-          <span class="ruby-identifier">io</span>.<span class="ruby-identifier">copy</span>(<span class="ruby-value str">&quot;r&quot;</span>, <span class="ruby-identifier">copy_beg</span><span class="ruby-operator">..</span><span class="ruby-identifier">copy_end</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">copy</span><span class="ruby-operator">|</span>
-            <span class="ruby-comment cmt"># pad as needed</span>
-            <span class="ruby-identifier">pad_to</span>(<span class="ruby-identifier">index</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">index</span> <span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">length</span>
-            
-            <span class="ruby-comment cmt"># write inserted value</span>
-            <span class="ruby-identifier">io</span>.<span class="ruby-identifier">pos</span> = <span class="ruby-identifier">index</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">frame_size</span>
-            <span class="ruby-identifier">write</span>(<span class="ruby-identifier">value</span>)
-            
-            <span class="ruby-comment cmt"># truncate io</span>
-            <span class="ruby-identifier">io</span>.<span class="ruby-identifier">truncate</span>(<span class="ruby-identifier">io</span>.<span class="ruby-identifier">pos</span>)
-
-            <span class="ruby-comment cmt"># copy the tail of the insertion</span>
-            <span class="ruby-identifier">io</span>.<span class="ruby-identifier">insert</span>(<span class="ruby-identifier">copy</span>)
-          <span class="ruby-keyword kw">end</span>
-        <span class="ruby-keyword kw">end</span>
-      <span class="ruby-keyword kw">end</span>
-      
-      <span class="ruby-identifier">value</span>
-    <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Range</span>
-      <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;can't convert Range into Integer&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">3</span> 
-      
-      <span class="ruby-comment cmt"># for conformance with setting a range with nil (truncates)</span>
-      <span class="ruby-identifier">value</span> = [] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">nil?</span>
-      <span class="ruby-identifier">offset</span>, <span class="ruby-identifier">length</span> = <span class="ruby-identifier">split_range</span>(<span class="ruby-identifier">index</span>)
-      <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">offset</span>, <span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>] = <span class="ruby-identifier">value</span>
-    <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span>
-      <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;no implicit conversion from nil to integer&quot;</span>)
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;can't convert #{index.class} into Integer&quot;</span>) 
-    <span class="ruby-keyword kw">end</span>
-  <span class="ruby-keyword kw">end</span></pre>
-</body>
-</html>
