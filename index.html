@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Thinkerbot
+title: Shell Script for the Soul
 ---
 
-<ul id="archive">
+<ul class="archive">
 {% for post in site.posts %}
-<li><a href="{{ post.url }}">{{ post.title }}</a><abbr>{{ post.date | date_to_string }}</abbr></li>
+<li><a href="{{ post.url }}"><strong>{{ post.title }}</strong> <abbr>{{ post.date | date: "%Y-%m-%d" }}</abbr></a></li>
 {% endfor %}
 </ul>

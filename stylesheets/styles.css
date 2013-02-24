@@ -7,6 +7,7 @@ body {
   font-weight:300;
   /* Image form http://subtlepatterns.com/brushed-alum/ */
   background-image: url(/images/brushed_alu.png);
+  overflow-y: scroll;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -179,6 +180,24 @@ section {
   padding-bottom:50px;
 }
 
+section .archive {
+  list-style:none;
+  padding-left: 0;
+}
+
+section .archive li {
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+section .archive a {
+  font-size: 18px;
+}
+
+section .archive abbr {
+  float:right;
+}
+
 small {
   font-size:11px;
 }
@@ -256,6 +275,10 @@ footer {
   }
   
   header ul {
+    display:none;
+  }
+
+  section .archive abbr {
     display:none;
   }
 }
