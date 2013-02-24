@@ -159,6 +159,14 @@ header ul a strong {
   color:#222;
 }
 
+header .contact .view {
+  margin-bottom: 5px;
+}
+
+header .contact {
+  margin-bottom: 15px;
+}
+
 section {
   width:570px;
   float:right;
