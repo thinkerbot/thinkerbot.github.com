@@ -169,6 +169,10 @@ header .contact {
   margin-bottom: 15px;
 }
 
+header .contact img {
+  border:5px solid #eee;
+}
+
 section {
   width:570px;
   float:right;
