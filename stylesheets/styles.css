@@ -6,7 +6,7 @@ body {
   color:#777;
   font-weight:300;
   /* Image form http://subtlepatterns.com/brushed-alum/ */
-  background-image: url(/images/brushed_alu.png);
+  background: #eee url(/images/brushed_alu.png);
   overflow-y: scroll;
 }
 
